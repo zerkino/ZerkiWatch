@@ -1,0 +1,55 @@
+name: build-exe
+# Builds ZerkiWatch.exe (unsigned) on a Windows runner.
+#  - "Run workflow" button (Actions tab): builds and keeps the files as a downloadable artifact (test).
+#  - pushing a tag like v6.0: builds and attaches a zip to a GitHub Release.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File tools\check-syntax.ps1
+          powershell -ExecutionPolicy Bypass -File tools\check-lang.ps1
+      - name: Build ZerkiWatch.exe with PS2EXE
+        shell: powershell
+        run: |
+          $t = [IO.File]::ReadAllText("$PWD\ZerkiWatch.bat")
+          $i = $t.IndexOf('#PS' + 'START')
+          [IO.File]::WriteAllText("$PWD\ZerkiWatch-tmp.ps1", $t.Substring($i + 8), [Text.Encoding]::ASCII)
+          Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser | Out-Null
+          Install-Module -Name ps2exe -Scope CurrentUser -Force
+          Import-Module ps2exe
+          Invoke-ps2exe -inputFile "$PWD\ZerkiWatch-tmp.ps1" -outputFile "$PWD\ZerkiWatch.exe" -noConsole -requireAdmin -STA -title 'ZerkiWatch' -iconFile "$PWD\ZerkiWatch.ico"
+          if (-not (Test-Path "$PWD\ZerkiWatch.exe")) { throw 'ZerkiWatch.exe was not created' }
+          Remove-Item "$PWD\ZerkiWatch-tmp.ps1"
+      - name: Package
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Path dist | Out-Null
+          Copy-Item ZerkiWatch.exe, ZerkiWatch.bat, ZerkiWatch.ico, Installer.bat, LICENSE, README.md, README.fr.md dist\
+          Copy-Item lang dist\lang -Recurse
+          Compress-Archive -Path dist\* -DestinationPath ZerkiWatch-windows.zip
+          (Get-FileHash ZerkiWatch.exe -Algorithm SHA256).Hash + '  ZerkiWatch.exe' | Set-Content SHA256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZerkiWatch-windows
+          path: |
+            ZerkiWatch-windows.zip
+            SHA256.txt
+      - name: Attach to the GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ZerkiWatch-windows.zip
+            ZerkiWatch.bat
+            SHA256.txt
+          generate_release_notes: true
