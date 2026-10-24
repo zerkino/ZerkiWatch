@@ -52,4 +52,5 @@ jobs:
             ZerkiWatch-windows.zip
             ZerkiWatch.bat
             SHA256.txt
-          generate_release_notes: true
+          body_path: .github/release-notes.md
+          name: ZerkiWatch ${{ github.ref_name }}

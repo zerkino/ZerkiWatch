@@ -18,7 +18,6 @@ Gratuit et open source · Windows 10 / 11 · un seul fichier `.bat` · 6 langues
 
 ![Fenêtre principale](docs/images/window-fr.png)
 
-> Les captures du bureau ci-dessous sont des **illustrations** fidèles aux couleurs de l'application, pas de vraies captures. Les images de la page iPhone sont de vrais rendus de la vraie page web avec des données d'exemple. Vos vraies captures d'écran sont les bienvenues — voir [CONTRIBUTING.md](CONTRIBUTING.md#screenshots).
 
 ## Ce que ça fait
 

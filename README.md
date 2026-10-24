@@ -18,7 +18,6 @@ Free and open source · Windows 10 / 11 · single `.bat` file · 6 languages
 
 ![Main window](docs/images/window-en.png)
 
-> The desktop screenshots below are **illustrations** that follow the real colour scheme of the app, not real captures. The iPhone page images are real renders of the actual web page with sample data. Real screenshots from your own PC are very welcome — see [CONTRIBUTING.md](CONTRIBUTING.md#screenshots).
 
 ## What it does
 
