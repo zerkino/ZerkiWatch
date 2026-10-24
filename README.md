@@ -2,7 +2,7 @@
 
 # ZerkiWatch
 
-**One click to cut the Internet while keeping your local network. Live PC monitoring. iPhone remote.**
+**Network speed meter in the Windows taskbar (download / upload, CPU, RAM, GPU) — plus a one-click Internet kill switch that keeps your local network (Plex, NAS…) and an iPhone remote.**
 
 Free and open source · Windows 10 / 11 · single `.bat` file · 6 languages
 
@@ -22,7 +22,7 @@ Free and open source · Windows 10 / 11 · single `.bat` file · 6 languages
 
 ## What it does
 
-ZerkiWatch switches your PC between **Internet** mode and **Local only** mode using Windows Firewall rules, and shows live what your machine is doing (network speed, CPU, RAM, GPU, disks, bandwidth per application and Windows service).
+ZerkiWatch puts your **live internet speed (download / upload), CPU, RAM, GPU and disk usage in the Windows 10 / 11 taskbar**, next to the clock, and shows which apps and services use your bandwidth. It also acts as a **firewall-based Internet on/off switch** that keeps your local network working (Plex, NAS, printer, media server…). It switches your PC between **Internet** mode and **Local only** mode using Windows Firewall rules, and shows live what your machine is doing (network speed, CPU, RAM, GPU, disks, bandwidth per application and Windows service).
 
 ### Cut / restore the Internet
 - One button (or a global keyboard shortcut) switches to **local mode**: the Internet is blocked but your home network (printer, NAS, media server, phone…) stays reachable.
@@ -42,7 +42,7 @@ ZerkiWatch switches your PC between **Internet** mode and **Local only** mode us
 
 ![History](docs/images/history-en.png)
 
-### Floating bar and taskbar
+### Network speed in the taskbar (floating bar)
 - A small always-visible **floating bar** (speed, CPU, RAM, GPU, disk); click the dot to toggle.
 - **Integrate into the taskbar** places the bar next to the clock and hides it in full screen.
 - Tray icon, right-click menu, start with Windows.

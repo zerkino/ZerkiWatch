@@ -2,7 +2,7 @@
 
 # ZerkiWatch
 
-**Un clic pour couper Internet en gardant le réseau local. Surveillance du PC en direct. Télécommande iPhone.**
+**Débit réseau dans la barre des tâches Windows (réception / envoi, CPU, RAM, GPU) — plus un interrupteur Internet en un clic qui garde le réseau local (Plex, NAS…) et une télécommande iPhone.**
 
 Gratuit et open source · Windows 10 / 11 · un seul fichier `.bat` · 6 langues
 
@@ -22,7 +22,7 @@ Gratuit et open source · Windows 10 / 11 · un seul fichier `.bat` · 6 langues
 
 ## Ce que ça fait
 
-ZerkiWatch bascule votre PC entre le mode **Internet** et le mode **Local uniquement** grâce aux règles du pare-feu Windows, et montre en direct ce que fait votre machine (débit, processeur, mémoire, carte graphique, disques, consommation par application et par service Windows).
+ZerkiWatch affiche votre **débit Internet en direct (réception / envoi), le CPU, la RAM, le GPU et les disques dans la barre des tâches de Windows 10 / 11**, à côté de l'horloge, et montre quelles applications et quels services consomment votre bande passante. Il sert aussi d'**interrupteur Internet basé sur le pare-feu** qui laisse le réseau local fonctionner (Plex, NAS, imprimante, serveur multimédia…). Il bascule votre PC entre le mode **Internet** et le mode **Local uniquement** grâce aux règles du pare-feu Windows, et montre en direct ce que fait votre machine (débit, processeur, mémoire, carte graphique, disques, consommation par application et par service Windows).
 
 ### Couper / remettre Internet
 - Un bouton (ou un raccourci clavier global) passe en **mode local** : Internet est bloqué, mais le réseau domestique (imprimante, NAS, serveur multimédia, téléphone…) reste joignable.
@@ -42,7 +42,7 @@ ZerkiWatch bascule votre PC entre le mode **Internet** et le mode **Local unique
 
 ![Historique](docs/images/history-fr.png)
 
-### Barre flottante et barre des tâches
+### Débit dans la barre des tâches (barre flottante)
 - Une petite **barre flottante** toujours visible (débit, CPU, RAM, GPU, disque) ; clic sur la pastille pour basculer.
 - **Intégrer à la barre des tâches** place la barre à côté de l'horloge et la cache en plein écran.
 - Icône près de l'horloge, menu clic droit, lancement avec Windows.
