@@ -8,7 +8,7 @@ Gratuit et open source · Windows 10 / 11 · un seul fichier `.bat` · 6 langues
 
 [English](README.md) · [Français](README.fr.md)
 
-![Licence : MIT](https://img.shields.io/badge/licence-MIT-blue) ![Plateforme : Windows 10/11](https://img.shields.io/badge/plateforme-Windows%2010%2F11-0078d4) ![Langues](https://img.shields.io/badge/langues-EN%20FR%20ES%20DE%20IT%20PT-green) ![PR bienvenues](https://img.shields.io/badge/PR-bienvenues-brightgreen)
+![Licence : MIT](https://img.shields.io/badge/licence-MIT-blue) ![Plateforme : Windows 10/11](https://img.shields.io/badge/plateforme-Windows%2010%2F11-0078d4) ![Langues](https://img.shields.io/badge/langues-EN%20FR%20ES%20DE%20IT%20PT-green) ![PR bienvenues](https://img.shields.io/badge/PR-bienvenues-brightgreen) [![Ko-fi](https://img.shields.io/badge/Ko--fi-soutenir-ff5e5b)](https://ko-fi.com/zerkino)
 
 </div>
 
@@ -109,6 +109,9 @@ Tout est dans `%APPDATA%\ZerkiWatch` : `history.csv` (moyennes par minute, 7 jou
 - **État : début de projet.** Il a été développé pas à pas et surtout testé par son auteur ; attendez-vous à des aspérités sur d'autres configurations — [ouvrez un ticket](../../issues).
 
 Problème de sécurité : voir [SECURITY.md](SECURITY.md).
+
+## Soutenir le projet
+ZerkiWatch est gratuit et le restera. S'il vous est utile, vous pouvez [m'offrir un café sur Ko-fi ☕](https://ko-fi.com/zerkino) — ce n'est jamais obligatoire, et contribuer par du code, des traductions ou des signalements de bugs aide tout autant.
 
 ## Contribuer
 Tout le monde est le bienvenu, débutants compris. Lisez [CONTRIBUTING.md](CONTRIBUTING.md). Pour aider : **traduire**, **tester**, **signaler des bugs**, **partager de vraies captures**, **améliorer le code ou la doc**, **relire la sécurité**.

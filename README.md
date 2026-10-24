@@ -8,7 +8,7 @@ Free and open source · Windows 10 / 11 · single `.bat` file · 6 languages
 
 [English](README.md) · [Français](README.fr.md)
 
-![License: MIT](https://img.shields.io/badge/license-MIT-blue) ![Platform: Windows 10/11](https://img.shields.io/badge/platform-Windows%2010%2F11-0078d4) ![Languages](https://img.shields.io/badge/languages-EN%20FR%20ES%20DE%20IT%20PT-green) ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue) ![Platform: Windows 10/11](https://img.shields.io/badge/platform-Windows%2010%2F11-0078d4) ![Languages](https://img.shields.io/badge/languages-EN%20FR%20ES%20DE%20IT%20PT-green) ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen) [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b)](https://ko-fi.com/zerkino)
 
 </div>
 
@@ -139,6 +139,9 @@ Build-EXE.bat      builds ZerkiWatch.exe
 docs/              translating guide, architecture notes, images
 ```
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how it works.
+
+## Support the project
+ZerkiWatch is free and will stay free. If it is useful to you, you can [buy me a coffee on Ko-fi ☕](https://ko-fi.com/zerkino) — it is never required, and contributing code, translations or bug reports helps just as much.
 
 ## Contributing
 Everyone is welcome — beginners included. Read [CONTRIBUTING.md](CONTRIBUTING.md). Ways to help: **translate**, **test**, **report bugs**, **share real screenshots**, **improve the code or the docs**, **review security**.
