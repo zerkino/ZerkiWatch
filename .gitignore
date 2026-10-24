@@ -1,0 +1,4 @@
+*.exe
+ZerkiWatch-tmp.ps1
+Thumbs.db
+.DS_Store
