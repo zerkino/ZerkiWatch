@@ -99,6 +99,8 @@ bal.lang_restart=Neustart, um die Sprache zu \u00fcbernehmen...
 bal.minimized=Das Programm l\u00e4uft weiter neben der Uhr. Rechtsklick auf das Symbol zum Beenden.
 bal.power=Herunterfahren oder Neustart vom iPhone angefordert: 30 Sekunden zum Abbrechen.
 bal.restored=Internet wiederhergestellt
+bar.internet=INTERNET
+bar.local=LOKAL
 bar.title=Systemmonitor
 cert.fail=Zertifikatexport fehlgeschlagen: {0}
 cert.help=Datei gespeichert: {0}\n\nAuf dem iPhone (gleiches WLAN):\n1. Sende diese Datei an das iPhone (AirDrop, Mail, iCloud Drive) oder \u00f6ffne {2} in Safari und tippe auf Erlauben, um das Profil zu laden.\n2. Einstellungen > Profil geladen > Installieren.\n3. Einstellungen > Allgemein > Info > Zertifikatsvertrauenseinstellungen > \u201eZerkiWatch Local CA\u201c aktivieren.\n4. Pr\u00fcfe den SHA-256-Fingerabdruck in den Zertifikatdetails auf dem iPhone:\n{1}\n\n\u00d6ffne danach die Adresse der Fernbedienung erneut.
@@ -140,6 +142,15 @@ hist.today=Heute
 hist.today_caps=HEUTE
 hist.top=TOP-VERBRAUCHER
 hist.total=Gesamt: {0}
+items.cpu=CPU
+items.dl=Empfang
+items.dsk=Datentr\u00e4ger
+items.full=Vollst\u00e4ndig
+items.gpu=GPU
+items.mini=Mini (nur Tempo)
+items.mode=Netzwerkmodus
+items.ram=RAM
+items.ul=Senden
 lang.name=Deutsch
 menu.auto=Mit Windows starten
 menu.bar=Schwebende Leiste
@@ -163,6 +174,7 @@ menu.hotkey_cur=Tastenkombination: {0}
 menu.hotkey_enable=Tastenkombination aktivieren
 menu.hotkey_off=Tastenkombination: aus
 menu.iphone=iPhone-Fernsteuerung...
+menu.items=Inhalt der Leiste
 menu.lang_auto=Automatisch
 menu.language=Sprache
 menu.log=Protokoll \u00f6ffnen
@@ -347,6 +359,8 @@ bal.lang_restart=Restarting to apply the language...
 bal.minimized=The program keeps running near the clock. Right-click the icon to quit.
 bal.power=Shutdown or restart requested from the iPhone: 30 seconds to cancel.
 bal.restored=Internet restored
+bar.internet=INTERNET
+bar.local=LOCAL
 bar.title=System monitor
 cert.fail=Certificate export failed: {0}
 cert.help=File saved: {0}\n\nOn the iPhone (same Wi-Fi):\n1. Send this file to the iPhone (AirDrop, mail, iCloud Drive) or open {2} in Safari and tap Allow when asked to download the profile.\n2. Settings > Profile Downloaded > Install.\n3. Settings > General > About > Certificate Trust Settings > turn ON "ZerkiWatch Local CA".\n4. Check the SHA-256 fingerprint in the certificate details on the iPhone:\n{1}\n\nThen open the remote address again.
@@ -388,6 +402,15 @@ hist.today=Today
 hist.today_caps=TODAY
 hist.top=TOP CONSUMERS
 hist.total=Total: {0}
+items.cpu=CPU
+items.dl=Download
+items.dsk=Disk
+items.full=Full
+items.gpu=GPU
+items.mini=Mini (speed only)
+items.mode=Network mode
+items.ram=RAM
+items.ul=Upload
 lang.name=English
 menu.auto=Start with Windows
 menu.bar=Floating bar
@@ -411,6 +434,7 @@ menu.hotkey_cur=Keyboard shortcut: {0}
 menu.hotkey_enable=Enable the shortcut
 menu.hotkey_off=Keyboard shortcut: off
 menu.iphone=iPhone remote...
+menu.items=Bar contents
 menu.lang_auto=Automatic
 menu.language=Language
 menu.log=Open the log
@@ -595,6 +619,8 @@ bal.lang_restart=Reiniciando para aplicar el idioma...
 bal.minimized=El programa sigue en ejecuci\u00f3n junto al reloj. Haz clic derecho en el icono para salir.
 bal.power=Apagado o reinicio solicitado desde el iPhone: 30 segundos para cancelar.
 bal.restored=Internet restablecido
+bar.internet=INTERNET
+bar.local=LOCAL
 bar.title=Monitor del sistema
 cert.fail=Error al exportar el certificado: {0}
 cert.help=Archivo guardado: {0}\n\nEn el iPhone (misma Wi-Fi):\n1. Env\u00eda este archivo al iPhone (AirDrop, correo, iCloud Drive) o abre {2} en Safari y pulsa Permitir para descargar el perfil.\n2. Ajustes > Perfil descargado > Instalar.\n3. Ajustes > General > Informaci\u00f3n > Ajustes de confianza de certificados > activa \u00abZerkiWatch Local CA\u00bb.\n4. Comprueba la huella SHA-256 en los detalles del certificado del iPhone:\n{1}\n\nDespu\u00e9s vuelve a abrir la direcci\u00f3n del mando.
@@ -636,6 +662,15 @@ hist.today=Hoy
 hist.today_caps=HOY
 hist.top=MAYORES CONSUMOS
 hist.total=Total: {0}
+items.cpu=CPU
+items.dl=Descarga
+items.dsk=Disco
+items.full=Completa
+items.gpu=GPU
+items.mini=Mini (solo velocidad)
+items.mode=Modo de red
+items.ram=RAM
+items.ul=Subida
 lang.name=Espa\u00f1ol
 menu.auto=Iniciar con Windows
 menu.bar=Barra flotante
@@ -659,6 +694,7 @@ menu.hotkey_cur=Atajo de teclado: {0}
 menu.hotkey_enable=Activar el atajo
 menu.hotkey_off=Atajo de teclado: desactivado
 menu.iphone=Control remoto iPhone...
+menu.items=Contenido de la barra
 menu.lang_auto=Autom\u00e1tico
 menu.language=Idioma
 menu.log=Abrir el registro
@@ -843,6 +879,8 @@ bal.lang_restart=Red\u00e9marrage pour appliquer la langue...
 bal.minimized=Le programme continue pr\u00e8s de l'horloge. Clic droit sur l'ic\u00f4ne pour quitter.
 bal.power=Arr\u00eat ou red\u00e9marrage demand\u00e9 depuis l'iPhone : 30 secondes pour annuler.
 bal.restored=Internet r\u00e9activ\u00e9
+bar.internet=INTERNET
+bar.local=LOCAL
 bar.title=Moniteur syst\u00e8me
 cert.fail=\u00c9chec de l'export du certificat : {0}
 cert.help=Fichier enregistr\u00e9 : {0}\n\nSur l'iPhone (m\u00eame Wi-Fi) :\n1. Envoyez ce fichier \u00e0 l'iPhone (AirDrop, mail, iCloud Drive) ou ouvrez {2} dans Safari et appuyez sur Autoriser pour t\u00e9l\u00e9charger le profil.\n2. R\u00e9glages > Profil t\u00e9l\u00e9charg\u00e9 > Installer.\n3. R\u00e9glages > G\u00e9n\u00e9ral > Informations > R\u00e9glages des certificats de confiance > activez \u00ab ZerkiWatch Local CA \u00bb.\n4. V\u00e9rifiez l'empreinte SHA-256 dans les d\u00e9tails du certificat sur l'iPhone :\n{1}\n\nRouvrez ensuite l'adresse de la t\u00e9l\u00e9commande.
@@ -884,6 +922,15 @@ hist.today=Aujourd'hui
 hist.today_caps=AUJOURD'HUI
 hist.top=GROS CONSOMMATEURS
 hist.total=Total : {0}
+items.cpu=CPU
+items.dl=R\u00e9ception
+items.dsk=Disque
+items.full=Complet
+items.gpu=GPU
+items.mini=Mini (d\u00e9bit seul)
+items.mode=Mode r\u00e9seau
+items.ram=RAM
+items.ul=Envoi
 lang.name=Fran\u00e7ais
 menu.auto=Lancer avec Windows
 menu.bar=Barre flottante
@@ -907,6 +954,7 @@ menu.hotkey_cur=Raccourci clavier : {0}
 menu.hotkey_enable=Activer le raccourci
 menu.hotkey_off=Raccourci clavier : d\u00e9sactiv\u00e9
 menu.iphone=T\u00e9l\u00e9commande iPhone...
+menu.items=Contenu de la barre
 menu.lang_auto=Automatique
 menu.language=Langue
 menu.log=Ouvrir le journal
@@ -1091,6 +1139,8 @@ bal.lang_restart=Riavvio per applicare la lingua...
 bal.minimized=Il programma resta attivo vicino all'orologio. Clic destro sull'icona per uscire.
 bal.power=Arresto o riavvio richiesto dall'iPhone: 30 secondi per annullare.
 bal.restored=Internet ripristinato
+bar.internet=INTERNET
+bar.local=LOCALE
 bar.title=Monitor di sistema
 cert.fail=Esportazione del certificato non riuscita: {0}
 cert.help=File salvato: {0}\n\nSu iPhone (stessa Wi-Fi):\n1. Invia questo file all'iPhone (AirDrop, mail, iCloud Drive) oppure apri {2} in Safari e tocca Consenti per scaricare il profilo.\n2. Impostazioni > Profilo scaricato > Installa.\n3. Impostazioni > Generali > Info > Impostazioni certificati attendibili > attiva \u00abZerkiWatch Local CA\u00bb.\n4. Verifica l'impronta SHA-256 nei dettagli del certificato su iPhone:\n{1}\n\nPoi riapri l'indirizzo del telecomando.
@@ -1132,6 +1182,15 @@ hist.today=Oggi
 hist.today_caps=OGGI
 hist.top=MAGGIORI CONSUMI
 hist.total=Totale: {0}
+items.cpu=CPU
+items.dl=Ricezione
+items.dsk=Disco
+items.full=Completa
+items.gpu=GPU
+items.mini=Mini (solo velocit\u00e0)
+items.mode=Modalit\u00e0 di rete
+items.ram=RAM
+items.ul=Invio
 lang.name=Italiano
 menu.auto=Avvia con Windows
 menu.bar=Barra mobile
@@ -1155,6 +1214,7 @@ menu.hotkey_cur=Scorciatoia da tastiera: {0}
 menu.hotkey_enable=Abilita la scorciatoia
 menu.hotkey_off=Scorciatoia da tastiera: no
 menu.iphone=Remoto iPhone...
+menu.items=Contenuto della barra
 menu.lang_auto=Automatica
 menu.language=Lingua
 menu.log=Apri il registro
@@ -1339,6 +1399,8 @@ bal.lang_restart=Reiniciando para aplicar o idioma...
 bal.minimized=O programa continua em execu\u00e7\u00e3o perto do rel\u00f3gio. Clique com o bot\u00e3o direito no \u00edcone para sair.
 bal.power=Desligamento ou reinicializa\u00e7\u00e3o solicitado pelo iPhone: 30 segundos para cancelar.
 bal.restored=Internet restaurada
+bar.internet=INTERNET
+bar.local=LOCAL
 bar.title=Monitor do sistema
 cert.fail=Falha ao exportar o certificado: {0}
 cert.help=Ficheiro guardado: {0}\n\nNo iPhone (mesmo Wi-Fi):\n1. Envie este ficheiro para o iPhone (AirDrop, e-mail, iCloud Drive) ou abra {2} no Safari e toque em Permitir para transferir o perfil.\n2. Defini\u00e7\u00f5es > Perfil transferido > Instalar.\n3. Defini\u00e7\u00f5es > Geral > Informa\u00e7\u00e3o > Defini\u00e7\u00f5es de confian\u00e7a de certificados > ative \u00abZerkiWatch Local CA\u00bb.\n4. Verifique a impress\u00e3o digital SHA-256 nos detalhes do certificado no iPhone:\n{1}\n\nDepois abra novamente o endere\u00e7o do controlo remoto.
@@ -1380,6 +1442,15 @@ hist.today=Hoje
 hist.today_caps=HOJE
 hist.top=MAIORES CONSUMIDORES
 hist.total=Total: {0}
+items.cpu=CPU
+items.dl=Rece\u00e7\u00e3o
+items.dsk=Disco
+items.full=Completa
+items.gpu=GPU
+items.mini=Mini (s\u00f3 velocidade)
+items.mode=Modo de rede
+items.ram=RAM
+items.ul=Envio
 lang.name=Portugu\u00eas
 menu.auto=Iniciar com o Windows
 menu.bar=Barra flutuante
@@ -1403,6 +1474,7 @@ menu.hotkey_cur=Atalho de teclado: {0}
 menu.hotkey_enable=Ativar o atalho
 menu.hotkey_off=Atalho de teclado: desativado
 menu.iphone=Controle remoto do iPhone...
+menu.items=Conte\u00fado da barra
 menu.lang_auto=Autom\u00e1tico
 menu.language=Idioma
 menu.log=Abrir o registro
@@ -4317,6 +4389,11 @@ if ($cfg.ContainsKey('Dock')) { $BAR.Dock = ($cfg['Dock'] -eq '1') }
 $WID = @{ On = $false; AutoHidden = $false; Dirty = $false; Dragging = $false; DragX = 0; DragY = 0 }
 if ($cfg.ContainsKey('Widget')) { $WID.On = ($cfg['Widget'] -eq '1') }
 # First-run wizard: shown only when there is no config at all (existing users never see it automatically)
+$BAR.Items = @('mode', 'dl', 'ul', 'cpu', 'ram', 'gpu', 'dsk')
+if ($cfg.ContainsKey('Items')) {
+    $its = @(([string]$cfg['Items']).Split(',') | ForEach-Object { $_.Trim() } | Where-Object { @('mode', 'dl', 'ul', 'cpu', 'ram', 'gpu', 'dsk') -contains $_ })
+    if ($its.Count -gt 0) { $BAR.Items = $its }
+}
 $S.WizDone = ($cfg.ContainsKey('Wizard') -or ($cfg.Count -gt 0))
 $savedWPt = $null
 if ($cfg.ContainsKey('WX') -and $cfg.ContainsKey('WY')) {
@@ -4445,6 +4522,7 @@ $null = $barForm.Handle
 $barForm.Text = 'ZerkiWatch - monitor'
 
 function Set-BarSize {
+    Update-BarLayout
     if ($BAR.Dock) { $BAR.K = $BAR.DockK } else { $BAR.K = $BAR.UserScale }
     $cw = [int][math]::Round($BAR.W * $BAR.K)
     $ch = [int][math]::Round($BAR.H * $BAR.K)
@@ -4481,6 +4559,7 @@ function Save-BarConfig {
             ('Dock=' + [int]$BAR.Dock),
             ('Widget=' + [int]$WID.On),
             ('Wizard=' + [int]($S.WizDone -eq $true)),
+            ('Items=' + ((@($BAR.Items)) -join ',')),
             ('Cumul=' + [int]$S.CumulOn),
             ('Hotkey=' + [int]$S.HkOn),
             ('HotkeyCombo=' + $S.HkId)
@@ -4516,6 +4595,22 @@ if ($okPos) { $barForm.Location = $savedPt } else {
 }
 if ($BAR.Dock) { $BAR.FloatPt = $barForm.Location }
 
+# Disposition de la barre : les indicateurs choisis ($BAR.Items) dans l'ordre fixe ci-dessous ; $BAR.W en decoule.
+$BarItemW = @{ mode = 84; dl = 123; ul = 115; cpu = 90; ram = 90; gpu = 90; dsk = 108 }
+$BarItemOrder = @('mode', 'dl', 'ul', 'cpu', 'ram', 'gpu', 'dsk')
+function Update-BarLayout {
+    $lay = New-Object System.Collections.ArrayList
+    $w = 34
+    foreach ($k in $BarItemOrder) {
+        if (@($BAR.Items) -contains $k) { [void]$lay.Add(@{ k = $k; w = $BarItemW[$k] }); $w = $w + $BarItemW[$k] }
+    }
+    $BAR.Layout = $lay.ToArray()
+    $BAR.W = [double]$w
+}
+function Get-ToggleW {
+    if (@($BAR.Items) -contains 'mode') { return (34 + $BarItemW['mode']) }
+    return 34
+}
 # Dessin commun a la barre et au widget libre ($k = echelle)
 function Draw-Bar($g, [double]$k) {
     try {
@@ -4545,17 +4640,32 @@ function Draw-Bar($g, [double]$k) {
         $db.Dispose(); $dp.Dispose()
         $g.TranslateTransform([single]34, [single]0)
         $sepPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(34, 255, 255, 255), [single]1)
-        foreach ($sx in @(123, 238, 328, 418, 508)) { $g.DrawLine($sepPen, [single]$sx, [single]10, [single]$sx, [single]36) }
+        $sx = 0
+        foreach ($seg in @($BAR.Layout)) {
+            if ($sx -gt 0) { $g.DrawLine($sepPen, [single]$sx, [single]10, [single]$sx, [single]36) }
+            switch ([string]$seg.k) {
+                'mode' {
+                    $mw = (T 'bar.internet'); $mc = $cLoadG
+                    if ($S.Local) { $mw = (T 'bar.local'); $mc = $cLoadA }
+                    $mb = New-Object System.Drawing.SolidBrush($mc)
+                    $g.DrawString($mw, $fLbl, $mb, [single]($sx + 8), [single]($BAR.H / 2 - 9), $sfmt)
+                    $mb.Dispose()
+                }
+                'dl' { Draw-NetSeg $g ($sx + 14) $true $S.Dl $S.HistDl $cDl }
+                'ul' { Draw-NetSeg $g ($sx + 6) $false $S.Ul $S.HistUl $cUl }
+                'cpu' { Draw-Gauge $g ($sx + 10) 'CPU' $S.Cpu 0 $aCpu }
+                'ram' { Draw-Gauge $g ($sx + 10) 'RAM' $S.Ram 1 $aRam }
+                'gpu' { Draw-Gauge $g ($sx + 10) 'GPU' $S.Gpu 2 $aGpu }
+                'dsk' {
+                    $dpc = -1.0
+                    $dlab = 'DSK'
+                    if (@($S.Disks).Count -gt 0) { $d0 = @($S.Disks)[0]; $dpc = [double]$d0.Pct; $dlab = [string]$d0.L }
+                    Draw-Gauge $g ($sx + 10) $dlab $dpc 3 $aDsk
+                }
+            }
+            $sx = $sx + [int]$seg.w
+        }
         $sepPen.Dispose()
-        Draw-NetSeg $g 14 $true $S.Dl $S.HistDl $cDl
-        Draw-NetSeg $g 129 $false $S.Ul $S.HistUl $cUl
-        Draw-Gauge $g 248 'CPU' $S.Cpu 0 $aCpu
-        Draw-Gauge $g 338 'RAM' $S.Ram 1 $aRam
-        Draw-Gauge $g 428 'GPU' $S.Gpu 2 $aGpu
-        $dpc = -1.0
-        $dlab = 'DSK'
-        if (@($S.Disks).Count -gt 0) { $d0 = @($S.Disks)[0]; $dpc = [double]$d0.Pct; $dlab = [string]$d0.L }
-        Draw-Gauge $g 518 $dlab $dpc 3 $aDsk
     } catch { Write-Log ('Bar paint: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'pb' }
 }
 $barForm.Add_Paint({ param($sender, $pe) Draw-Bar $pe.Graphics $BAR.K })
@@ -4563,7 +4673,7 @@ $barForm.Add_Paint({ param($sender, $pe) Draw-Bar $pe.Graphics $BAR.K })
 $barForm.Add_MouseDown({
     param($sender, $me)
     if ($me.Button -eq [System.Windows.Forms.MouseButtons]::Left) {
-        if ($me.X -lt (34 * $BAR.K)) { Invoke-Toggle; return }
+        if ($me.X -lt ((Get-ToggleW) * $BAR.K)) { Invoke-Toggle; return }
         if ($BAR.Dock) { return }
         if ($S.Native) { try { [MN]::Drag($barForm.Handle) } catch { } }
         else { $BAR.Dragging = $true; $BAR.DragX = $me.X; $BAR.DragY = $me.Y }
@@ -4599,6 +4709,7 @@ $wForm.Add_HandleCreated({
 })
 $null = $wForm.Handle
 function Set-WidgetSize {
+    Update-BarLayout
     $cw = [int][math]::Round($BAR.W * $BAR.UserScale)
     $ch = [int][math]::Round($BAR.H * $BAR.UserScale)
     $wForm.ClientSize = New-Object System.Drawing.Size($cw, $ch)
@@ -4627,7 +4738,7 @@ $wForm.Add_Paint({ param($sender, $pe) Draw-Bar $pe.Graphics $BAR.UserScale })
 $wForm.Add_MouseDown({
     param($sender, $me)
     if ($me.Button -eq [System.Windows.Forms.MouseButtons]::Left) {
-        if ($me.X -lt (34 * $BAR.UserScale)) { Invoke-Toggle; return }
+        if ($me.X -lt ((Get-ToggleW) * $BAR.UserScale)) { Invoke-Toggle; return }
         if ($S.Native) { try { [MN]::Drag($wForm.Handle) } catch { } }
         else { $WID.Dragging = $true; $WID.DragX = $me.X; $WID.DragY = $me.Y }
     }
@@ -4654,6 +4765,19 @@ function Update-Widget {
     }
     if ($WID.Dirty) { $WID.Dirty = $false; Save-BarConfig }
     if ($wForm.Visible) { $wForm.Invalidate() }
+}
+function Set-BarItems([string[]]$items) {
+    if (@($items).Count -eq 0) { return }
+    $BAR.Items = @($items)
+    $mx = $barForm.Left + $barForm.Width / 2.0
+    $my = $barForm.Top + $barForm.Height / 2.0
+    Set-BarSize
+    if (-not $BAR.Dock) { $barForm.Location = New-Object System.Drawing.Point([int]($mx - $barForm.Width / 2.0), [int]($my - $barForm.Height / 2.0)) }
+    $wx = $wForm.Left + $wForm.Width / 2.0
+    $wy = $wForm.Top + $wForm.Height / 2.0
+    Set-WidgetSize
+    $wForm.Location = New-Object System.Drawing.Point([int]($wx - $wForm.Width / 2.0), [int]($wy - $wForm.Height / 2.0))
+    Save-BarConfig
 }
 function Switch-Widget {
     if ($WID.On) { $WID.On = $false; $wForm.Hide() }
@@ -4762,6 +4886,36 @@ $miCutC.Add_Click({ [void](Start-TimedCut 'cancel') })
 try { $miCut.DropDown.BackColor = $cMenuBg; $miCut.DropDown.ShowImageMargin = $false } catch { }
 $miBar   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.bar'))
 $miWid   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.widget'))
+$miItems = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.items'))
+$miItemList = @{}
+foreach ($iq in @(@('mode', 'items.mode'), @('dl', 'items.dl'), @('ul', 'items.ul'), @('cpu', 'items.cpu'), @('ram', 'items.ram'), @('gpu', 'items.gpu'), @('dsk', 'items.dsk'))) {
+    $ii = New-Object System.Windows.Forms.ToolStripMenuItem((T $iq[1]))
+    $ii.Tag = [string]$iq[0]
+    $ii.ForeColor = $cText; $ii.BackColor = $cMenuBg
+    $ii.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
+    $ii.Add_Click({
+        param($snd, $ea)
+        $kk = [string]$snd.Tag
+        $cur = @($BAR.Items)
+        if ($cur -contains $kk) { $nw = @($cur | Where-Object { $_ -ne $kk }) } else { $nw = $cur + $kk }
+        Set-BarItems $nw
+    })
+    [void]$miItems.DropDownItems.Add($ii)
+    $miItemList[[string]$iq[0]] = $ii
+}
+[void]$miItems.DropDownItems.Add((New-Object System.Windows.Forms.ToolStripSeparator))
+foreach ($pq in @(@('mini', 'items.mini'), @('full', 'items.full'))) {
+    $ip = New-Object System.Windows.Forms.ToolStripMenuItem((T $pq[1]))
+    $ip.Tag = [string]$pq[0]
+    $ip.ForeColor = $cText; $ip.BackColor = $cMenuBg
+    $ip.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
+    $ip.Add_Click({
+        param($snd, $ea)
+        if ([string]$snd.Tag -eq 'mini') { Set-BarItems @('mode', 'dl', 'ul') } else { Set-BarItems @('mode', 'dl', 'ul', 'cpu', 'ram', 'gpu', 'dsk') }
+    })
+    [void]$miItems.DropDownItems.Add($ip)
+}
+try { $miItems.DropDown.BackColor = $cMenuBg; $miItems.DropDown.ShowImageMargin = $false } catch { }
 $miTop   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.top'))
 $miDock  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.dock'))
 $miSize  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.size'))
@@ -4788,6 +4942,7 @@ $null = $menu.Items.Add($miCut)
 $null = $menu.Items.Add((New-Object System.Windows.Forms.ToolStripSeparator))
 $null = $menu.Items.Add($miBar)
 $null = $menu.Items.Add($miWid)
+$null = $menu.Items.Add($miItems)
 $null = $menu.Items.Add($miTop)
 $null = $menu.Items.Add($miDock)
 $null = $menu.Items.Add($miSize)
@@ -4802,7 +4957,7 @@ $null = $menu.Items.Add($miWiz)
 $null = $menu.Items.Add($miAuto)
 $null = $menu.Items.Add($miLog)
 $null = $menu.Items.Add($miQuit)
-foreach ($it in @($miOpen, $miHist, $miNet, $miCut, $miBar, $miWid, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miWiz, $miAuto, $miLog, $miQuit)) {
+foreach ($it in @($miOpen, $miHist, $miNet, $miCut, $miBar, $miWid, $miItems, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miWiz, $miAuto, $miLog, $miQuit)) {
     $it.ForeColor = $cText
     $it.BackColor = $cMenuBg
     $it.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
@@ -4897,6 +5052,7 @@ function Update-MenuText {
     else { $miCut.Text = (T 'menu.cut_timed'); $miCutC.Visible = $false }
     $b1 = $dotOn; if ($BAR.UserHidden) { $b1 = $dotOff }
     $miBar.Text = $b1 + '  ' + (T 'menu.bar_full')
+    foreach ($ik in @($miItemList.Keys)) { $im = $dotOff; if (@($BAR.Items) -contains $ik) { $im = $dotOn }; $miItemList[$ik].Text = $im + '  ' + (T ('items.' + $ik)) }
     $w1 = $dotOff; if ($WID.On) { $w1 = $dotOn }
     $miWid.Text = $w1 + '  ' + (T 'menu.widget')
     $t1 = $dotOff; if ($BAR.Top) { $t1 = $dotOn }
