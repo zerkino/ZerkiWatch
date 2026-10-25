@@ -4058,7 +4058,7 @@ $dotChar = [string][char]0x25CF
 
 $form = New-Object System.Windows.Forms.Form
 $form.Text = 'ZerkiWatch'
-$form.ClientSize = New-Object System.Drawing.Size(1080, 560)
+$form.ClientSize = New-Object System.Drawing.Size(1160, 640)
 $form.StartPosition = 'CenterScreen'
 $form.FormBorderStyle = 'FixedSingle'
 $form.MaximizeBox = $false
@@ -4081,14 +4081,16 @@ try {
     $form.Icon = New-Object System.Drawing.Icon($icoStream)
 } catch { }
 
-$lblTitle = New-Label 'ZERKIWATCH' 0 20 400 24 (New-Font 10 $true) $cMuted 'MiddleCenter'
+$lblTitle = New-Label 'ZERKIWATCH' 24 22 150 30 (New-Font 14 $true) $cText 'MiddleLeft'
 $form.Controls.Add($lblTitle)
+$lblVer = New-Label ('v' + $APPVER) 168 26 80 24 (New-Font 9 $false) $cMuted 'MiddleLeft'
+$form.Controls.Add($lblVer)
 
 # --- Interrupteur ---
 $toggle = New-Object System.Windows.Forms.Panel
-$toggle.Location = New-Object System.Drawing.Point(90, 64)
+$toggle.Location = New-Object System.Drawing.Point(104, 124)
 $toggle.Size = New-Object System.Drawing.Size(220, 110)
-$toggle.BackColor = $cBg
+$toggle.BackColor = $cCard
 $toggle.Cursor = [System.Windows.Forms.Cursors]::Hand
 Enable-DoubleBuffer $toggle
 $form.Controls.Add($toggle)
@@ -4137,17 +4139,17 @@ $toggle.Add_Paint({
     $brush.Dispose(); $shadow.Dispose(); $white.Dispose(); $path.Dispose()
 })
 
-$lblStatus = New-Label '' 0 188 400 40 (New-Font 20 $true) $cGreen 'MiddleCenter'
+$lblStatus = New-Label '' 24 252 380 40 (New-Font 20 $true) $cGreen 'MiddleCenter'
 $form.Controls.Add($lblStatus)
 
-$lblSub = New-Label '' 24 230 352 44 (New-Font 10 $false) $cMuted 'TopCenter'
+$lblSub = New-Label '' 44 296 340 44 (New-Font 10 $false) $cMuted 'TopCenter'
 $form.Controls.Add($lblSub)
 
 # --- Carte d'etat ---
 $card = New-Object System.Windows.Forms.Panel
-$card.Location = New-Object System.Drawing.Point(24, 290)
+$card.Location = New-Object System.Drawing.Point(38, 356)
 $card.Size = New-Object System.Drawing.Size(352, 140)
-$card.BackColor = $cCard
+$card.BackColor = $cBg
 $card.Region = New-Object System.Drawing.Region -ArgumentList (New-RoundPath 0 0 352 140 14)
 $form.Controls.Add($card)
 
@@ -4160,15 +4162,29 @@ $valBox = New-Label '' 160 50 178 24 (New-Font 10 $false) $cMuted 'MiddleRight'
 $lblMsg = New-Label '' 14 88 324 44 (New-Font 9 $false) $cMuted 'TopLeft'
 foreach ($c in @($dotNet, $nameNet, $valNet, $dotBox, $nameBox, $valBox, $lblMsg)) { $card.Controls.Add($c) }
 
-$lblFoot = New-Label '' 14 434 372 40 (New-Font 9 $false) $cMuted 'MiddleCenter'
+$lblFoot = New-Label '' 34 520 360 60 (New-Font 9 $false) $cMuted 'MiddleCenter'
 $form.Controls.Add($lblFoot)
+$form.Add_Paint({
+    param($sender, $pe)
+    try {
+        $g = $pe.Graphics
+        $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
+        $hp = New-RoundPath 24 84 380 532 18
+        $hb = New-Object System.Drawing.SolidBrush($cCard)
+        $g.FillPath($hb, $hp)
+        $hn = New-Object System.Drawing.Pen($cBorder, [single]1)
+        $g.DrawPath($hn, $hp)
+        $hb.Dispose(); $hn.Dispose(); $hp.Dispose()
+    } catch { }
+})
 
 $btnRetest = New-Object System.Windows.Forms.Button
 $btnRetest.Text = (T 'ui.retest')
-$btnRetest.Location = New-Object System.Drawing.Point(26, 476)
+$btnRetest.Location = New-Object System.Drawing.Point(790, 18)
 $btnRetest.Size = New-Object System.Drawing.Size(110, 32)
 $btnRetest.FlatStyle = 'Flat'
-$btnRetest.FlatAppearance.BorderSize = 0
+$btnRetest.FlatAppearance.BorderSize = 1
+$btnRetest.FlatAppearance.BorderColor = $cBorder
 $btnRetest.BackColor = $cCard
 $btnRetest.ForeColor = $cText
 $btnRetest.Font = New-Font 9 $false
@@ -4177,7 +4193,7 @@ $form.Controls.Add($btnRetest)
 
 $btnHist = New-Object System.Windows.Forms.Button
 $btnHist.Text = (T 'ui.history')
-$btnHist.Location = New-Object System.Drawing.Point(148, 476)
+$btnHist.Location = New-Object System.Drawing.Point(908, 18)
 $btnHist.Size = New-Object System.Drawing.Size(110, 32)
 $btnHist.FlatStyle = 'Flat'
 $btnHist.FlatAppearance.BorderSize = 1
@@ -4190,7 +4206,7 @@ $form.Controls.Add($btnHist)
 
 $btnSet = New-Object System.Windows.Forms.Button
 $btnSet.Text = (T 'ui.settings')
-$btnSet.Location = New-Object System.Drawing.Point(270, 476)
+$btnSet.Location = New-Object System.Drawing.Point(1026, 18)
 $btnSet.Size = New-Object System.Drawing.Size(110, 32)
 $btnSet.FlatStyle = 'Flat'
 $btnSet.FlatAppearance.BorderSize = 1
@@ -4228,8 +4244,8 @@ $sfRight.FormatFlags = [System.Drawing.StringFormatFlags]::NoWrap
 $sfTight = [System.Drawing.StringFormat]::GenericTypographic
 
 $pnlRight = New-Object System.Windows.Forms.Panel
-$pnlRight.Location = New-Object System.Drawing.Point(410, 0)
-$pnlRight.Size = New-Object System.Drawing.Size(670, 560)
+$pnlRight.Location = New-Object System.Drawing.Point(424, 84)
+$pnlRight.Size = New-Object System.Drawing.Size(712, 532)
 $pnlRight.BackColor = $cBg
 Enable-DoubleBuffer $pnlRight
 $form.Controls.Add($pnlRight)
@@ -4452,19 +4468,19 @@ $pnlRight.Add_Paint({
         $g = $pe.Graphics
         $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
         $g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::ClearTypeGridFit
-        Draw-NetTile $g 10 14 325 120 $true $S.Dl $S.HistDl $cDl (T 'ui.recv')
-        Draw-NetTile $g 345 14 325 120 $false $S.Ul $S.HistUl $cUl (T 'ui.send')
+        Draw-NetTile $g 0 0 350 128 $true $S.Dl $S.HistDl $cDl (T 'ui.recv')
+        Draw-NetTile $g 362 0 350 128 $false $S.Ul $S.HistUl $cUl (T 'ui.send')
 
         $nc = [Environment]::ProcessorCount
-        Draw-RingTile $g 10 144 155 176 (T 'ui.cpu') $S.Cpu $aCpu 0 (T 'ui.cpu_load') (Tf 'ui.cores' @([string]$nc))
-        Draw-RingTile $g 175 144 155 176 (T 'ui.ram') $S.Ram $aRam 1 ((Format-Bytes $S.RamUsed) + ' / ' + (Format-Bytes $S.RamTot)) (T 'ui.ram_used')
+        Draw-RingTile $g 0 140 169 176 (T 'ui.cpu') $S.Cpu $aCpu 0 (T 'ui.cpu_load') (Tf 'ui.cores' @([string]$nc))
+        Draw-RingTile $g 181 140 169 176 (T 'ui.ram') $S.Ram $aRam 1 ((Format-Bytes $S.RamUsed) + ' / ' + (Format-Bytes $S.RamTot)) (T 'ui.ram_used')
         $gn = [string]$S.GpuName
         if ($gn -eq '') { $gn = (T 'ui.gpu_default') }
         $gd = (T 'ui.gpu_load')
         if ($S.Gpu -lt 0) { $gd = (T 'ui.gpu_nocounter') }
         if ($S.VramTot -gt 0) { $gd = (Tf 'ui.vram' @((Format-Bytes $S.VramUsed), (Format-Bytes $S.VramTot))) }
-        Draw-RingTile $g 340 144 155 176 'GPU' $S.Gpu $aGpu 2 $gn $gd
-        Draw-DiskTile $g 505 144 155 176 @($S.Disks)
+        Draw-RingTile $g 362 140 169 176 'GPU' $S.Gpu $aGpu 2 $gn $gd
+        Draw-DiskTile $g 543 140 169 176 @($S.Disks)
 
         $msg1 = (T 'ui.noact')
         $msg2 = $msg1
@@ -4475,10 +4491,10 @@ $pnlRight.Add_Paint({
             $msg1 = $S.EtwStatus
             $msg2 = $S.EtwStatus
         }
-        Draw-Card $g 10 330 325 220 (T 'ui.apps')
-        Draw-Rows $g $S.Apps 10 368 $cApp $msg1 293
-        Draw-Card $g 345 330 325 220 (T 'ui.services')
-        Draw-Rows $g $S.Svcs 345 368 $cSvc $msg2 293
+        Draw-Card $g 0 328 350 204 (T 'ui.apps')
+        Draw-Rows $g $S.Apps 0 366 $cApp $msg1 318
+        Draw-Card $g 362 328 350 204 (T 'ui.services')
+        Draw-Rows $g $S.Svcs 362 366 $cSvc $msg2 318
     } catch { Write-Log ('Window paint: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'pw' }
 })
 
