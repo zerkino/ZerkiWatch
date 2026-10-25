@@ -2281,12 +2281,12 @@ function Test-Box {
 }
 
 # ---------- Interface graphique ----------
-$cBg = (Pc @(17, 18, 22) @(242, 241, 238))
+$cBg = (Pc @(17, 18, 22) @(229, 227, 221))
 $cCard = (Pc @(25, 27, 33) @(255, 255, 255))
 $cCardTop = (Pc @(25, 27, 33) @(255, 255, 255))
-$cBorder = (Pc @(44, 47, 56) @(223, 220, 214))
+$cBorder = (Pc @(44, 47, 56) @(196, 192, 184))
 $cText = (Pc @(238, 240, 244) @(24, 24, 27))
-$cMuted = (Pc @(140, 146, 158) @(106, 108, 118))
+$cMuted = (Pc @(140, 146, 158) @(88, 90, 100))
 $cAccent = (Pc @(74, 222, 129) @(22, 163, 74))
 $cGreen = (Pc @(74, 222, 128) @(22, 163, 74))
 $cRed = (Pc @(255, 99, 88) @(220, 38, 38))
@@ -4603,7 +4603,7 @@ $pnlHead.Add_MouseClick({
 $pnlRight.Add_MouseMove({
     param($snd, $ev)
     $h = Find-Hit $S.HitMain $ev.X $ev.Y
-    if ($h -eq 'dial') { $dx = $ev.X - 290; $dy = $ev.Y - 165; if (([math]::Sqrt($dx * $dx + $dy * $dy)) -gt 130) { $h = '' } }
+    if ($h -eq 'dial') { $dx = $ev.X - 290; $dy = $ev.Y - 200; if (([math]::Sqrt($dx * $dx + $dy * $dy)) -gt 130) { $h = '' } }
     if ($h -ne '') { $snd.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $snd.Cursor = [System.Windows.Forms.Cursors]::Default }
 })
 $pnlRight.Add_MouseClick({
@@ -4611,7 +4611,7 @@ $pnlRight.Add_MouseClick({
     $h = Find-Hit $S.HitMain $ev.X $ev.Y
     try {
         if ($h -eq 'dial') {
-            $dx = $ev.X - 290; $dy = $ev.Y - 165
+            $dx = $ev.X - 290; $dy = $ev.Y - 200
             if (([math]::Sqrt($dx * $dx + $dy * $dy)) -le 130) { Invoke-Toggle }
         } elseif (@('15', '30', '60', 'tomorrow', 'cancel') -contains $h) {
             $ce = Start-TimedCut $h
@@ -4659,7 +4659,7 @@ $pnlRight.Add_Paint({
         # ----- Accueil : cadran -----
         $isLocal = [bool]$S.Local
         if ($isLocal) { $ac = $cRed } else { $ac = $cGreen }
-        $cx = 290; $cy = 165; $r = 118
+        $cx = 290; $cy = 200; $r = 118
         $tp = New-Object System.Drawing.Pen($cTrack, [single]14)
         $g.DrawEllipse($tp, [single]($cx - $r), [single]($cy - $r), [single](2 * $r), [single](2 * $r))
         $tp.Dispose()
@@ -4689,27 +4689,27 @@ $pnlRight.Add_Paint({
         $g.DrawString((T 'ui.mbps_in'), $fSmall, $bMuted, $rc3, $sfCenter)
         Add-Hit $S.HitMain 'dial' ($cx - $r - 6) ($cy - $r - 6) (2 * $r + 12) (2 * $r + 12)
         $tbr = New-Object System.Drawing.SolidBrush($lblStatus.ForeColor)
-        $rc4 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]304), ([single]540), ([single]36)
+        $rc4 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]339), ([single]540), ([single]36)
         $g.DrawString($lblStatus.Text, $fTitle, $bText, $rc4, $sfCenter)
         $tbr.Dispose()
-        $rc5 = New-Object System.Drawing.RectangleF -ArgumentList ([single]70), ([single]346), ([single]440), ([single]44)
+        $rc5 = New-Object System.Drawing.RectangleF -ArgumentList ([single]70), ([single]381), ([single]440), ([single]44)
         $g.DrawString($lblSub.Text, $fRow, $bMuted, $rc5, $sfWrapC)
         if ($S.CutUntil -ne $null) {
             $back = (Tf 'menu.cut_until' @((([DateTime]$S.CutUntil).ToLocalTime()).ToString('t')))
             $ab = New-Object System.Drawing.SolidBrush($cAmber)
-            $rc6 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]398), ([single]540), ([single]22)
+            $rc6 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]433), ([single]540), ([single]22)
             $g.DrawString($back, $fRowV, $ab, $rc6, $sfCenter)
             $ab.Dispose()
-            Draw-Pill $g (T 'menu.cut_cancel') 150 428 280 36 $null $cBorder $cText $fTab
-            Add-Hit $S.HitMain 'cancel' 150 428 280 36
+            Draw-Pill $g (T 'menu.cut_cancel') 150 463 280 36 $null $cBorder $cText $fTab
+            Add-Hit $S.HitMain 'cancel' 150 463 280 36
         } elseif (-not $isLocal) {
             $chips = @(@('15', (T 'menu.cut_15'), 104), @('30', (T 'menu.cut_30'), 104), @('60', (T 'menu.cut_60'), 104), @('tomorrow', (T 'menu.cut_tomorrow'), 168))
-            $rc7 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]398), ([single]540), ([single]20)
+            $rc7 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]433), ([single]540), ([single]20)
             $g.DrawString((T 'ui.cut_for'), $fSmall, $bMuted, $rc7, $sfCenter)
             $px = 38
             foreach ($cp in $chips) {
-                Draw-Pill $g $cp[1] $px 426 $cp[2] 36 $cCard $cBorder $cText $fTab
-                Add-Hit $S.HitMain $cp[0] $px 426 $cp[2] 36
+                Draw-Pill $g $cp[1] $px 461 $cp[2] 36 $cCard $cBorder $cText $fTab
+                Add-Hit $S.HitMain $cp[0] $px 461 $cp[2] 36
                 $px = $px + $cp[2] + 8
             }
         }
@@ -4841,15 +4841,15 @@ if ($S.Local) { $S.Pos = 0.0 } else { $S.Pos = 1.0 }
 Update-Ui
 
 # ---------- Barre flottante (CPU, RAM, debit) ----------
-$cBg1 = (Pc @(30, 32, 39) @(250, 249, 247))
-$cBg2 = (Pc @(17, 18, 22) @(242, 241, 238))
+$cBg1 = (Pc @(30, 32, 39) @(244, 242, 238))
+$cBg2 = (Pc @(17, 18, 22) @(229, 227, 221))
 $bText   = New-Object System.Drawing.SolidBrush($cText)
 $bMuted  = New-Object System.Drawing.SolidBrush($cMuted)
-$barBorder = (Pc @(52, 56, 66) @(205, 201, 194))
+$barBorder = (Pc @(52, 56, 66) @(184, 180, 172))
 $barIconBmp = $null
 try { $barIconBmp = (New-Object System.Drawing.Icon($form.Icon, 32, 32)).ToBitmap() } catch { $barIconBmp = $null }
 $cMenuBg = (Pc @(25, 27, 33) @(255, 255, 255))
-$cTrack = (Pc @(44, 47, 56) @(226, 223, 217))
+$cTrack = (Pc @(44, 47, 56) @(210, 206, 198))
 $cLoadG = (Pc @(74, 222, 128) @(22, 163, 74))
 $cLoadA = (Pc @(251, 191, 36) @(180, 83, 9))
 $cLoadR = (Pc @(255, 99, 88) @(220, 38, 38))
