@@ -1,7 +1,8 @@
 name: build-exe
-# Builds ZerkiWatch.exe (unsigned) on a Windows runner.
-#  - "Run workflow" button (Actions tab): builds and keeps the files as a downloadable artifact (test).
-#  - pushing a tag like v6.1: builds and attaches a zip to a GitHub Release.
+# Release zip = ZerkiWatch.bat + Installer.bat + languages (NO .exe: unsigned PS2EXE files are flagged by
+# Windows Defender as false positives, so releases ship the readable .bat).
+#  - pushing a tag like v6.1.2: checks, packages and attaches the zip to a GitHub Release.
+#  - "Run workflow" button (Actions tab): same, plus an optional PS2EXE test build kept as an artifact only.
 on:
   workflow_dispatch:
   push:
@@ -18,7 +19,8 @@ jobs:
         run: |
           powershell -ExecutionPolicy Bypass -File tools\check-syntax.ps1
           powershell -ExecutionPolicy Bypass -File tools\check-lang.ps1
-      - name: Build ZerkiWatch.exe with PS2EXE
+      - name: Build ZerkiWatch.exe with PS2EXE (manual runs only, never released)
+        if: github.event_name == 'workflow_dispatch'
         shell: powershell
         run: |
           $t = [IO.File]::ReadAllText("$PWD\ZerkiWatch.bat")
@@ -34,10 +36,12 @@ jobs:
         shell: powershell
         run: |
           New-Item -ItemType Directory -Path dist | Out-Null
-          Copy-Item ZerkiWatch.exe, ZerkiWatch.bat, ZerkiWatch.ico, Installer.bat, LICENSE, README.md, README.fr.md dist\
+          Copy-Item ZerkiWatch.bat, ZerkiWatch.ico, Installer.bat, LICENSE, README.md, README.fr.md dist\
           Copy-Item lang dist\lang -Recurse
           Compress-Archive -Path dist\* -DestinationPath ZerkiWatch-windows.zip
-          (Get-FileHash ZerkiWatch.exe -Algorithm SHA256).Hash + '  ZerkiWatch.exe' | Set-Content SHA256.txt
+          $h = @((Get-FileHash ZerkiWatch.bat -Algorithm SHA256).Hash + '  ZerkiWatch.bat', (Get-FileHash ZerkiWatch-windows.zip -Algorithm SHA256).Hash + '  ZerkiWatch-windows.zip')
+          if (Test-Path ZerkiWatch.exe) { $h += (Get-FileHash ZerkiWatch.exe -Algorithm SHA256).Hash + '  ZerkiWatch.exe (test build, not released)' }
+          $h | Set-Content SHA256.txt
       - uses: actions/upload-artifact@v4
         with:
           name: ZerkiWatch-windows
