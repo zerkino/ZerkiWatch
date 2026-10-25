@@ -1,25 +1,23 @@
-## 🇬🇧 ZerkiWatch 6.0
+## 🇬🇧 ZerkiWatch 6.1
 **Network speed in your Windows taskbar + one-click Internet kill switch that keeps your local network (Plex, NAS…).**
 
-- New name (formerly *Mode réseau*): your settings and history are migrated automatically.
-- 6 languages: English, Français, Español, Deutsch, Italiano, Português — add yours with one text file ([guide](https://github.com/zerkino/ZerkiWatch/blob/main/docs/TRANSLATING.md)).
-- Live speed, CPU, RAM, GPU, disks in a floating bar / taskbar, per-app bandwidth, history and top consumers.
-- iPhone remote on your Wi-Fi (random password by default, change it from the tray menu).
+- **iPhone remote now uses HTTPS.** ZerkiWatch creates a local certificate authority on your PC; install it once on your iPhone (tray menu → *iPhone remote…* → *iPhone certificate*, steps in the [README](https://github.com/zerkino/ZerkiWatch#https-certificate-on-the-iphone-one-time)). If the certificate cannot be set up, the remote does not start (no HTTP fallback).
+- The password is no longer accepted in the URL, only in the `X-Pin` header: **update your Apple Shortcuts**. After upgrading, re-enter the password once in Safari and re-add the Home Screen icon.
+- Everything else from 6.0 is unchanged (6 languages, floating bar, history, per-app bandwidth).
 
 **Download:** `ZerkiWatch-windows.zip` (contains `ZerkiWatch.exe`, the readable `ZerkiWatch.bat`, the installer and the languages) — or just `ZerkiWatch.bat`.
-The `.exe` is not code-signed: Windows SmartScreen may warn ("More info" → "Run anyway"). You can read the whole source in `ZerkiWatch.bat`. SHA-256 of the exe is in `SHA256.txt`.
+The `.exe` is not code-signed: Windows SmartScreen may warn ("More info" → "Run anyway"). SHA-256 of the exe is in `SHA256.txt`.
 
-Early-stage project, feedback and contributions are very welcome. ☕ [Support on Ko-fi](https://ko-fi.com/zerkino)
+☕ [Support on Ko-fi](https://ko-fi.com/zerkino)
 
-## 🇫🇷 ZerkiWatch 6.0
+## 🇫🇷 ZerkiWatch 6.1
 **Le débit réseau dans la barre des tâches Windows + un interrupteur Internet en un clic qui garde le réseau local (Plex, NAS…).**
 
-- Nouveau nom (ex-*Mode réseau*) : vos réglages et votre historique sont repris automatiquement.
-- 6 langues : English, Français, Español, Deutsch, Italiano, Português — ajoutez la vôtre avec un simple fichier texte ([guide](https://github.com/zerkino/ZerkiWatch/blob/main/docs/TRANSLATING.md)).
-- Débit, CPU, RAM, GPU et disques en direct dans une barre flottante / la barre des tâches, consommation par application, historique et classement.
-- Télécommande iPhone sur votre Wi-Fi (mot de passe aléatoire par défaut, modifiable depuis le menu de l'icône).
+- **La télécommande iPhone passe en HTTPS.** ZerkiWatch crée une autorité de certification locale sur votre PC ; installez-la une fois sur l'iPhone (menu de l'icône → *Télécommande iPhone…* → *Certificat iPhone*, étapes dans le [README](https://github.com/zerkino/ZerkiWatch/blob/main/README.fr.md)). Si le certificat ne peut pas être configuré, la télécommande ne démarre pas (pas de repli en HTTP).
+- Le mot de passe n'est plus accepté dans l'URL, seulement dans l'en-tête `X-Pin` : **mettez à jour vos Raccourcis Apple**. Après la mise à jour, ressaisissez le mot de passe une fois dans Safari et réajoutez l'icône sur l'écran d'accueil.
+- Le reste de la 6.0 est inchangé (6 langues, barre flottante, historique, consommation par application).
 
 **Téléchargement :** `ZerkiWatch-windows.zip` (contient `ZerkiWatch.exe`, le `ZerkiWatch.bat` lisible, l'installateur et les langues) — ou simplement `ZerkiWatch.bat`.
-L'`.exe` n'est pas signé : SmartScreen peut afficher un avertissement (« Informations complémentaires » → « Exécuter quand même »). Tout le code est lisible dans `ZerkiWatch.bat`. Le SHA-256 de l'exe est dans `SHA256.txt`.
+L'`.exe` n'est pas signé : SmartScreen peut afficher un avertissement (« Informations complémentaires » → « Exécuter quand même »). Le SHA-256 de l'exe est dans `SHA256.txt`.
 
-Projet jeune : retours et contributions bienvenus. ☕ [Soutenir sur Ko-fi](https://ko-fi.com/zerkino)
+☕ [Soutenir sur Ko-fi](https://ko-fi.com/zerkino)

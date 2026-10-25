@@ -1,7 +1,7 @@
 name: build-exe
 # Builds ZerkiWatch.exe (unsigned) on a Windows runner.
 #  - "Run workflow" button (Actions tab): builds and keeps the files as a downloadable artifact (test).
-#  - pushing a tag like v6.0: builds and attaches a zip to a GitHub Release.
+#  - pushing a tag like v6.1: builds and attaches a zip to a GitHub Release.
 on:
   workflow_dispatch:
   push:
