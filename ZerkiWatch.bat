@@ -27,7 +27,7 @@ $ErrorActionPreference = 'Stop'
 [System.Windows.Forms.Application]::SetUnhandledExceptionMode([System.Windows.Forms.UnhandledExceptionMode]::CatchException)
 
 # ---------- Version and error log ----------
-$APPVER = '6.1.2'
+$APPVER = '6.1.3'
 $logDir = Join-Path $env:APPDATA 'ZerkiWatch'
 $oldDataDir = Join-Path $env:APPDATA 'ModeReseau'
 try {
@@ -100,6 +100,7 @@ bal.restored=Internet wiederhergestellt
 bar.title=Systemmonitor
 cert.fail=Zertifikatexport fehlgeschlagen: {0}
 cert.help=Datei gespeichert: {0}\n\nAuf dem iPhone (gleiches WLAN):\n1. Sende diese Datei an das iPhone (AirDrop, Mail, iCloud Drive) oder \u00f6ffne {2} in Safari und tippe auf Erlauben, um das Profil zu laden.\n2. Einstellungen > Profil geladen > Installieren.\n3. Einstellungen > Allgemein > Info > Zertifikatsvertrauenseinstellungen > \u201eZerkiWatch Local CA\u201c aktivieren.\n4. Pr\u00fcfe den SHA-256-Fingerabdruck in den Zertifikatdetails auf dem iPhone:\n{1}\n\n\u00d6ffne danach die Adresse der Fernbedienung erneut.
+cert.qr=Scanne diesen Code mit der iPhone-Kamera. Tippe in Safari auf Details einblenden, dann auf diese Website besuchen, und erlaube den Download des Zertifikats.
 err.bind=Zertifikat konnte nicht an den Port gebunden werden ({0})
 err.cert=Problem mit dem HTTPS-Zertifikat, Fernbedienung nicht gestartet: {0}
 err.fatal=Fehler: {0}
@@ -323,6 +324,7 @@ bal.restored=Internet restored
 bar.title=System monitor
 cert.fail=Certificate export failed: {0}
 cert.help=File saved: {0}\n\nOn the iPhone (same Wi-Fi):\n1. Send this file to the iPhone (AirDrop, mail, iCloud Drive) or open {2} in Safari and tap Allow when asked to download the profile.\n2. Settings > Profile Downloaded > Install.\n3. Settings > General > About > Certificate Trust Settings > turn ON "ZerkiWatch Local CA".\n4. Check the SHA-256 fingerprint in the certificate details on the iPhone:\n{1}\n\nThen open the remote address again.
+cert.qr=Scan this code with the iPhone camera. In Safari, tap Show details, then visit this website, and Allow the download of the certificate.
 err.bind=could not bind the certificate to the port ({0})
 err.cert=HTTPS certificate problem, remote not started: {0}
 err.fatal=Error: {0}
@@ -546,6 +548,7 @@ bal.restored=Internet restablecido
 bar.title=Monitor del sistema
 cert.fail=Error al exportar el certificado: {0}
 cert.help=Archivo guardado: {0}\n\nEn el iPhone (misma Wi-Fi):\n1. Env\u00eda este archivo al iPhone (AirDrop, correo, iCloud Drive) o abre {2} en Safari y pulsa Permitir para descargar el perfil.\n2. Ajustes > Perfil descargado > Instalar.\n3. Ajustes > General > Informaci\u00f3n > Ajustes de confianza de certificados > activa \u00abZerkiWatch Local CA\u00bb.\n4. Comprueba la huella SHA-256 en los detalles del certificado del iPhone:\n{1}\n\nDespu\u00e9s vuelve a abrir la direcci\u00f3n del mando.
+cert.qr=Escanea este c\u00f3digo con la c\u00e1mara del iPhone. En Safari, toca Mostrar detalles, luego Visitar este sitio web, y Permite la descarga del certificado.
 err.bind=no se pudo asociar el certificado al puerto ({0})
 err.cert=Problema con el certificado HTTPS, mando no iniciado: {0}
 err.fatal=Error: {0}
@@ -769,6 +772,7 @@ bal.restored=Internet r\u00e9activ\u00e9
 bar.title=Moniteur syst\u00e8me
 cert.fail=\u00c9chec de l'export du certificat : {0}
 cert.help=Fichier enregistr\u00e9 : {0}\n\nSur l'iPhone (m\u00eame Wi-Fi) :\n1. Envoyez ce fichier \u00e0 l'iPhone (AirDrop, mail, iCloud Drive) ou ouvrez {2} dans Safari et appuyez sur Autoriser pour t\u00e9l\u00e9charger le profil.\n2. R\u00e9glages > Profil t\u00e9l\u00e9charg\u00e9 > Installer.\n3. R\u00e9glages > G\u00e9n\u00e9ral > Informations > R\u00e9glages des certificats de confiance > activez \u00ab ZerkiWatch Local CA \u00bb.\n4. V\u00e9rifiez l'empreinte SHA-256 dans les d\u00e9tails du certificat sur l'iPhone :\n{1}\n\nRouvrez ensuite l'adresse de la t\u00e9l\u00e9commande.
+cert.qr=Scannez ce code avec l'appareil photo de l'iPhone. Dans Safari, touchez Afficher les d\u00e9tails, puis Visiter ce site web, et Autorisez le t\u00e9l\u00e9chargement du certificat.
 err.bind=impossible de lier le certificat au port ({0})
 err.cert=Probl\u00e8me de certificat HTTPS, t\u00e9l\u00e9commande non d\u00e9marr\u00e9e : {0}
 err.fatal=Erreur : {0}
@@ -992,6 +996,7 @@ bal.restored=Internet ripristinato
 bar.title=Monitor di sistema
 cert.fail=Esportazione del certificato non riuscita: {0}
 cert.help=File salvato: {0}\n\nSu iPhone (stessa Wi-Fi):\n1. Invia questo file all'iPhone (AirDrop, mail, iCloud Drive) oppure apri {2} in Safari e tocca Consenti per scaricare il profilo.\n2. Impostazioni > Profilo scaricato > Installa.\n3. Impostazioni > Generali > Info > Impostazioni certificati attendibili > attiva \u00abZerkiWatch Local CA\u00bb.\n4. Verifica l'impronta SHA-256 nei dettagli del certificato su iPhone:\n{1}\n\nPoi riapri l'indirizzo del telecomando.
+cert.qr=Inquadra questo codice con la fotocamera dell'iPhone. In Safari tocca Mostra dettagli, poi Visita questo sito web, e consenti il download del certificato.
 err.bind=impossibile associare il certificato alla porta ({0})
 err.cert=Problema con il certificato HTTPS, telecomando non avviato: {0}
 err.fatal=Errore: {0}
@@ -1215,6 +1220,7 @@ bal.restored=Internet restaurada
 bar.title=Monitor do sistema
 cert.fail=Falha ao exportar o certificado: {0}
 cert.help=Ficheiro guardado: {0}\n\nNo iPhone (mesmo Wi-Fi):\n1. Envie este ficheiro para o iPhone (AirDrop, e-mail, iCloud Drive) ou abra {2} no Safari e toque em Permitir para transferir o perfil.\n2. Defini\u00e7\u00f5es > Perfil transferido > Instalar.\n3. Defini\u00e7\u00f5es > Geral > Informa\u00e7\u00e3o > Defini\u00e7\u00f5es de confian\u00e7a de certificados > ative \u00abZerkiWatch Local CA\u00bb.\n4. Verifique a impress\u00e3o digital SHA-256 nos detalhes do certificado no iPhone:\n{1}\n\nDepois abra novamente o endere\u00e7o do controlo remoto.
+cert.qr=Leia este c\u00f3digo com a c\u00e2mara do iPhone. No Safari, toque em Mostrar detalhes, depois Visitar este site, e permita a transfer\u00eancia do certificado.
 err.bind=n\u00e3o foi poss\u00edvel associar o certificado \u00e0 porta ({0})
 err.cert=Problema com o certificado HTTPS, controlo remoto n\u00e3o iniciado: {0}
 err.fatal=Erro: {0}
@@ -4747,6 +4753,238 @@ function Update-LangMenu {
         [void]$miLang.DropDownItems.Add($il)
     }
 }
+# ---------- QR code for the certificate download address (byte mode, ECC level L, versions 1-5) ----------
+function New-QrMatrix([string]$text) {
+    $data = [System.Text.Encoding]::ASCII.GetBytes($text)
+    $caps = @(0, 17, 32, 53, 78, 106)
+    $ecN  = @(0, 7, 10, 15, 20, 26)
+    $ver = 0
+    for ($v = 1; $v -le 5; $v++) { if ($data.Length -le $caps[$v]) { $ver = $v; break } }
+    if ($ver -eq 0) { return $null }
+    $size = 17 + 4 * $ver
+    $ecLen = $ecN[$ver]
+    $total = @(0, 26, 44, 70, 100, 134)[$ver]
+    $dataCw = $total - $ecLen
+    # --- bit stream
+    $bits = New-Object System.Collections.ArrayList
+    function AddBits([int]$val, [int]$len) { for ($i = $len - 1; $i -ge 0; $i--) { [void]$bits.Add(($val -shr $i) -band 1) } }
+    AddBits 4 4
+    AddBits $data.Length 8
+    foreach ($b in $data) { AddBits $b 8 }
+    $room = $dataCw * 8 - $bits.Count
+    $tl = [math]::Min(4, $room)
+    AddBits 0 $tl
+    while (($bits.Count % 8) -ne 0) { [void]$bits.Add(0) }
+    $cw = New-Object System.Collections.ArrayList
+    for ($i = 0; $i -lt $bits.Count; $i += 8) {
+        $x = 0
+        for ($j = 0; $j -lt 8; $j++) { $x = ($x -shl 1) -bor $bits[$i + $j] }
+        [void]$cw.Add($x)
+    }
+    $pad = 0xEC
+    while ($cw.Count -lt $dataCw) { [void]$cw.Add($pad); if ($pad -eq 0xEC) { $pad = 0x11 } else { $pad = 0xEC } }
+    # --- Reed-Solomon
+    $exp = New-Object 'int[]' 512
+    $log = New-Object 'int[]' 256
+    $x = 1
+    for ($i = 0; $i -lt 255; $i++) { $exp[$i] = $x; $log[$x] = $i; $x = $x -shl 1; if ($x -band 0x100) { $x = $x -bxor 0x11D } }
+    for ($i = 255; $i -lt 512; $i++) { $exp[$i] = $exp[$i - 255] }
+    $gen = New-Object 'int[]' ($ecLen + 1)
+    $gen[0] = 1
+    for ($i = 0; $i -lt $ecLen; $i++) {
+        for ($j = $i + 1; $j -ge 0; $j--) {
+            $t = 0
+            if ($gen[$j] -ne 0) { $t = $exp[($log[$gen[$j]] + $i) % 255] }
+            $prev = 0
+            if ($j -gt 0) { $prev = $gen[$j - 1] }
+            $gen[$j] = $prev -bxor $t
+        }
+    }
+    # gen[k] is coefficient of x^k ; remainder computation
+    $rem = New-Object 'int[]' $ecLen
+    foreach ($d in $cw) {
+        $f = $d -bxor $rem[0]
+        for ($i = 0; $i -lt $ecLen - 1; $i++) { $rem[$i] = $rem[$i + 1] }
+        $rem[$ecLen - 1] = 0
+        if ($f -ne 0) {
+            for ($i = 0; $i -lt $ecLen; $i++) {
+                $g = $gen[$ecLen - 1 - $i]
+                if ($g -ne 0) { $rem[$i] = $rem[$i] -bxor $exp[($log[$f] + $log[$g]) % 255] }
+            }
+        }
+    }
+    $all = New-Object System.Collections.ArrayList
+    foreach ($d in $cw) { [void]$all.Add($d) }
+    foreach ($d in $rem) { [void]$all.Add($d) }
+    # --- matrix: 0 light, 1 dark ; fn marks function modules
+    $m = New-Object 'int[,]' $size, $size
+    $fn = New-Object 'bool[,]' $size, $size
+    function SetF([int]$r, [int]$c, [int]$v) { $m[$r, $c] = $v; $fn[$r, $c] = $true }
+    function Finder([int]$r0, [int]$c0) {
+        for ($r = -1; $r -le 7; $r++) { for ($c = -1; $c -le 7; $c++) {
+            $rr = $r0 + $r; $cc = $c0 + $c
+            if ($rr -lt 0 -or $rr -ge $size -or $cc -lt 0 -or $cc -ge $size) { continue }
+            $v = 0
+            if (($r -ge 0 -and $r -le 6 -and ($c -eq 0 -or $c -eq 6)) -or ($c -ge 0 -and $c -le 6 -and ($r -eq 0 -or $r -eq 6)) -or ($r -ge 2 -and $r -le 4 -and $c -ge 2 -and $c -le 4)) { $v = 1 }
+            SetF $rr $cc $v
+        } }
+    }
+    Finder 0 0; Finder 0 ($size - 7); Finder ($size - 7) 0
+    for ($i = 8; $i -lt $size - 8; $i++) { $v = 1 - ($i % 2); SetF 6 $i $v; SetF $i 6 $v }
+    if ($ver -ge 2) {
+        $ap = $size - 7
+        for ($r = -2; $r -le 2; $r++) { for ($c = -2; $c -le 2; $c++) {
+            $v = 0
+            if (([math]::Max([math]::Abs($r), [math]::Abs($c)) -ne 1)) { $v = 1 }
+            SetF ($ap + $r) ($ap + $c) $v
+        } }
+    }
+    SetF ($size - 8) 8 1
+    # reserve format areas
+    for ($i = 0; $i -lt 9; $i++) { if (-not $fn[8, $i]) { $fn[8, $i] = $true }; if (-not $fn[$i, 8]) { $fn[$i, 8] = $true } }
+    for ($i = 0; $i -lt 8; $i++) { $q = $size - 1 - $i; $fn[8, $q] = $true; $fn[$q, 8] = $true }
+    $q = $size - 8
+    $fn[$q, 8] = $true
+    # --- place data
+    $bitList = New-Object System.Collections.ArrayList
+    foreach ($d in $all) { for ($i = 7; $i -ge 0; $i--) { [void]$bitList.Add(($d -shr $i) -band 1) } }
+    $pos = 0
+    $up = $true
+    for ($col = $size - 1; $col -ge 1; $col -= 2) {
+        if ($col -eq 6) { $col = 5 }
+        for ($k = 0; $k -lt $size; $k++) {
+            if ($up) { $r = $size - 1 - $k } else { $r = $k }
+            for ($dc = 0; $dc -lt 2; $dc++) {
+                $c = $col - $dc
+                if ($fn[$r, $c]) { continue }
+                $v = 0
+                if ($pos -lt $bitList.Count) { $v = $bitList[$pos]; $pos++ }
+                $m[$r, $c] = $v
+            }
+        }
+        $up = -not $up
+    }
+    # --- masks + penalty
+    $best = $null; $bestPen = [int]::MaxValue
+    for ($mask = 0; $mask -lt 8; $mask++) {
+        $t = New-Object 'int[,]' $size, $size
+        for ($r = 0; $r -lt $size; $r++) { for ($c = 0; $c -lt $size; $c++) {
+            $v = $m[$r, $c]
+            if (-not $fn[$r, $c]) {
+                switch ($mask) {
+                    0 { $f = (($r + $c) % 2) -eq 0 }
+                    1 { $f = ($r % 2) -eq 0 }
+                    2 { $f = ($c % 3) -eq 0 }
+                    3 { $f = (($r + $c) % 3) -eq 0 }
+                    4 { $f = ((([math]::Floor($r / 2)) + ([math]::Floor($c / 3))) % 2) -eq 0 }
+                    5 { $f = ((($r * $c) % 2) + (($r * $c) % 3)) -eq 0 }
+                    6 { $f = (((($r * $c) % 2) + (($r * $c) % 3)) % 2) -eq 0 }
+                    7 { $f = (((($r + $c) % 2) + (($r * $c) % 3)) % 2) -eq 0 }
+                }
+                if ($f) { $v = 1 - $v }
+            }
+            $t[$r, $c] = $v
+        } }
+        # format info
+        $fmt = (1 -shl 3) -bor $mask   # ECC L = 01
+        $rm = $fmt -shl 10
+        for ($i = 14; $i -ge 10; $i--) { if ((($rm -shr $i) -band 1) -ne 0) { $rm = $rm -bxor (0x537 -shl ($i - 10)) } }
+        $fb = (($fmt -shl 10) -bor $rm) -bxor 0x5412
+        for ($i = 0; $i -lt 15; $i++) {
+            $b = ($fb -shr $i) -band 1
+            if ($i -lt 6) { $t[$i, 8] = $b }
+            elseif ($i -eq 6) { $t[7, 8] = $b }
+            elseif ($i -eq 7) { $t[8, 8] = $b }
+            elseif ($i -eq 8) { $t[8, 7] = $b }
+            else { $q = 14 - $i; $t[8, $q] = $b }
+            if ($i -lt 8) { $q = $size - 1 - $i; $t[8, $q] = $b }
+            else { $q = $size - 15 + $i; $t[$q, 8] = $b }
+        }
+        $q = $size - 8
+        $t[$q, 8] = 1
+        # penalty
+        $pen = 0
+        for ($r = 0; $r -lt $size; $r++) {
+            $run = 1
+            for ($c = 1; $c -lt $size; $c++) { if ($t[$r, $c] -eq $t[$r, ($c - 1)]) { $run++ } else { if ($run -ge 5) { $pen += $run - 2 }; $run = 1 } }
+            if ($run -ge 5) { $pen += $run - 2 }
+        }
+        for ($c = 0; $c -lt $size; $c++) {
+            $run = 1
+            for ($r = 1; $r -lt $size; $r++) { if ($t[$r, $c] -eq $t[($r - 1), $c]) { $run++ } else { if ($run -ge 5) { $pen += $run - 2 }; $run = 1 } }
+            if ($run -ge 5) { $pen += $run - 2 }
+        }
+        for ($r = 0; $r -lt $size - 1; $r++) { for ($c = 0; $c -lt $size - 1; $c++) {
+            $s = $t[$r, $c] + $t[($r + 1), $c] + $t[$r, ($c + 1)] + $t[($r + 1), ($c + 1)]
+            if ($s -eq 0 -or $s -eq 4) { $pen += 3 }
+        } }
+        $dark = 0
+        for ($r = 0; $r -lt $size; $r++) { for ($c = 0; $c -lt $size; $c++) { $dark += $t[$r, $c] } }
+        $pen += 10 * [math]::Floor([math]::Abs(($dark * 100 / ($size * $size)) - 50) / 5)
+        if ($pen -lt $bestPen) { $bestPen = $pen; $best = $t }
+    }
+    return ,$best
+}
+
+function New-QrBitmap([string]$text, [int]$scale) {
+    $m = New-QrMatrix $text
+    if ($m -eq $null) { return $null }
+    $n = $m.GetLength(0)
+    $px = ($n + 8) * $scale
+    $bmp = New-Object System.Drawing.Bitmap($px, $px)
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.Clear([System.Drawing.Color]::White)
+    $blk = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::Black)
+    for ($r = 0; $r -lt $n; $r++) { for ($c = 0; $c -lt $n; $c++) {
+        if ($m[$r, $c] -eq 1) { $g.FillRectangle($blk, (($c + 4) * $scale), (($r + 4) * $scale), $scale, $scale) }
+    } }
+    $blk.Dispose(); $g.Dispose()
+    return $bmp
+}
+
+# Fenetre "Certificat iPhone" : fichier exporte, etapes, empreinte et QR code de telechargement.
+function Show-CertDialog($lanIp) {
+    $cp = Export-CaFile
+    $fp = Get-CaFingerprint
+    $url = ''
+    if ($lanIp) { $url = 'https://' + $lanIp + ':' + $RemotePort + '/ca.cer' }
+    $d = New-Object System.Windows.Forms.Form
+    $d.Text = (T 'pin.cert')
+    $d.ClientSize = New-Object System.Drawing.Size(520, 700)
+    $d.StartPosition = 'CenterScreen'
+    $d.FormBorderStyle = 'FixedDialog'
+    $d.MaximizeBox = $false
+    $d.MinimizeBox = $false
+    $d.BackColor = $cBg
+    $d.ForeColor = $cText
+    $d.Font = New-Object System.Drawing.Font('Segoe UI', 9.5)
+    $lt = New-Label (Tf 'cert.help' @($cp, $fp, $url)) 20 16 480 340 $d.Font $cText 'TopLeft'
+    $d.Controls.Add($lt)
+    $bmp = $null
+    if ($url -ne '') { try { $bmp = New-QrBitmap $url 5 } catch { $bmp = $null } }
+    if ($bmp -ne $null) {
+        $pb = New-Object System.Windows.Forms.PictureBox
+        $pb.Image = $bmp
+        $pb.SizeMode = 'AutoSize'
+        $pb.Location = New-Object System.Drawing.Point([int]((520 - $bmp.Width) / 2), 364)
+        $d.Controls.Add($pb)
+        $lq = New-Label (T 'cert.qr') 20 (364 + $bmp.Height + 6) 480 60 $d.Font $cMuted 'TopCenter'
+        $d.Controls.Add($lq)
+    }
+    $okb = New-Object System.Windows.Forms.Button
+    $okb.Text = 'OK'
+    $okb.Location = New-Object System.Drawing.Point(205, 654)
+    $okb.Size = New-Object System.Drawing.Size(110, 30)
+    $okb.FlatStyle = 'Flat'; $okb.BackColor = $cCard; $okb.ForeColor = $cText
+    $okb.Add_Click({ $d.Close() })
+    $d.AcceptButton = $okb
+    $d.Controls.Add($okb)
+    [void]$d.ShowDialog()
+    $d.Dispose()
+    if ($bmp -ne $null) { $bmp.Dispose() }
+    try { Start-Process -FilePath 'explorer.exe' -ArgumentList ('/select,"' + $cp + '"') } catch { }
+}
+
 function Show-PinDialog {
     $lanIp = Get-LanIp
     $dlg = New-Object System.Windows.Forms.Form
@@ -4789,13 +5027,7 @@ function Show-PinDialog {
     $bc.Size = New-Object System.Drawing.Size(124, 30)
     $bc.FlatStyle = 'Flat'; $bc.BackColor = $cCard; $bc.ForeColor = $cText
     $bc.Add_Click({
-        try {
-            $cp = Export-CaFile
-            $fp = Get-CaFingerprint
-            $addrC = 'https://' + $lanIp + ':' + $RemotePort + '/ca.cer'
-            [void][System.Windows.Forms.MessageBox]::Show((Tf 'cert.help' @($cp, $fp, $addrC)), (T 'pin.title'))
-            Start-Process -FilePath 'explorer.exe' -ArgumentList ('/select,"' + $cp + '"')
-        } catch { $lerr.Text = (Tf 'cert.fail' @($_.Exception.Message)) }
+        try { Show-CertDialog $lanIp } catch { $lerr.Text = (Tf 'cert.fail' @($_.Exception.Message)) }
     })
     $ok.Add_Click({
         if (Set-Pin $tb.Text) { $dlg.Close() } else { $lerr.Text = (T 'pin.invalid') }

@@ -17,6 +17,7 @@ bal.restored=Internet restaurada
 bar.title=Monitor do sistema
 cert.fail=Falha ao exportar o certificado: {0}
 cert.help=Ficheiro guardado: {0}\n\nNo iPhone (mesmo Wi-Fi):\n1. Envie este ficheiro para o iPhone (AirDrop, e-mail, iCloud Drive) ou abra {2} no Safari e toque em Permitir para transferir o perfil.\n2. Definições > Perfil transferido > Instalar.\n3. Definições > Geral > Informação > Definições de confiança de certificados > ative «ZerkiWatch Local CA».\n4. Verifique a impressão digital SHA-256 nos detalhes do certificado no iPhone:\n{1}\n\nDepois abra novamente o endereço do controlo remoto.
+cert.qr=Leia este código com a câmara do iPhone. No Safari, toque em Mostrar detalhes, depois Visitar este site, e permita a transferência do certificado.
 err.bind=não foi possível associar o certificado à porta ({0})
 err.cert=Problema com o certificado HTTPS, controlo remoto não iniciado: {0}
 err.fatal=Erro: {0}

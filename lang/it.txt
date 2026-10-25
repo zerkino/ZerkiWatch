@@ -17,6 +17,7 @@ bal.restored=Internet ripristinato
 bar.title=Monitor di sistema
 cert.fail=Esportazione del certificato non riuscita: {0}
 cert.help=File salvato: {0}\n\nSu iPhone (stessa Wi-Fi):\n1. Invia questo file all'iPhone (AirDrop, mail, iCloud Drive) oppure apri {2} in Safari e tocca Consenti per scaricare il profilo.\n2. Impostazioni > Profilo scaricato > Installa.\n3. Impostazioni > Generali > Info > Impostazioni certificati attendibili > attiva «ZerkiWatch Local CA».\n4. Verifica l'impronta SHA-256 nei dettagli del certificato su iPhone:\n{1}\n\nPoi riapri l'indirizzo del telecomando.
+cert.qr=Inquadra questo codice con la fotocamera dell'iPhone. In Safari tocca Mostra dettagli, poi Visita questo sito web, e consenti il download del certificato.
 err.bind=impossibile associare il certificato alla porta ({0})
 err.cert=Problema con il certificato HTTPS, telecomando non avviato: {0}
 err.fatal=Errore: {0}

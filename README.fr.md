@@ -89,7 +89,7 @@ Le mot de passe par défaut est **aléatoire** (6 chiffres, généré au premier
 ### Certificat HTTPS sur l'iPhone (une seule fois)
 ZerkiWatch crée sa propre autorité locale (`ZerkiWatch Local CA`, dans le magasin de certificats Windows de votre PC) et un certificat serveur pour l'IP locale du PC. Pour que l'iPhone lui fasse confiance :
 1. Sur le PC : menu de l'icône → *Télécommande iPhone…* → **Certificat iPhone**. Le fichier public `ZerkiWatch-CA.cer` est enregistré sur le Bureau et l'empreinte SHA-256 est affichée.
-2. Envoyez-le à l'iPhone (AirDrop, mail, iCloud Drive), ou ouvrez `https://<adresse du PC>:8765/ca.cer` dans Safari (acceptez l'avertissement unique : seul le certificat public est téléchargé) puis *Autoriser*.
+2. Scannez le **QR code** affiché dans cette fenêtre avec l'appareil photo de l'iPhone, ou envoyez le fichier à l'iPhone (AirDrop, mail, iCloud Drive), ou ouvrez `https://<adresse du PC>:8765/ca.cer` dans Safari (acceptez l'avertissement unique : seul le certificat public est téléchargé) puis *Autoriser*.
 3. iPhone : **Réglages → Profil téléchargé → Installer**.
 4. iPhone : **Réglages → Général → Informations → Réglages des certificats de confiance** → activez **ZerkiWatch Local CA**.
 5. Comparez l'empreinte SHA-256 des détails du certificat avec celle affichée sur le PC.

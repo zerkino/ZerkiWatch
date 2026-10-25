@@ -17,6 +17,7 @@ bal.restored=Internet réactivé
 bar.title=Moniteur système
 cert.fail=Échec de l'export du certificat : {0}
 cert.help=Fichier enregistré : {0}\n\nSur l'iPhone (même Wi-Fi) :\n1. Envoyez ce fichier à l'iPhone (AirDrop, mail, iCloud Drive) ou ouvrez {2} dans Safari et appuyez sur Autoriser pour télécharger le profil.\n2. Réglages > Profil téléchargé > Installer.\n3. Réglages > Général > Informations > Réglages des certificats de confiance > activez « ZerkiWatch Local CA ».\n4. Vérifiez l'empreinte SHA-256 dans les détails du certificat sur l'iPhone :\n{1}\n\nRouvrez ensuite l'adresse de la télécommande.
+cert.qr=Scannez ce code avec l'appareil photo de l'iPhone. Dans Safari, touchez Afficher les détails, puis Visiter ce site web, et Autorisez le téléchargement du certificat.
 err.bind=impossible de lier le certificat au port ({0})
 err.cert=Problème de certificat HTTPS, télécommande non démarrée : {0}
 err.fatal=Erreur : {0}

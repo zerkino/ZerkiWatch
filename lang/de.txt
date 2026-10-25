@@ -17,6 +17,7 @@ bal.restored=Internet wiederhergestellt
 bar.title=Systemmonitor
 cert.fail=Zertifikatexport fehlgeschlagen: {0}
 cert.help=Datei gespeichert: {0}\n\nAuf dem iPhone (gleiches WLAN):\n1. Sende diese Datei an das iPhone (AirDrop, Mail, iCloud Drive) oder öffne {2} in Safari und tippe auf Erlauben, um das Profil zu laden.\n2. Einstellungen > Profil geladen > Installieren.\n3. Einstellungen > Allgemein > Info > Zertifikatsvertrauenseinstellungen > „ZerkiWatch Local CA“ aktivieren.\n4. Prüfe den SHA-256-Fingerabdruck in den Zertifikatdetails auf dem iPhone:\n{1}\n\nÖffne danach die Adresse der Fernbedienung erneut.
+cert.qr=Scanne diesen Code mit der iPhone-Kamera. Tippe in Safari auf Details einblenden, dann auf diese Website besuchen, und erlaube den Download des Zertifikats.
 err.bind=Zertifikat konnte nicht an den Port gebunden werden ({0})
 err.cert=Problem mit dem HTTPS-Zertifikat, Fernbedienung nicht gestartet: {0}
 err.fatal=Fehler: {0}

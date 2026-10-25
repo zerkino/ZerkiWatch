@@ -17,6 +17,7 @@ bal.restored=Internet restored
 bar.title=System monitor
 cert.fail=Certificate export failed: {0}
 cert.help=File saved: {0}\n\nOn the iPhone (same Wi-Fi):\n1. Send this file to the iPhone (AirDrop, mail, iCloud Drive) or open {2} in Safari and tap Allow when asked to download the profile.\n2. Settings > Profile Downloaded > Install.\n3. Settings > General > About > Certificate Trust Settings > turn ON "ZerkiWatch Local CA".\n4. Check the SHA-256 fingerprint in the certificate details on the iPhone:\n{1}\n\nThen open the remote address again.
+cert.qr=Scan this code with the iPhone camera. In Safari, tap Show details, then visit this website, and Allow the download of the certificate.
 err.bind=could not bind the certificate to the port ({0})
 err.cert=HTTPS certificate problem, remote not started: {0}
 err.fatal=Error: {0}
