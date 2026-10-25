@@ -168,6 +168,7 @@ menu.size=Leistengr\u00f6\u00dfe
 menu.small=Klein
 menu.top=Leiste im Vordergrund halten
 menu.widget=Desktop-Widget (verschiebbar)
+menu.wizard=Einrichtungsassistent...
 p.apps=ANWENDUNGEN
 p.badpw=Falsches Passwort.
 p.busy=Der PC ist besch\u00e4ftigt, versuche es erneut.
@@ -307,6 +308,13 @@ unit.g=GB
 unit.k=KB
 unit.m=MB
 unit.t=TB
+wiz.cert_hint=Um die iPhone-Fernbedienung ohne Browserwarnung zu nutzen, installiere das ZerkiWatch-Zertifikat einmal auf deinem iPhone (Schritte und QR-Code im Fenster oben).
+wiz.finish=Fertig
+wiz.intro=Ein paar schnelle Einstellungen zum Start. Alles l\u00e4sst sich sp\u00e4ter \u00e4ndern; dieses Fenster \u00f6ffnest du \u00fcber das Symbolmen\u00fc erneut.
+wiz.lang=Sprache
+wiz.pin=Passwort der iPhone-Fernbedienung (das erzeugte kann bleiben):
+wiz.skip=\u00dcberspringen
+wiz.title=Willkommen bei ZerkiWatch
 [en]
 app.others=Others (ended processes)
 app.system=Windows system (shared, kernel)
@@ -392,6 +400,7 @@ menu.size=Bar size
 menu.small=Small
 menu.top=Keep bar on top
 menu.widget=Desktop widget (movable)
+menu.wizard=Setup assistant...
 p.apps=APPLICATIONS
 p.badpw=Wrong password.
 p.busy=The PC is busy, try again.
@@ -531,6 +540,13 @@ unit.g=GB
 unit.k=KB
 unit.m=MB
 unit.t=TB
+wiz.cert_hint=To use the iPhone remote without a browser warning, install the ZerkiWatch certificate on your iPhone once (steps and QR code in the window above).
+wiz.finish=Finish
+wiz.intro=A few quick choices to get started. You can change everything later and reopen this window from the tray menu.
+wiz.lang=Language
+wiz.pin=iPhone remote password (you can keep the generated one):
+wiz.skip=Skip
+wiz.title=Welcome to ZerkiWatch
 [es]
 app.others=Otros (procesos finalizados)
 app.system=Sistema Windows (compartido, kernel)
@@ -616,6 +632,7 @@ menu.size=Tama\u00f1o de la barra
 menu.small=Peque\u00f1a
 menu.top=Mantener la barra al frente
 menu.widget=Widget en el escritorio (movible)
+menu.wizard=Asistente de configuraci\u00f3n...
 p.apps=APLICACIONES
 p.badpw=Contrase\u00f1a incorrecta.
 p.busy=El PC est\u00e1 ocupado, int\u00e9ntalo de nuevo.
@@ -755,6 +772,13 @@ unit.g=GB
 unit.k=KB
 unit.m=MB
 unit.t=TB
+wiz.cert_hint=Para usar el mando del iPhone sin aviso del navegador, instala una vez el certificado de ZerkiWatch en tu iPhone (pasos y c\u00f3digo QR en la ventana de arriba).
+wiz.finish=Terminar
+wiz.intro=Unas elecciones r\u00e1pidas para empezar. Podr\u00e1s cambiarlo todo despu\u00e9s y reabrir esta ventana desde el men\u00fa del icono.
+wiz.lang=Idioma
+wiz.pin=Contrase\u00f1a del mando del iPhone (puedes conservar la generada):
+wiz.skip=Omitir
+wiz.title=Bienvenido a ZerkiWatch
 [fr]
 app.others=Autres (processus termin\u00e9s)
 app.system=Syst\u00e8me Windows (partages, noyau)
@@ -840,6 +864,7 @@ menu.size=Taille de la barre
 menu.small=Petit
 menu.top=Barre toujours au premier plan
 menu.widget=Widget sur le bureau (d\u00e9pla\u00e7able)
+menu.wizard=Assistant de configuration...
 p.apps=APPLICATIONS
 p.badpw=Mot de passe incorrect.
 p.busy=Le PC est occup\u00e9, r\u00e9essayez.
@@ -979,6 +1004,13 @@ unit.g=Go
 unit.k=Ko
 unit.m=Mo
 unit.t=To
+wiz.cert_hint=Pour utiliser la t\u00e9l\u00e9commande iPhone sans avertissement du navigateur, installez une fois le certificat ZerkiWatch sur votre iPhone (\u00e9tapes et QR code dans la fen\u00eatre ci-dessus).
+wiz.finish=Terminer
+wiz.intro=Quelques choix rapides pour d\u00e9marrer. Vous pourrez tout modifier plus tard et rouvrir cette fen\u00eatre depuis le menu de l'ic\u00f4ne.
+wiz.lang=Langue
+wiz.pin=Mot de passe de la t\u00e9l\u00e9commande iPhone (vous pouvez garder celui g\u00e9n\u00e9r\u00e9) :
+wiz.skip=Passer
+wiz.title=Bienvenue dans ZerkiWatch
 [it]
 app.others=Altri (processi terminati)
 app.system=Sistema Windows (condivisi, kernel)
@@ -1064,6 +1096,7 @@ menu.size=Dimensione barra
 menu.small=Piccola
 menu.top=Barra sempre in primo piano
 menu.widget=Widget sul desktop (spostabile)
+menu.wizard=Configurazione guidata...
 p.apps=APPLICAZIONI
 p.badpw=Password errata.
 p.busy=Il PC \u00e8 occupato, riprova.
@@ -1203,6 +1236,13 @@ unit.g=GB
 unit.k=KB
 unit.m=MB
 unit.t=TB
+wiz.cert_hint=Per usare il telecomando iPhone senza avviso del browser, installa una volta il certificato ZerkiWatch sul tuo iPhone (passaggi e codice QR nella finestra sopra).
+wiz.finish=Fine
+wiz.intro=Poche scelte rapide per iniziare. Potrai cambiare tutto in seguito e riaprire questa finestra dal menu dell'icona.
+wiz.lang=Lingua
+wiz.pin=Password del telecomando iPhone (puoi tenere quella generata):
+wiz.skip=Salta
+wiz.title=Benvenuto in ZerkiWatch
 [pt]
 app.others=Outros (processos encerrados)
 app.system=Sistema Windows (compartilhado, kernel)
@@ -1288,6 +1328,7 @@ menu.size=Tamanho da barra
 menu.small=Pequeno
 menu.top=Manter a barra no topo
 menu.widget=Widget no ambiente de trabalho (mov\u00edvel)
+menu.wizard=Assistente de configura\u00e7\u00e3o...
 p.apps=APLICATIVOS
 p.badpw=Senha incorreta.
 p.busy=O PC est\u00e1 ocupado, tente novamente.
@@ -1427,6 +1468,13 @@ unit.g=GB
 unit.k=KB
 unit.m=MB
 unit.t=TB
+wiz.cert_hint=Para usar o controlo remoto do iPhone sem aviso do navegador, instale uma vez o certificado do ZerkiWatch no iPhone (passos e c\u00f3digo QR na janela acima).
+wiz.finish=Concluir
+wiz.intro=Algumas escolhas r\u00e1pidas para come\u00e7ar. Pode alterar tudo depois e reabrir esta janela a partir do menu do \u00edcone.
+wiz.lang=Idioma
+wiz.pin=Palavra-passe do controlo remoto do iPhone (pode manter a gerada):
+wiz.skip=Saltar
+wiz.title=Bem-vindo ao ZerkiWatch
 '@
 # LANGDATA END
 Add-LangLines ($langData -split "`n") ''
@@ -4049,6 +4097,8 @@ if ($cfg.ContainsKey('Bar')) { $BAR.UserHidden = ($cfg['Bar'] -eq '0') }
 if ($cfg.ContainsKey('Dock')) { $BAR.Dock = ($cfg['Dock'] -eq '1') }
 $WID = @{ On = $false; AutoHidden = $false; Dirty = $false; Dragging = $false; DragX = 0; DragY = 0 }
 if ($cfg.ContainsKey('Widget')) { $WID.On = ($cfg['Widget'] -eq '1') }
+# First-run wizard: shown only when there is no config at all (existing users never see it automatically)
+$S.WizDone = ($cfg.ContainsKey('Wizard') -or ($cfg.Count -gt 0))
 $savedWPt = $null
 if ($cfg.ContainsKey('WX') -and $cfg.ContainsKey('WY')) {
     try { $savedWPt = New-Object System.Drawing.Point([int]$cfg['WX'], [int]$cfg['WY']) } catch { $savedWPt = $null }
@@ -4211,6 +4261,7 @@ function Save-BarConfig {
             ('Bar=' + $barOn),
             ('Dock=' + [int]$BAR.Dock),
             ('Widget=' + [int]$WID.On),
+            ('Wizard=' + [int]($S.WizDone -eq $true)),
             ('Cumul=' + [int]$S.CumulOn),
             ('Hotkey=' + [int]$S.HkOn),
             ('HotkeyCombo=' + $S.HkId)
@@ -4488,6 +4539,7 @@ $miAuto  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.auto'))
 $miCumul = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.cumul'))
 $miHot = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.hotkey'))
 $miLang  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.language'))
+$miWiz   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.wizard'))
 $miPhone = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.iphone'))
 $miLog   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.log'))
 $miQuit  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.quit'))
@@ -4510,10 +4562,11 @@ $null = $menu.Items.Add($miCumul)
 $null = $menu.Items.Add($miHot)
 $null = $menu.Items.Add($miPhone)
 $null = $menu.Items.Add($miLang)
+$null = $menu.Items.Add($miWiz)
 $null = $menu.Items.Add($miAuto)
 $null = $menu.Items.Add($miLog)
 $null = $menu.Items.Add($miQuit)
-foreach ($it in @($miOpen, $miHist, $miNet, $miBar, $miWid, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miAuto, $miLog, $miQuit)) {
+foreach ($it in @($miOpen, $miHist, $miNet, $miBar, $miWid, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miWiz, $miAuto, $miLog, $miQuit)) {
     $it.ForeColor = $cText
     $it.BackColor = $cMenuBg
     $it.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
@@ -5039,6 +5092,92 @@ function Show-PinDialog {
     $dlg.Dispose()
     try { $lblFoot.Text = (Get-FootText) } catch { }
 }
+# Assistant de premiere ouverture (reutilise Set-Pin, Show-CertDialog, Set-Autostart, Set-Language)
+function Show-Wizard {
+    $lanIp = Get-LanIp
+    $d = New-Object System.Windows.Forms.Form
+    $d.Text = (T 'wiz.title')
+    $d.ClientSize = New-Object System.Drawing.Size(480, 430)
+    $d.StartPosition = 'CenterScreen'
+    $d.FormBorderStyle = 'FixedDialog'
+    $d.MaximizeBox = $false
+    $d.MinimizeBox = $false
+    $d.BackColor = $cBg
+    $d.ForeColor = $cText
+    $d.Font = New-Object System.Drawing.Font('Segoe UI', 9.5)
+    $fT = New-Object System.Drawing.Font('Segoe UI Semibold', 13)
+    $d.Controls.Add((New-Label (T 'wiz.title') 24 18 432 28 $fT $cText 'MiddleLeft'))
+    $d.Controls.Add((New-Label (T 'wiz.intro') 24 50 432 40 $d.Font $cMuted 'TopLeft'))
+    $d.Controls.Add((New-Label (T 'wiz.lang') 24 100 432 20 $d.Font $cMuted 'MiddleLeft'))
+    $cb = New-Object System.Windows.Forms.ComboBox
+    $cb.DropDownStyle = 'DropDownList'
+    $cb.Location = New-Object System.Drawing.Point(24, 122)
+    $cb.Size = New-Object System.Drawing.Size(432, 26)
+    $codes = New-Object System.Collections.ArrayList
+    [void]$cb.Items.Add((T 'menu.lang_auto')); [void]$codes.Add('')
+    foreach ($lc in @($LangDb.Keys | Sort-Object)) {
+        $nm = $lc
+        if ($LangDb[$lc].ContainsKey('lang.name')) { $nm = [string]$LangDb[$lc]['lang.name'] }
+        [void]$cb.Items.Add($nm); [void]$codes.Add([string]$lc)
+    }
+    $cb.SelectedIndex = [math]::Max(0, $codes.IndexOf([string]$LangPref))
+    $d.Controls.Add($cb)
+    $d.Controls.Add((New-Label (T 'wiz.pin') 24 162 432 20 $d.Font $cMuted 'MiddleLeft'))
+    $tb = New-Object System.Windows.Forms.TextBox
+    $tb.Location = New-Object System.Drawing.Point(24, 184)
+    $tb.Size = New-Object System.Drawing.Size(200, 26)
+    $tb.Text = [string]$S.Pin
+    $tb.BackColor = $cCard; $tb.ForeColor = $cText; $tb.BorderStyle = 'FixedSingle'
+    $d.Controls.Add($tb)
+    $btCert = New-Object System.Windows.Forms.Button
+    $btCert.Text = (T 'pin.cert')
+    $btCert.Location = New-Object System.Drawing.Point(236, 182)
+    $btCert.Size = New-Object System.Drawing.Size(220, 30)
+    $btCert.FlatStyle = 'Flat'; $btCert.BackColor = $cCard; $btCert.ForeColor = $cText
+    if ($S.Listener -eq $null) { $btCert.Enabled = $false }
+    $btCert.Add_Click({ try { Show-CertDialog $lanIp } catch { } })
+    $d.Controls.Add($btCert)
+    $d.Controls.Add((New-Label (T 'wiz.cert_hint') 24 218 432 56 $d.Font $cMuted 'TopLeft'))
+    $ck = New-Object System.Windows.Forms.CheckBox
+    $ck.Text = (T 'menu.auto')
+    $ck.Location = New-Object System.Drawing.Point(24, 286)
+    $ck.Size = New-Object System.Drawing.Size(432, 26)
+    $ck.ForeColor = $cText
+    $ck.Checked = (Test-Autostart)
+    $d.Controls.Add($ck)
+    $lerr = New-Label '' 24 322 432 22 $d.Font $cAmber 'MiddleLeft'
+    $d.Controls.Add($lerr)
+    $bf = New-Object System.Windows.Forms.Button
+    $bf.Text = (T 'wiz.finish')
+    $bf.Location = New-Object System.Drawing.Point(236, 380)
+    $bf.Size = New-Object System.Drawing.Size(130, 32)
+    $bf.FlatStyle = 'Flat'; $bf.BackColor = $cCard; $bf.ForeColor = $cText
+    $bs = New-Object System.Windows.Forms.Button
+    $bs.Text = (T 'wiz.skip')
+    $bs.Location = New-Object System.Drawing.Point(376, 380)
+    $bs.Size = New-Object System.Drawing.Size(80, 32)
+    $bs.FlatStyle = 'Flat'; $bs.BackColor = $cCard; $bs.ForeColor = $cText
+    $S.WizLang = $null
+    $bs.Add_Click({ $S.WizDone = $true; Save-BarConfig; $d.Close() })
+    $bf.Add_Click({
+        $newPin = $tb.Text.Trim()
+        if (($newPin -ne [string]$S.Pin) -and (-not (Set-Pin $newPin))) { $lerr.Text = (T 'pin.invalid'); return }
+        try { if ($ck.Checked -ne (Test-Autostart)) { Set-Autostart $ck.Checked } } catch { }
+        $S.WizDone = $true
+        Save-BarConfig
+        $pick = [string]$codes[[math]::Max(0, $cb.SelectedIndex)]
+        if ($pick -ne [string]$LangPref) { $S.WizLang = $pick }
+        $d.Close()
+    })
+    $d.AcceptButton = $bf
+    $d.CancelButton = $bs
+    $d.Controls.Add($bf)
+    $d.Controls.Add($bs)
+    [void]$d.ShowDialog()
+    $d.Dispose()
+    try { $lblFoot.Text = (Get-FootText) } catch { }
+    if ($S.WizLang -ne $null) { $pl = [string]$S.WizLang; $S.WizLang = $null; Set-Language $pl }
+}
 $menu.Add_Opening({ try { Update-MenuText } catch { }; try { Update-LangMenu } catch { }; try { Update-DiskMenu } catch { Write-Log ('Disk menu: ' + $_.Exception.Message) 'md' }; try { Update-HotMenu } catch { Write-Log ('Hotkey menu: ' + $_.Exception.Message) 'mh' } })
 $miOpen.Add_Click({ Show-Main })
 $miHist.Add_Click({ try { Show-History } catch { Write-Log ('History: ' + $_.Exception.Message) 'sh' } })
@@ -5060,6 +5199,7 @@ $miLog.Add_Click({
     } catch { }
 })
 $miPhone.Add_Click({ try { Show-PinDialog } catch { Write-Log ('PIN dialog: ' + $_.Exception.Message) } })
+$miWiz.Add_Click({ try { Show-Wizard } catch { Write-Log ('Wizard: ' + $_.Exception.Message) 'wz' } })
 $miQuit.Add_Click({ Quit-App })
 $barForm.ContextMenuStrip = $menu
 $wForm.ContextMenuStrip = $menu
@@ -5803,6 +5943,12 @@ $form.Add_FormClosing({
 if (-not $BAR.UserHidden) { $barForm.Show() }
 if ($WID.On) { $wForm.Show() }
 if (-not $startHidden) { $form.Show() }
+if (-not $S.WizDone) {
+    $wizTimer = New-Object System.Windows.Forms.Timer
+    $wizTimer.Interval = 1500
+    $wizTimer.Add_Tick({ $wizTimer.Stop(); try { Show-Wizard } catch { Write-Log ('Wizard: ' + $_.Exception.Message) 'wz' } })
+    $wizTimer.Start()
+}
 Update-Mon
 Write-Log ('Start v' + $APPVER + ' | native=' + $native + ' theme=' + $themed + ' | bar: hidden_by_user=' + $BAR.UserHidden + ' auto_hidden=' + $BAR.AutoHidden + ' visible=' + $barForm.Visible + ' pos=' + $barForm.Location.X + ',' + $barForm.Location.Y + ' taille=' + $barForm.Width + 'x' + $barForm.Height + ' | ecrans=' + [System.Windows.Forms.Screen]::AllScreens.Count + ' | ETW=' + $S.EtwOk)
 if ($BAR.UserHidden) {
