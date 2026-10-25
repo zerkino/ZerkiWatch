@@ -90,6 +90,8 @@ bal.autostart_fail=Start mit Windows nicht m\u00f6glich: {0}
 bal.bar_hidden=Die schwebende Leiste ist ausgeblendet. Rechtsklick auf das Tray-Symbol, dann Schwebende Leiste, um sie wieder anzuzeigen.
 bal.busy=Ein Umschalten l\u00e4uft bereits, bitte warten.
 bal.cut=Lokaler Modus: Internet ist aus
+bal.cut_end=Zeit abgelaufen: Internet wiederhergestellt.
+bal.cut_timed=Internet getrennt bis {0}, dann automatisch wiederhergestellt.
 bal.dock_na=Die Taskleisten-Integration ist auf diesem PC nicht verf\u00fcgbar.
 bal.dock_notaskbar=Taskleiste nicht gefunden oder vertikal: Die Integration funktioniert nur mit einer horizontalen Taskleiste (unten oder oben).
 bal.hk_used=Die Tastenkombination {0} wird bereits von einem anderen Programm verwendet. W\u00e4hle im Men\u00fc unter Tastenkombination eine andere.
@@ -145,6 +147,13 @@ menu.bar_full=Schwebende Leiste (CPU, RAM, Tempo)
 menu.big=Gro\u00df
 menu.cumul=Fortlaufende Summen pro App
 menu.cut=Internet trennen
+menu.cut_15=15 Minuten
+menu.cut_30=30 Minuten
+menu.cut_60=1 Stunde
+menu.cut_cancel=Automatische R\u00fcckkehr abbrechen
+menu.cut_timed=Internet trennen f\u00fcr...
+menu.cut_tomorrow=Bis morgen 7:00 Uhr
+menu.cut_until=Internet kommt um {0} zur\u00fcck
 menu.disk=Datentr\u00e4ger
 menu.disks=Angezeigte Datentr\u00e4ger
 menu.dock=In die Taskleiste integrieren
@@ -176,6 +185,13 @@ p.bymonth=NACH MONAT
 p.cancel=Abbrechen
 p.changepw=Passwort eingeben
 p.connecting=Verbinde...
+p.cut_15=15 Min.
+p.cut_30=30 Min.
+p.cut_60=1 Std.
+p.cut_back=Internet kommt in {0} zur\u00fcck
+p.cut_cancel=Abbrechen
+p.cut_title=INTERNET TRENNEN F\u00dcR
+p.cut_tomorrow=Bis morgen 7:00
 p.d30=30 Tage
 p.d7=7 Tage
 p.days=So,Mo,Di,Mi,Do,Fr,Sa
@@ -322,6 +338,8 @@ bal.autostart_fail=Could not start with Windows: {0}
 bal.bar_hidden=The floating bar is hidden. Right-click the tray icon, then Floating bar to show it again.
 bal.busy=A switch is already in progress, please wait.
 bal.cut=Local mode: Internet is off
+bal.cut_end=Time is up: Internet restored.
+bal.cut_timed=Internet cut until {0}, then restored automatically.
 bal.dock_na=Taskbar integration is not available on this PC.
 bal.dock_notaskbar=Taskbar not found or vertical: integration only works with a horizontal taskbar (bottom or top).
 bal.hk_used=The shortcut {0} is already used by another program. Pick another one in the menu, Keyboard shortcut.
@@ -377,6 +395,13 @@ menu.bar_full=Floating bar (CPU, RAM, speed)
 menu.big=Large
 menu.cumul=Continuous per-app totals
 menu.cut=Cut Internet
+menu.cut_15=15 minutes
+menu.cut_30=30 minutes
+menu.cut_60=1 hour
+menu.cut_cancel=Cancel automatic return
+menu.cut_timed=Cut Internet for...
+menu.cut_tomorrow=Until tomorrow 7:00
+menu.cut_until=Internet returns at {0}
 menu.disk=Disk
 menu.disks=Displayed disks
 menu.dock=Integrate into the taskbar
@@ -408,6 +433,13 @@ p.bymonth=BY MONTH
 p.cancel=Cancel
 p.changepw=Enter the password
 p.connecting=Connecting...
+p.cut_15=15 min
+p.cut_30=30 min
+p.cut_60=1 h
+p.cut_back=Internet returns in {0}
+p.cut_cancel=Cancel
+p.cut_title=CUT INTERNET FOR
+p.cut_tomorrow=Until tomorrow 7:00
 p.d30=30 days
 p.d7=7 days
 p.days=Sun,Mon,Tue,Wed,Thu,Fri,Sat
@@ -554,6 +586,8 @@ bal.autostart_fail=No se pudo iniciar con Windows: {0}
 bal.bar_hidden=La barra flotante est\u00e1 oculta. Haz clic derecho en el icono de la bandeja y elige Barra flotante para mostrarla de nuevo.
 bal.busy=Ya hay un cambio en curso, espera un momento.
 bal.cut=Modo local: Internet desactivado
+bal.cut_end=Tiempo cumplido: Internet restablecido.
+bal.cut_timed=Internet cortado hasta las {0}; despu\u00e9s se restablece solo.
 bal.dock_na=La integraci\u00f3n en la barra de tareas no est\u00e1 disponible en este PC.
 bal.dock_notaskbar=Barra de tareas no encontrada o vertical: la integraci\u00f3n solo funciona con una barra de tareas horizontal (abajo o arriba).
 bal.hk_used=El atajo {0} ya lo usa otro programa. Elige otro en el men\u00fa, Atajo de teclado.
@@ -609,6 +643,13 @@ menu.bar_full=Barra flotante (CPU, RAM, velocidad)
 menu.big=Grande
 menu.cumul=Totales continuos por app
 menu.cut=Cortar Internet
+menu.cut_15=15 minutos
+menu.cut_30=30 minutos
+menu.cut_60=1 hora
+menu.cut_cancel=Cancelar el regreso autom\u00e1tico
+menu.cut_timed=Cortar Internet durante...
+menu.cut_tomorrow=Hasta ma\u00f1ana a las 7:00
+menu.cut_until=Internet vuelve a las {0}
 menu.disk=Disco
 menu.disks=Discos mostrados
 menu.dock=Integrar en la barra de tareas
@@ -640,6 +681,13 @@ p.bymonth=POR MES
 p.cancel=Cancelar
 p.changepw=Introduce la contrase\u00f1a
 p.connecting=Conectando...
+p.cut_15=15 min
+p.cut_30=30 min
+p.cut_60=1 h
+p.cut_back=Internet vuelve en {0}
+p.cut_cancel=Cancelar
+p.cut_title=CORTAR INTERNET DURANTE
+p.cut_tomorrow=Hasta ma\u00f1ana 7:00
 p.d30=30 d\u00edas
 p.d7=7 d\u00edas
 p.days=Dom,Lun,Mar,Mi\u00e9,Jue,Vie,S\u00e1b
@@ -786,6 +834,8 @@ bal.autostart_fail=Lancement avec Windows impossible : {0}
 bal.bar_hidden=La barre flottante est masqu\u00e9e. Clic droit sur l'ic\u00f4ne, puis Barre flottante pour la r\u00e9afficher.
 bal.busy=Changement d\u00e9j\u00e0 en cours, patientez.
 bal.cut=Mode local : Internet coup\u00e9
+bal.cut_end=D\u00e9lai termin\u00e9 : Internet remis.
+bal.cut_timed=Internet coup\u00e9 jusqu'\u00e0 {0}, puis remis automatiquement.
 bal.dock_na=Int\u00e9gration indisponible sur ce PC.
 bal.dock_notaskbar=Barre des t\u00e2ches introuvable ou verticale : l'int\u00e9gration n'est possible qu'avec une barre des t\u00e2ches horizontale (en bas ou en haut).
 bal.hk_used=Le raccourci {0} est d\u00e9j\u00e0 utilis\u00e9 par un autre programme. Choisissez-en un autre dans le menu, Raccourci clavier.
@@ -841,6 +891,13 @@ menu.bar_full=Barre flottante (CPU, RAM, d\u00e9bit)
 menu.big=Grand
 menu.cumul=Cumul par application en continu
 menu.cut=Couper Internet
+menu.cut_15=15 minutes
+menu.cut_30=30 minutes
+menu.cut_60=1 heure
+menu.cut_cancel=Annuler le retour automatique
+menu.cut_timed=Couper Internet pendant...
+menu.cut_tomorrow=Jusqu'\u00e0 demain 7 h
+menu.cut_until=Internet revient \u00e0 {0}
 menu.disk=Disque
 menu.disks=Disques affich\u00e9s
 menu.dock=Int\u00e9grer \u00e0 la barre des t\u00e2ches
@@ -872,6 +929,13 @@ p.bymonth=PAR MOIS
 p.cancel=Annuler
 p.changepw=Saisir le mot de passe
 p.connecting=Connexion...
+p.cut_15=15 min
+p.cut_30=30 min
+p.cut_60=1 h
+p.cut_back=Internet revient dans {0}
+p.cut_cancel=Annuler
+p.cut_title=COUPER INTERNET PENDANT
+p.cut_tomorrow=Jusqu'\u00e0 demain 7 h
 p.d30=30 jours
 p.d7=7 jours
 p.days=dim.,lun.,mar.,mer.,jeu.,ven.,sam.
@@ -1018,6 +1082,8 @@ bal.autostart_fail=Impossibile avviare con Windows: {0}
 bal.bar_hidden=La barra mobile \u00e8 nascosta. Clic destro sull'icona nell'area di notifica, poi Barra mobile per mostrarla di nuovo.
 bal.busy=Un cambio \u00e8 gi\u00e0 in corso, attendi.
 bal.cut=Modalit\u00e0 locale: Internet disattivato
+bal.cut_end=Tempo scaduto: Internet ripristinato.
+bal.cut_timed=Internet interrotto fino alle {0}, poi ripristinato automaticamente.
 bal.dock_na=L'integrazione nella barra delle applicazioni non \u00e8 disponibile su questo PC.
 bal.dock_notaskbar=Barra delle applicazioni non trovata o verticale: l'integrazione funziona solo con una barra orizzontale (in basso o in alto).
 bal.hk_used=La scorciatoia {0} \u00e8 gi\u00e0 usata da un altro programma. Scegline un'altra nel menu, Scorciatoia da tastiera.
@@ -1073,6 +1139,13 @@ menu.bar_full=Barra mobile (CPU, RAM, velocit\u00e0)
 menu.big=Grande
 menu.cumul=Totali per app continui
 menu.cut=Disattiva Internet
+menu.cut_15=15 minuti
+menu.cut_30=30 minuti
+menu.cut_60=1 ora
+menu.cut_cancel=Annulla il ripristino automatico
+menu.cut_timed=Interrompi Internet per...
+menu.cut_tomorrow=Fino a domani alle 7:00
+menu.cut_until=Internet torna alle {0}
 menu.disk=Disco
 menu.disks=Dischi mostrati
 menu.dock=Integra nella barra delle applicazioni
@@ -1104,6 +1177,13 @@ p.bymonth=PER MESE
 p.cancel=Annulla
 p.changepw=Inserisci la password
 p.connecting=Connessione...
+p.cut_15=15 min
+p.cut_30=30 min
+p.cut_60=1 h
+p.cut_back=Internet torna tra {0}
+p.cut_cancel=Annulla
+p.cut_title=INTERROMPI INTERNET PER
+p.cut_tomorrow=Fino a domani 7:00
 p.d30=30 gg
 p.d7=7 gg
 p.days=Dom,Lun,Mar,Mer,Gio,Ven,Sab
@@ -1250,6 +1330,8 @@ bal.autostart_fail=N\u00e3o foi poss\u00edvel iniciar com o Windows: {0}
 bal.bar_hidden=A barra flutuante est\u00e1 oculta. Clique com o bot\u00e3o direito no \u00edcone da bandeja e depois em Barra flutuante para exibi-la novamente.
 bal.busy=Uma altern\u00e2ncia j\u00e1 est\u00e1 em andamento, aguarde.
 bal.cut=Modo local: Internet desligada
+bal.cut_end=Tempo esgotado: Internet reposta.
+bal.cut_timed=Internet cortada at\u00e9 \u00e0s {0}; depois \u00e9 reposta automaticamente.
 bal.dock_na=A integra\u00e7\u00e3o \u00e0 barra de tarefas n\u00e3o est\u00e1 dispon\u00edvel neste PC.
 bal.dock_notaskbar=Barra de tarefas n\u00e3o encontrada ou vertical: a integra\u00e7\u00e3o s\u00f3 funciona com uma barra de tarefas horizontal (embaixo ou no topo).
 bal.hk_used=O atalho {0} j\u00e1 est\u00e1 sendo usado por outro programa. Escolha outro no menu, Atalho de teclado.
@@ -1305,6 +1387,13 @@ menu.bar_full=Barra flutuante (CPU, RAM, velocidade)
 menu.big=Grande
 menu.cumul=Total cont\u00ednuo por aplicativo
 menu.cut=Cortar a Internet
+menu.cut_15=15 minutos
+menu.cut_30=30 minutos
+menu.cut_60=1 hora
+menu.cut_cancel=Cancelar o regresso autom\u00e1tico
+menu.cut_timed=Cortar a Internet durante...
+menu.cut_tomorrow=At\u00e9 amanh\u00e3 \u00e0s 7:00
+menu.cut_until=A Internet volta \u00e0s {0}
 menu.disk=Disco
 menu.disks=Discos exibidos
 menu.dock=Integrar \u00e0 barra de tarefas
@@ -1336,6 +1425,13 @@ p.bymonth=POR M\u00caS
 p.cancel=Cancelar
 p.changepw=Digite a senha
 p.connecting=Conectando...
+p.cut_15=15 min
+p.cut_30=30 min
+p.cut_60=1 h
+p.cut_back=A Internet volta em {0}
+p.cut_cancel=Cancelar
+p.cut_title=CORTAR A INTERNET DURANTE
+p.cut_tomorrow=At\u00e9 amanh\u00e3 7:00
 p.d30=30 dias
 p.d7=7 dias
 p.days=dom,seg,ter,qua,qui,sex,s\u00e1b
@@ -1970,8 +2066,8 @@ canvas{width:100%;height:70px;display:block;margin-top:12px}
 .pills{display:flex;gap:8px;margin-bottom:12px}
 .pills button{flex:1;padding:9px 0;border-radius:14px;border:1px solid #222d52;background:#131a30;color:#8a96b8;font-size:14px;font-weight:600;font-family:inherit}
 .pills button.on{background:#38bdf8;border-color:#38bdf8;color:#0a0e1c}
-.pw{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pw button{padding:14px 0;border-radius:14px;border:1px solid #222d52;background:#131a30;color:#e6ebf8;font-size:15px;font-weight:600;font-family:inherit}
+.pw,.cutg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pw button,.cutg button{padding:14px 0;border-radius:14px;border:1px solid #222d52;background:#131a30;color:#e6ebf8;font-size:15px;font-weight:600;font-family:inherit}
 .pw button.dg{color:#f87171;border-color:#4a2230}
 .pw button.wd{grid-column:1/3}
 .pwb{display:none;margin-top:12px;padding:12px;border-radius:14px;background:rgba(248,113,113,.12);color:#fca5a5;font-size:14px}
@@ -1991,6 +2087,9 @@ canvas{width:100%;height:70px;display:block;margin-top:12px}
 <div id="st" class="st">{{p.connecting}}</div>
 <div id="sub" class="sub"></div>
 <div id="msg" class="msg"></div>
+<div class="card"><div class="ct">{{p.cut_title}}</div>
+<div class="cutg"><button data-c="15">{{p.cut_15}}</button><button data-c="30">{{p.cut_30}}</button><button data-c="60">{{p.cut_60}}</button><button data-c="tomorrow">{{p.cut_tomorrow}}</button></div>
+<div id="cutb" class="pwb"><span id="cutt"></span><button id="cutc">{{p.cut_cancel}}</button></div></div>
 <div class="card"><div class="ct">{{p.live}}</div>
 <div class="sp"><div><small>{{p.recv}}</small><b class="d" id="dl">0.00</b><i>Mbps</i></div><div><small>{{p.send}}</small><b class="u" id="ul">0.00</b><i>Mbps</i></div></div>
 <canvas id="cv"></canvas></div>
@@ -2319,6 +2418,7 @@ function refresh() {
     document.getElementById('gpud').textContent = (j.vramTot > 0) ? ((j.vramUsed || 0) + ' / ' + j.vramTot + ' ' + LG['p.unit_g']) : (j.gpuName || '');
     disks(j.disks);
     pwSet(j.power);
+    cutSet(j.cutUntil);
     hd.push(Number(j.dl) || 0); hu.push(Number(j.ul) || 0);
     if (hd.length > 40) hd.shift();
     if (hu.length > 40) hu.shift();
@@ -2329,6 +2429,37 @@ function refresh() {
     if (Date.now() - hlast > 30000) loadHist();
     render();
   }).catch(function () { mode = ''; render(); say(LG['p.unreach2']); });
+}
+var cutEnd = 0;
+function cutShow() {
+  var bx = document.getElementById('cutb');
+  if (!bx) return;
+  var left = Math.max(0, Math.round((cutEnd - Date.now()) / 60000));
+  if (cutEnd && left >= 0) {
+    var h = Math.floor(left / 60), m = left % 60;
+    bx.style.display = 'block';
+    document.getElementById('cutt').textContent = tf('p.cut_back', [h > 0 ? h + ' h ' + m + ' min' : m + ' min']);
+  } else { bx.style.display = 'none'; }
+}
+function cutSet(iso) { cutEnd = iso ? Date.parse(iso) : 0; cutShow(); }
+function cut(c) {
+  if (busy) return;
+  if (!pin) { askPin(); return; }
+  busy = true; say('');
+  api('/api/cut?m=' + c, 'POST').then(function (j) {
+    busy = false;
+    if (j.http === 401) { mode = ''; render(); say(LG['p.badpw']); return; }
+    if (j.http === 429) { say(LG['p.toomany']); return; }
+    if (j.error) { say(j.http === 409 ? LG['p.busy'] : tf('p.err', [j.error])); return; }
+    if (j.mode) mode = j.mode;
+    cutSet(j.cutUntil); render();
+  }).catch(function () { busy = false; say(LG['p.noresp']); });
+}
+function initCut() {
+  var bs = document.querySelectorAll('.cutg button'), i;
+  for (i = 0; i < bs.length; i++) { bs[i].onclick = function () { cut(this.getAttribute('data-c')); }; }
+  document.getElementById('cutc').onclick = function () { cut('cancel'); };
+  setInterval(cutShow, 1000);
 }
 function tap() {
   if (busy) return;
@@ -2344,7 +2475,7 @@ function tap() {
     render();
   }).catch(function () { busy = false; render(); say(LG['p.noresp']); });
 }
-render(); refresh(); initPills(); initTop(); initPower();
+render(); refresh(); initPills(); initTop(); initPower(); initCut();
 setInterval(refresh, 2000);
 </script></body></html>
 '@
@@ -2497,6 +2628,78 @@ function Invoke-Power([string]$act) {
     } catch { return $_.Exception.Message }
 }
 
+# ---------- Coupure temporisee : Internet est remis automatiquement a l'heure choisie ----------
+$S.CutUntil = $null
+function Get-CutFile { return (Join-Path $cfgDir 'cut-until.txt') }
+function Save-CutState {
+    try {
+        $f = Get-CutFile
+        if ($S.CutUntil -eq $null) { if (Test-Path -LiteralPath $f) { Remove-Item -LiteralPath $f -Force } }
+        else { Set-Content -LiteralPath $f -Value ([DateTime]$S.CutUntil).ToString('o') -Encoding ASCII }
+    } catch { }
+}
+function Load-CutState {
+    try {
+        $f = Get-CutFile
+        if (Test-Path -LiteralPath $f) {
+            $v = (Get-Content -LiteralPath $f -TotalCount 1).Trim()
+            $S.CutUntil = [DateTime]::Parse($v, [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::RoundtripKind)
+        }
+    } catch { $S.CutUntil = $null }
+}
+# Passe en mode local (si besoin) et memorise l'heure de retour. $what = 15 | 30 | 60 | tomorrow | cancel. Retourne '' ou un code d'erreur.
+function Start-TimedCut([string]$what) {
+    if ($what -eq 'cancel') { $S.CutUntil = $null; Save-CutState; return '' }
+    if ($S.Busy -or $S.Switching) { return 'busy' }
+    if ($what -eq 'tomorrow') {
+        $until = ([DateTime]::Today.AddDays(1).AddHours(7)).ToUniversalTime()
+    } else {
+        $mins = 0
+        if (-not [int]::TryParse($what, [ref]$mins)) { return 'arg' }
+        if (@(15, 30, 60) -notcontains $mins) { return 'arg' }
+        $until = [DateTime]::UtcNow.AddMinutes($mins)
+    }
+    if (-not $S.Local) {
+        $errTxt = ''
+        $S.Busy = $true
+        $S.Switching = $true
+        $lblStatus.Text = (T 'ui.wait')
+        $lblStatus.ForeColor = $cMuted
+        $toggle.Invalidate()
+        try { Set-ModeLocal } catch { $errTxt = $_.Exception.Message }
+        $S.Switching = $false
+        $S.Busy = $false
+        Update-Ui
+        $S.PendingTest = $true
+        if ($errTxt -ne '') { return $errTxt }
+    }
+    $S.CutUntil = $until
+    Save-CutState
+    try { $tray.ShowBalloonTip(3500, 'ZerkiWatch', (Tf 'bal.cut_timed' @(($until.ToLocalTime()).ToString('t'))), [System.Windows.Forms.ToolTipIcon]::Info) } catch { }
+    return ''
+}
+# Appelee chaque seconde : remet Internet quand l'heure est passee ; abandonne si l'utilisateur l'a deja remis.
+function Check-TimedCut {
+    if ($S.CutUntil -eq $null) { return }
+    if ($S.Busy -or $S.Switching) { return }
+    if (-not $S.Local) { $S.CutUntil = $null; Save-CutState; return }
+    if ([DateTime]::UtcNow -ge ([DateTime]$S.CutUntil)) {
+        $S.CutUntil = $null
+        Save-CutState
+        $S.Busy = $true
+        $S.Switching = $true
+        $lblStatus.Text = (T 'ui.wait')
+        $lblStatus.ForeColor = $cMuted
+        $toggle.Invalidate()
+        try { Set-ModeInternet; Write-Log 'Timed cut ended: Internet restored' } catch { Write-Log ('Timed cut restore: ' + $_.Exception.Message) 'tc' }
+        $S.Switching = $false
+        $S.Busy = $false
+        Update-Ui
+        $S.PendingTest = $true
+        try { $tray.ShowBalloonTip(3500, 'ZerkiWatch', (T 'bal.cut_end'), [System.Windows.Forms.ToolTipIcon]::Info) } catch { }
+    }
+}
+
 function Get-StatusObj {
     $dskL = New-Object System.Collections.ArrayList
     foreach ($dk in @($S.Disks)) {
@@ -2505,8 +2708,11 @@ function Get-StatusObj {
     $dskList = $dskL.ToArray()
     $m = 'INTERNET'
     if ($S.Local) { $m = 'LOCAL' }
+    $cutIso = ''
+    if ($S.CutUntil -ne $null) { $cutIso = ([DateTime]$S.CutUntil).ToString('o') }
     return @{
         mode = $m
+        cutUntil = $cutIso
         dl = [math]::Round([double]$S.Dl, 2)
         ul = [math]::Round([double]$S.Ul, 2)
         apps = @($S.Apps)
@@ -2546,7 +2752,7 @@ function Handle-Remote($ctx) {
             Send-Bytes $ctx 'image/png' $S.Icon180
             return
         }
-        if (($path -ne '/api/status') -and ($path -ne '/api/set') -and ($path -ne '/api/history') -and ($path -ne '/api/short') -and ($path -ne '/api/toggle') -and ($path -ne '/api/power')) { Send-Json $ctx 404 @{ error = 'not found' }; return }
+        if (($path -ne '/api/status') -and ($path -ne '/api/set') -and ($path -ne '/api/history') -and ($path -ne '/api/short') -and ($path -ne '/api/toggle') -and ($path -ne '/api/power') -and ($path -ne '/api/cut')) { Send-Json $ctx 404 @{ error = 'not found' }; return }
         $S.LastRemote = [DateTime]::UtcNow
         $nowUtc = [DateTime]::UtcNow
         if ($S.LockUntil -gt $nowUtc) { Send-Json $ctx 429 @{ error = 'locked' }; return }
@@ -2577,6 +2783,17 @@ function Handle-Remote($ctx) {
                 Start-Sleep -Milliseconds 700
                 [void][System.Windows.Forms.Application]::SetSuspendState([System.Windows.Forms.PowerState]::Suspend, $false, $false)
             }
+            return
+        }
+        if ($path -eq '/api/cut') {
+            if ($req.HttpMethod -ne 'POST') { Send-Json $ctx 405 @{ error = 'method' }; return }
+            $cw = [string]$req.QueryString['m']
+            if (@('15', '30', '60', 'tomorrow', 'cancel') -notcontains $cw) { Send-Json $ctx 400 @{ error = 'm' }; return }
+            Write-Log ('Timed cut requested from the iPhone: ' + $cw)
+            $cerr = Start-TimedCut $cw
+            if ($cerr -eq 'busy') { Send-Json $ctx 409 @{ error = 'busy'; mode = (Get-Mode) }; return }
+            if ($cerr -ne '') { Send-Json $ctx 500 @{ error = $cerr; mode = (Get-Mode) }; return }
+            Send-Json $ctx 200 (Get-StatusObj)
             return
         }
         if ($path -eq '/api/short') {
@@ -3462,6 +3679,7 @@ function Update-Mon {
 
     if ((($S.Tick % 20) -eq 3) -and (-not $S.Busy) -and (-not $S.Switching)) { Start-BgWork 'mode' }
     try { Update-Bar } catch { Write-Log ('Update-Bar: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'ub' }
+    try { Check-TimedCut } catch { Write-Log ('Check-TimedCut: ' + $_.Exception.Message) 'ct' }
     try { Update-Widget } catch { Write-Log ('Update-Widget: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'uw' }
     if ($formOn) { try { $pnlRight.Invalidate() } catch { } }
 }
@@ -4054,6 +4272,7 @@ $btnHist.Add_Click({ try { Show-History } catch { Write-Log ('History: ' + $_.Ex
 $form.Add_Shown({ Invoke-Tests })
 
 $S.Local = ((Get-Mode) -eq 'LOCAL')
+Load-CutState
 if ($S.Local) { $S.Pos = 0.0 } else { $S.Pos = 1.0 }
 Update-Ui
 
@@ -4525,6 +4744,22 @@ $menu.ForeColor = $cText
 $miOpen  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.open'))
 $miNet   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.cut'))
 $miHist  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.history'))
+$miCut   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.cut_timed'))
+$miCutC  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.cut_cancel'))
+foreach ($cq in @(@('15', 'menu.cut_15'), @('30', 'menu.cut_30'), @('60', 'menu.cut_60'), @('tomorrow', 'menu.cut_tomorrow'))) {
+    $ci = New-Object System.Windows.Forms.ToolStripMenuItem((T $cq[1]))
+    $ci.Tag = [string]$cq[0]
+    $ci.ForeColor = $cText; $ci.BackColor = $cMenuBg
+    $ci.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
+    $ci.Add_Click({ param($snd, $ea) $ce = Start-TimedCut ([string]$snd.Tag); if ($ce -ne '') { try { $tray.ShowBalloonTip(3500, 'ZerkiWatch', (Tf 'p.err' @($ce)), [System.Windows.Forms.ToolTipIcon]::Warning) } catch { } } })
+    [void]$miCut.DropDownItems.Add($ci)
+}
+$miCutC.Tag = 'cancel'
+$miCutC.ForeColor = $cText; $miCutC.BackColor = $cMenuBg
+$miCutC.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
+$miCutC.Add_Click({ [void](Start-TimedCut 'cancel') })
+[void]$miCut.DropDownItems.Add($miCutC)
+try { $miCut.DropDown.BackColor = $cMenuBg; $miCut.DropDown.ShowImageMargin = $false } catch { }
 $miBar   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.bar'))
 $miWid   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.widget'))
 $miTop   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.top'))
@@ -4549,6 +4784,7 @@ $null = $miSize.DropDownItems.Add($miS3)
 $null = $menu.Items.Add($miOpen)
 $null = $menu.Items.Add($miHist)
 $null = $menu.Items.Add($miNet)
+$null = $menu.Items.Add($miCut)
 $null = $menu.Items.Add((New-Object System.Windows.Forms.ToolStripSeparator))
 $null = $menu.Items.Add($miBar)
 $null = $menu.Items.Add($miWid)
@@ -4566,7 +4802,7 @@ $null = $menu.Items.Add($miWiz)
 $null = $menu.Items.Add($miAuto)
 $null = $menu.Items.Add($miLog)
 $null = $menu.Items.Add($miQuit)
-foreach ($it in @($miOpen, $miHist, $miNet, $miBar, $miWid, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miWiz, $miAuto, $miLog, $miQuit)) {
+foreach ($it in @($miOpen, $miHist, $miNet, $miCut, $miBar, $miWid, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miWiz, $miAuto, $miLog, $miQuit)) {
     $it.ForeColor = $cText
     $it.BackColor = $cMenuBg
     $it.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
@@ -4657,6 +4893,8 @@ function Quit-App {
 }
 function Update-MenuText {
     if ($S.Local) { $miNet.Text = (T 'menu.restore') } else { $miNet.Text = (T 'menu.cut') }
+    if ($S.CutUntil -ne $null) { $miCut.Text = (Tf 'menu.cut_until' @((([DateTime]$S.CutUntil).ToLocalTime()).ToString('t'))); $miCutC.Visible = $true }
+    else { $miCut.Text = (T 'menu.cut_timed'); $miCutC.Visible = $false }
     $b1 = $dotOn; if ($BAR.UserHidden) { $b1 = $dotOff }
     $miBar.Text = $b1 + '  ' + (T 'menu.bar_full')
     $w1 = $dotOff; if ($WID.On) { $w1 = $dotOn }
