@@ -86,6 +86,9 @@ $langData = @'
 [de]
 app.others=Andere (beendete Prozesse)
 app.system=Windows-System (geteilt, Kernel)
+bal.alert_cut=Internet ist seit {0} Min. getrennt.
+bal.alert_speed=Hoher Datenverkehr: {0} Mbps.
+bal.alert_speed_app=Hoher Datenverkehr: {0} Mbps (Haupt: {1}).
 bal.autostart_fail=Start mit Windows nicht m\u00f6glich: {0}
 bal.bar_hidden=Die schwebende Leiste ist ausgeblendet. Rechtsklick auf das Tray-Symbol, dann Schwebende Leiste, um sie wieder anzuzeigen.
 bal.busy=Ein Umschalten l\u00e4uft bereits, bitte warten.
@@ -99,6 +102,7 @@ bal.lang_restart=Neustart, um die Sprache zu \u00fcbernehmen...
 bal.minimized=Das Programm l\u00e4uft weiter neben der Uhr. Rechtsklick auf das Symbol zum Beenden.
 bal.power=Herunterfahren oder Neustart vom iPhone angefordert: 30 Sekunden zum Abbrechen.
 bal.restored=Internet wiederhergestellt
+bal.theme_restart=Neustart, um das Design anzuwenden...
 bar.internet=INTERNET
 bar.local=LOKAL
 bar.title=Systemmonitor
@@ -185,6 +189,7 @@ menu.quit=Beenden
 menu.removable=Wechseldatentr\u00e4ger
 menu.reset=Leistenposition zur\u00fccksetzen
 menu.restore=Internet wiederherstellen
+menu.settings=Einstellungen...
 menu.size=Leistengr\u00f6\u00dfe
 menu.small=Klein
 menu.top=Leiste im Vordergrund halten
@@ -274,6 +279,20 @@ pin.off=Die Fernsteuerung ist nicht aktiv.
 pin.save=Speichern
 pin.title=iPhone-Fernsteuerung
 power.reason=ZerkiWatch: Anfrage vom iPhone
+set.alert_cut=Warnen, wenn Internet getrennt bleibt f\u00fcr
+set.alert_speed=Warnen, wenn der Datenverkehr \u00fcbersteigt
+set.alerts=Warnungen
+set.close=Schlie\u00dfen
+set.display=Anzeige
+set.general=Allgemein
+set.min=Min.
+set.pw=Passwort / Adresse...
+set.remote=iPhone-Fernbedienung
+set.theme=Design
+set.theme_auto=Automatisch (Windows)
+set.theme_dark=Dunkel
+set.theme_light=Hell (Beta)
+set.title=ZerkiWatch-Einstellungen
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
 short.local=Lokaler Modus (Internet aus)
@@ -327,6 +346,7 @@ ui.recv=DOWNLOAD
 ui.retest=Erneut testen
 ui.send=UPLOAD
 ui.services=WINDOWS-DIENSTE
+ui.settings=Einstellungen
 ui.testing=Teste...
 ui.unreachable=Nicht erreichbar
 ui.vram=VRAM {0} / {1}
@@ -346,6 +366,9 @@ wiz.title=Willkommen bei ZerkiWatch
 [en]
 app.others=Others (ended processes)
 app.system=Windows system (shared, kernel)
+bal.alert_cut=Internet has been cut for {0} min.
+bal.alert_speed=Heavy traffic: {0} Mbps.
+bal.alert_speed_app=Heavy traffic: {0} Mbps (top: {1}).
 bal.autostart_fail=Could not start with Windows: {0}
 bal.bar_hidden=The floating bar is hidden. Right-click the tray icon, then Floating bar to show it again.
 bal.busy=A switch is already in progress, please wait.
@@ -359,6 +382,7 @@ bal.lang_restart=Restarting to apply the language...
 bal.minimized=The program keeps running near the clock. Right-click the icon to quit.
 bal.power=Shutdown or restart requested from the iPhone: 30 seconds to cancel.
 bal.restored=Internet restored
+bal.theme_restart=Restarting to apply the theme...
 bar.internet=INTERNET
 bar.local=LOCAL
 bar.title=System monitor
@@ -445,6 +469,7 @@ menu.quit=Quit
 menu.removable=Removable
 menu.reset=Reset bar position
 menu.restore=Restore Internet
+menu.settings=Settings...
 menu.size=Bar size
 menu.small=Small
 menu.top=Keep bar on top
@@ -534,6 +559,20 @@ pin.off=The remote is not active.
 pin.save=Save
 pin.title=iPhone remote
 power.reason=ZerkiWatch: request from the iPhone
+set.alert_cut=Alert when Internet stays cut for
+set.alert_speed=Alert when traffic exceeds
+set.alerts=Alerts
+set.close=Close
+set.display=Display
+set.general=General
+set.min=min
+set.pw=Password / address...
+set.remote=iPhone remote
+set.theme=Theme
+set.theme_auto=Automatic (Windows)
+set.theme_dark=Dark
+set.theme_light=Light (beta)
+set.title=ZerkiWatch settings
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
 short.local=Local mode (Internet off)
@@ -587,6 +626,7 @@ ui.recv=DOWNLOAD
 ui.retest=Retest
 ui.send=UPLOAD
 ui.services=WINDOWS SERVICES
+ui.settings=Settings
 ui.testing=Testing...
 ui.unreachable=Unreachable
 ui.vram=VRAM {0} / {1}
@@ -606,6 +646,9 @@ wiz.title=Welcome to ZerkiWatch
 [es]
 app.others=Otros (procesos finalizados)
 app.system=Sistema Windows (compartido, kernel)
+bal.alert_cut=Internet lleva cortado {0} min.
+bal.alert_speed=Tr\u00e1fico alto: {0} Mbps.
+bal.alert_speed_app=Tr\u00e1fico alto: {0} Mbps (principal: {1}).
 bal.autostart_fail=No se pudo iniciar con Windows: {0}
 bal.bar_hidden=La barra flotante est\u00e1 oculta. Haz clic derecho en el icono de la bandeja y elige Barra flotante para mostrarla de nuevo.
 bal.busy=Ya hay un cambio en curso, espera un momento.
@@ -619,6 +662,7 @@ bal.lang_restart=Reiniciando para aplicar el idioma...
 bal.minimized=El programa sigue en ejecuci\u00f3n junto al reloj. Haz clic derecho en el icono para salir.
 bal.power=Apagado o reinicio solicitado desde el iPhone: 30 segundos para cancelar.
 bal.restored=Internet restablecido
+bal.theme_restart=Reiniciando para aplicar el tema...
 bar.internet=INTERNET
 bar.local=LOCAL
 bar.title=Monitor del sistema
@@ -705,6 +749,7 @@ menu.quit=Salir
 menu.removable=Extra\u00edble
 menu.reset=Restablecer posici\u00f3n de la barra
 menu.restore=Restablecer Internet
+menu.settings=Ajustes...
 menu.size=Tama\u00f1o de la barra
 menu.small=Peque\u00f1a
 menu.top=Mantener la barra al frente
@@ -794,6 +839,20 @@ pin.off=El control remoto no est\u00e1 activo.
 pin.save=Guardar
 pin.title=Control remoto iPhone
 power.reason=ZerkiWatch: solicitud desde el iPhone
+set.alert_cut=Avisar si Internet sigue cortado
+set.alert_speed=Avisar si el tr\u00e1fico supera
+set.alerts=Alertas
+set.close=Cerrar
+set.display=Pantalla
+set.general=General
+set.min=min
+set.pw=Contrase\u00f1a / direcci\u00f3n...
+set.remote=Mando del iPhone
+set.theme=Tema
+set.theme_auto=Autom\u00e1tico (Windows)
+set.theme_dark=Oscuro
+set.theme_light=Claro (beta)
+set.title=Ajustes de ZerkiWatch
 short.all={0} - Baj. {1} - Sub. {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
 short.local=Modo local (Internet desactivado)
@@ -847,6 +906,7 @@ ui.recv=DESCARGA
 ui.retest=Repetir
 ui.send=SUBIDA
 ui.services=SERVICIOS DE WINDOWS
+ui.settings=Ajustes
 ui.testing=Probando...
 ui.unreachable=Inaccesible
 ui.vram=VRAM {0} / {1}
@@ -866,6 +926,9 @@ wiz.title=Bienvenido a ZerkiWatch
 [fr]
 app.others=Autres (processus termin\u00e9s)
 app.system=Syst\u00e8me Windows (partages, noyau)
+bal.alert_cut=Internet est coup\u00e9 depuis {0} min.
+bal.alert_speed=Trafic \u00e9lev\u00e9 : {0} Mbps.
+bal.alert_speed_app=Trafic \u00e9lev\u00e9 : {0} Mbps (principal : {1}).
 bal.autostart_fail=Lancement avec Windows impossible : {0}
 bal.bar_hidden=La barre flottante est masqu\u00e9e. Clic droit sur l'ic\u00f4ne, puis Barre flottante pour la r\u00e9afficher.
 bal.busy=Changement d\u00e9j\u00e0 en cours, patientez.
@@ -879,6 +942,7 @@ bal.lang_restart=Red\u00e9marrage pour appliquer la langue...
 bal.minimized=Le programme continue pr\u00e8s de l'horloge. Clic droit sur l'ic\u00f4ne pour quitter.
 bal.power=Arr\u00eat ou red\u00e9marrage demand\u00e9 depuis l'iPhone : 30 secondes pour annuler.
 bal.restored=Internet r\u00e9activ\u00e9
+bal.theme_restart=Red\u00e9marrage pour appliquer le th\u00e8me...
 bar.internet=INTERNET
 bar.local=LOCAL
 bar.title=Moniteur syst\u00e8me
@@ -965,6 +1029,7 @@ menu.quit=Quitter
 menu.removable=Amovible
 menu.reset=Remettre la barre en place
 menu.restore=R\u00e9activer Internet
+menu.settings=R\u00e9glages...
 menu.size=Taille de la barre
 menu.small=Petit
 menu.top=Barre toujours au premier plan
@@ -1054,6 +1119,20 @@ pin.off=La t\u00e9l\u00e9commande n'est pas active.
 pin.save=Enregistrer
 pin.title=T\u00e9l\u00e9commande iPhone
 power.reason=ZerkiWatch : demande depuis l'iPhone
+set.alert_cut=Alerter si Internet reste coup\u00e9
+set.alert_speed=Alerter si le trafic d\u00e9passe
+set.alerts=Alertes
+set.close=Fermer
+set.display=Affichage
+set.general=G\u00e9n\u00e9ral
+set.min=min
+set.pw=Mot de passe / adresse...
+set.remote=T\u00e9l\u00e9commande iPhone
+set.theme=Th\u00e8me
+set.theme_auto=Automatique (Windows)
+set.theme_dark=Sombre
+set.theme_light=Clair (b\u00eata)
+set.title=R\u00e9glages ZerkiWatch
 short.all={0} - Re\u00e7u {1} - Envoi {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
 short.local=Mode local (Internet coup\u00e9)
@@ -1107,6 +1186,7 @@ ui.recv=R\u00c9CEPTION
 ui.retest=Retester
 ui.send=ENVOI
 ui.services=SERVICES WINDOWS
+ui.settings=R\u00e9glages
 ui.testing=Test en cours...
 ui.unreachable=Injoignable
 ui.vram=VRAM {0} / {1}
@@ -1126,6 +1206,9 @@ wiz.title=Bienvenue dans ZerkiWatch
 [it]
 app.others=Altri (processi terminati)
 app.system=Sistema Windows (condivisi, kernel)
+bal.alert_cut=Internet \u00e8 interrotto da {0} min.
+bal.alert_speed=Traffico elevato: {0} Mbps.
+bal.alert_speed_app=Traffico elevato: {0} Mbps (principale: {1}).
 bal.autostart_fail=Impossibile avviare con Windows: {0}
 bal.bar_hidden=La barra mobile \u00e8 nascosta. Clic destro sull'icona nell'area di notifica, poi Barra mobile per mostrarla di nuovo.
 bal.busy=Un cambio \u00e8 gi\u00e0 in corso, attendi.
@@ -1139,6 +1222,7 @@ bal.lang_restart=Riavvio per applicare la lingua...
 bal.minimized=Il programma resta attivo vicino all'orologio. Clic destro sull'icona per uscire.
 bal.power=Arresto o riavvio richiesto dall'iPhone: 30 secondi per annullare.
 bal.restored=Internet ripristinato
+bal.theme_restart=Riavvio per applicare il tema...
 bar.internet=INTERNET
 bar.local=LOCALE
 bar.title=Monitor di sistema
@@ -1225,6 +1309,7 @@ menu.quit=Esci
 menu.removable=Rimovibile
 menu.reset=Reimposta posizione barra
 menu.restore=Ripristina Internet
+menu.settings=Impostazioni...
 menu.size=Dimensione barra
 menu.small=Piccola
 menu.top=Barra sempre in primo piano
@@ -1314,6 +1399,20 @@ pin.off=Il remoto non \u00e8 attivo.
 pin.save=Salva
 pin.title=Remoto iPhone
 power.reason=ZerkiWatch: richiesta dall'iPhone
+set.alert_cut=Avvisa se Internet resta interrotto per
+set.alert_speed=Avvisa se il traffico supera
+set.alerts=Avvisi
+set.close=Chiudi
+set.display=Schermo
+set.general=Generale
+set.min=min
+set.pw=Password / indirizzo...
+set.remote=Telecomando iPhone
+set.theme=Tema
+set.theme_auto=Automatico (Windows)
+set.theme_dark=Scuro
+set.theme_light=Chiaro (beta)
+set.title=Impostazioni ZerkiWatch
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
 short.local=Modalit\u00e0 locale (Internet off)
@@ -1367,6 +1466,7 @@ ui.recv=DOWNLOAD
 ui.retest=Riprova
 ui.send=UPLOAD
 ui.services=SERVIZI WINDOWS
+ui.settings=Impostazioni
 ui.testing=Test in corso...
 ui.unreachable=Non raggiungibile
 ui.vram=VRAM {0} / {1}
@@ -1386,6 +1486,9 @@ wiz.title=Benvenuto in ZerkiWatch
 [pt]
 app.others=Outros (processos encerrados)
 app.system=Sistema Windows (compartilhado, kernel)
+bal.alert_cut=A Internet est\u00e1 cortada h\u00e1 {0} min.
+bal.alert_speed=Tr\u00e1fego elevado: {0} Mbps.
+bal.alert_speed_app=Tr\u00e1fego elevado: {0} Mbps (principal: {1}).
 bal.autostart_fail=N\u00e3o foi poss\u00edvel iniciar com o Windows: {0}
 bal.bar_hidden=A barra flutuante est\u00e1 oculta. Clique com o bot\u00e3o direito no \u00edcone da bandeja e depois em Barra flutuante para exibi-la novamente.
 bal.busy=Uma altern\u00e2ncia j\u00e1 est\u00e1 em andamento, aguarde.
@@ -1399,6 +1502,7 @@ bal.lang_restart=Reiniciando para aplicar o idioma...
 bal.minimized=O programa continua em execu\u00e7\u00e3o perto do rel\u00f3gio. Clique com o bot\u00e3o direito no \u00edcone para sair.
 bal.power=Desligamento ou reinicializa\u00e7\u00e3o solicitado pelo iPhone: 30 segundos para cancelar.
 bal.restored=Internet restaurada
+bal.theme_restart=A reiniciar para aplicar o tema...
 bar.internet=INTERNET
 bar.local=LOCAL
 bar.title=Monitor do sistema
@@ -1485,6 +1589,7 @@ menu.quit=Sair
 menu.removable=Remov\u00edvel
 menu.reset=Redefinir posi\u00e7\u00e3o da barra
 menu.restore=Restaurar a Internet
+menu.settings=Defini\u00e7\u00f5es...
 menu.size=Tamanho da barra
 menu.small=Pequeno
 menu.top=Manter a barra no topo
@@ -1574,6 +1679,20 @@ pin.off=O controle remoto n\u00e3o est\u00e1 ativo.
 pin.save=Salvar
 pin.title=Controle remoto do iPhone
 power.reason=ZerkiWatch: solicita\u00e7\u00e3o do iPhone
+set.alert_cut=Avisar se a Internet ficar cortada
+set.alert_speed=Avisar se o tr\u00e1fego exceder
+set.alerts=Alertas
+set.close=Fechar
+set.display=Ecr\u00e3
+set.general=Geral
+set.min=min
+set.pw=Palavra-passe / endere\u00e7o...
+set.remote=Controlo remoto do iPhone
+set.theme=Tema
+set.theme_auto=Autom\u00e1tico (Windows)
+set.theme_dark=Escuro
+set.theme_light=Claro (beta)
+set.title=Defini\u00e7\u00f5es do ZerkiWatch
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
 short.local=Modo local (Internet desligada)
@@ -1627,6 +1746,7 @@ ui.recv=DOWNLOAD
 ui.retest=Testar de novo
 ui.send=UPLOAD
 ui.services=SERVI\u00c7OS DO WINDOWS
+ui.settings=Defini\u00e7\u00f5es
 ui.testing=Testando...
 ui.unreachable=Inacess\u00edvel
 ui.vram=VRAM {0} / {1}
@@ -1658,15 +1778,33 @@ try {
     }
 } catch { }
 $LangCode = ''
+$ThemePref = 'dark'
 try {
     $cfgPath0 = Join-Path $logDir 'config.txt'
     if (Test-Path -LiteralPath $cfgPath0) {
         foreach ($ln0 in [System.IO.File]::ReadAllLines($cfgPath0)) {
             if ($ln0.StartsWith('Lang=')) { $LangCode = $ln0.Substring(5).Trim().ToLower() }
+            if ($ln0.StartsWith('Theme=')) { $ThemePref = $ln0.Substring(6).Trim().ToLower() }
         }
     }
 } catch { }
 $LangPref = $LangCode
+# Theme: dark (default) | light | auto (follows Windows). Applied at start; changing it restarts the app.
+if (@('dark', 'light', 'auto') -notcontains $ThemePref) { $ThemePref = 'dark' }
+$ThemeLight = ($ThemePref -eq 'light')
+if ($ThemePref -eq 'auto') {
+    try { $ThemeLight = ((Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'AppsUseLightTheme' -ErrorAction Stop).AppsUseLightTheme -eq 1) } catch { $ThemeLight = $false }
+}
+function Pc([int[]]$d, [int[]]$l) {
+    $v = $d
+    if ($ThemeLight) { $v = $l }
+    return [System.Drawing.Color]::FromArgb($v[0], $v[1], $v[2])
+}
+# Overlay line colour: white on the dark theme, black on the light one
+function Get-Ov([int]$a) {
+    if ($ThemeLight) { return [System.Drawing.Color]::FromArgb($a, 0, 0, 0) }
+    return [System.Drawing.Color]::FromArgb($a, 255, 255, 255)
+}
 if (($LangCode -eq '') -or (-not $LangDb.ContainsKey($LangCode))) {
     $LangCode = 'en'
     try {
@@ -2037,20 +2175,19 @@ function Test-Box {
 }
 
 # ---------- Interface graphique ----------
-$cBg    = [System.Drawing.Color]::FromArgb(10, 14, 28)
-$cCard  = [System.Drawing.Color]::FromArgb(19, 26, 48)
-$cCardTop = [System.Drawing.Color]::FromArgb(28, 38, 70)
-$cBorder = [System.Drawing.Color]::FromArgb(38, 50, 86)
-$cText  = [System.Drawing.Color]::FromArgb(240, 244, 255)
-$cMuted = [System.Drawing.Color]::FromArgb(138, 150, 184)
-$cGreen = [System.Drawing.Color]::FromArgb(52, 211, 153)
-$cRed   = [System.Drawing.Color]::FromArgb(248, 113, 113)
-$cAmber = [System.Drawing.Color]::FromArgb(251, 191, 36)
-$aCpu = [System.Drawing.Color]::FromArgb(52, 211, 153)
-$aRam = [System.Drawing.Color]::FromArgb(45, 212, 191)
-$aGpu = [System.Drawing.Color]::FromArgb(244, 114, 182)
-$aDsk = [System.Drawing.Color]::FromArgb(251, 191, 36)
-
+$cBg = (Pc @(10, 14, 28) @(244, 246, 251))
+$cCard = (Pc @(19, 26, 48) @(255, 255, 255))
+$cCardTop = (Pc @(28, 38, 70) @(238, 242, 250))
+$cBorder = (Pc @(38, 50, 86) @(213, 220, 235))
+$cText = (Pc @(240, 244, 255) @(15, 23, 42))
+$cMuted = (Pc @(138, 150, 184) @(91, 103, 133))
+$cGreen = (Pc @(52, 211, 153) @(14, 159, 110))
+$cRed = (Pc @(248, 113, 113) @(220, 38, 38))
+$cAmber = (Pc @(251, 191, 36) @(180, 83, 9))
+$aCpu = (Pc @(52, 211, 153) @(14, 159, 110))
+$aRam = (Pc @(45, 212, 191) @(13, 148, 136))
+$aGpu = (Pc @(244, 114, 182) @(219, 39, 119))
+$aDsk = (Pc @(251, 191, 36) @(180, 83, 9))
 # Etat de l'interface : Local = mode local actif ; Busy = clics ignores ; Switching = bascule en cours ; Pos = position du bouton (0 = gauche/coupe, 1 = droite/actif)
 $S = @{ Local = $false; Busy = $false; Switching = $false; Pos = 1.0 }
 $S.HkOk = $hkOkTmp
@@ -2769,6 +2906,35 @@ function Check-TimedCut {
         Update-Ui
         $S.PendingTest = $true
         try { $tray.ShowBalloonTip(3500, 'ZerkiWatch', (T 'bal.cut_end'), [System.Windows.Forms.ToolTipIcon]::Info) } catch { }
+    }
+}
+
+# ---------- Alertes (desactivees par defaut) : trafic eleve, Internet coupe trop longtemps ----------
+$S.AlHi = 0
+$S.AlArm = $true
+$S.LocalSince = $null
+$S.AlCutSent = $false
+function Check-Alerts {
+    if ($S.AlertSpeed -gt 0) {
+        $tot = [double]$S.Dl + [double]$S.Ul
+        if ($tot -ge $S.AlertSpeed) { $S.AlHi = $S.AlHi + 1 }
+        else { $S.AlHi = 0; if ($tot -lt ($S.AlertSpeed * 0.7)) { $S.AlArm = $true } }
+        if (($S.AlHi -ge 10) -and $S.AlArm) {
+            $S.AlArm = $false
+            $who = ''
+            try { $ap = @($S.Apps); if ($ap.Count -gt 0) { $who = [string]$ap[0].n } } catch { }
+            if ($who -ne '') { $msg = (Tf 'bal.alert_speed_app' @($tot.ToString('0'), $who)) } else { $msg = (Tf 'bal.alert_speed' @($tot.ToString('0'))) }
+            try { $tray.ShowBalloonTip(5000, 'ZerkiWatch', $msg, [System.Windows.Forms.ToolTipIcon]::Warning) } catch { }
+        }
+    }
+    if ($S.AlertCut -gt 0) {
+        if ($S.Local) {
+            if ($S.LocalSince -eq $null) { $S.LocalSince = [DateTime]::UtcNow }
+            if ((-not $S.AlCutSent) -and ($S.CutUntil -eq $null) -and (([DateTime]::UtcNow - [DateTime]$S.LocalSince).TotalMinutes -ge $S.AlertCut)) {
+                $S.AlCutSent = $true
+                try { $tray.ShowBalloonTip(5000, 'ZerkiWatch', (Tf 'bal.alert_cut' @([string]$S.AlertCut)), [System.Windows.Forms.ToolTipIcon]::Warning) } catch { }
+            }
+        } else { $S.LocalSince = $null; $S.AlCutSent = $false }
     }
 }
 
@@ -3751,6 +3917,7 @@ function Update-Mon {
 
     if ((($S.Tick % 20) -eq 3) -and (-not $S.Busy) -and (-not $S.Switching)) { Start-BgWork 'mode' }
     try { Update-Bar } catch { Write-Log ('Update-Bar: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'ub' }
+    try { Check-Alerts } catch { Write-Log ('Check-Alerts: ' + $_.Exception.Message) 'ca' }
     try { Check-TimedCut } catch { Write-Log ('Check-TimedCut: ' + $_.Exception.Message) 'ct' }
     try { Update-Widget } catch { Write-Log ('Update-Widget: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'uw' }
     if ($formOn) { try { $pnlRight.Invalidate() } catch { } }
@@ -3944,8 +4111,8 @@ $form.Controls.Add($lblFoot)
 
 $btnRetest = New-Object System.Windows.Forms.Button
 $btnRetest.Text = (T 'ui.retest')
-$btnRetest.Location = New-Object System.Drawing.Point(70, 476)
-$btnRetest.Size = New-Object System.Drawing.Size(120, 32)
+$btnRetest.Location = New-Object System.Drawing.Point(26, 476)
+$btnRetest.Size = New-Object System.Drawing.Size(110, 32)
 $btnRetest.FlatStyle = 'Flat'
 $btnRetest.FlatAppearance.BorderSize = 0
 $btnRetest.BackColor = $cCard
@@ -3956,8 +4123,8 @@ $form.Controls.Add($btnRetest)
 
 $btnHist = New-Object System.Windows.Forms.Button
 $btnHist.Text = (T 'ui.history')
-$btnHist.Location = New-Object System.Drawing.Point(210, 476)
-$btnHist.Size = New-Object System.Drawing.Size(120, 32)
+$btnHist.Location = New-Object System.Drawing.Point(148, 476)
+$btnHist.Size = New-Object System.Drawing.Size(110, 32)
 $btnHist.FlatStyle = 'Flat'
 $btnHist.FlatAppearance.BorderSize = 1
 $btnHist.FlatAppearance.BorderColor = $cBorder
@@ -3967,11 +4134,24 @@ $btnHist.Font = New-Font 9 $false
 $btnHist.Cursor = [System.Windows.Forms.Cursors]::Hand
 $form.Controls.Add($btnHist)
 
+$btnSet = New-Object System.Windows.Forms.Button
+$btnSet.Text = (T 'ui.settings')
+$btnSet.Location = New-Object System.Drawing.Point(270, 476)
+$btnSet.Size = New-Object System.Drawing.Size(110, 32)
+$btnSet.FlatStyle = 'Flat'
+$btnSet.FlatAppearance.BorderSize = 1
+$btnSet.FlatAppearance.BorderColor = $cBorder
+$btnSet.BackColor = $cCard
+$btnSet.ForeColor = $cText
+$btnSet.Font = New-Font 9 $false
+$btnSet.Cursor = [System.Windows.Forms.Cursors]::Hand
+$form.Controls.Add($btnSet)
+
 # --- Colonne de droite : debit, applications, services ---
-$cDl  = [System.Drawing.Color]::FromArgb(56, 189, 248)
-$cUl  = [System.Drawing.Color]::FromArgb(167, 139, 250)
-$cApp = [System.Drawing.Color]::FromArgb(251, 146, 60)
-$cSvc = [System.Drawing.Color]::FromArgb(45, 212, 191)
+$cDl = (Pc @(56, 189, 248) @(2, 132, 199))
+$cUl = (Pc @(167, 139, 250) @(124, 58, 237))
+$cApp = (Pc @(251, 146, 60) @(234, 88, 12))
+$cSvc = (Pc @(45, 212, 191) @(13, 148, 136))
 $fCardT = New-Object System.Drawing.Font('Segoe UI Semibold', 8.5)
 $fBig   = New-Object System.Drawing.Font('Segoe UI Semibold', 20)
 $fPctBig = New-Object System.Drawing.Font('Segoe UI Semibold', 17)
@@ -4196,7 +4376,7 @@ function Draw-Rows($g, $items, [int]$x, [int]$y0, $accent, [string]$emptyMsg, [i
         $g.DrawString([string]$it.n, $fRow, $bText, $rc1, $sfEll)
         $rc2 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x + 16 + $w - 124)), ([single]$ry), ([single]124), ([single]18)
         $g.DrawString((Format-Mbps ([double]$it.m)) + ' Mbps', $fRowV, $bMuted, $rc2, $sfRight)
-        $tr = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(26, 255, 255, 255))
+        $tr = New-Object System.Drawing.SolidBrush((Get-Ov 26))
         $g.FillRectangle($tr, [single]($x + 16), [single]($ry + 20), [single]$w, [single]3)
         $tr.Dispose()
         $fw = [math]::Max(2.0, [double]$w * [double]$it.m / $mx)
@@ -4349,18 +4529,18 @@ if ($S.Local) { $S.Pos = 0.0 } else { $S.Pos = 1.0 }
 Update-Ui
 
 # ---------- Barre flottante (CPU, RAM, debit) ----------
-$cBg1    = [System.Drawing.Color]::FromArgb(26, 36, 68)
-$cBg2    = [System.Drawing.Color]::FromArgb(10, 14, 28)
+$cBg1 = (Pc @(26, 36, 68) @(232, 238, 250))
+$cBg2 = (Pc @(10, 14, 28) @(244, 246, 251))
 $bText   = New-Object System.Drawing.SolidBrush($cText)
 $bMuted  = New-Object System.Drawing.SolidBrush($cMuted)
-$barBorder = [System.Drawing.Color]::FromArgb(44, 58, 98)
+$barBorder = (Pc @(44, 58, 98) @(190, 200, 222))
 $barIconBmp = $null
 try { $barIconBmp = (New-Object System.Drawing.Icon($form.Icon, 32, 32)).ToBitmap() } catch { $barIconBmp = $null }
-$cMenuBg = [System.Drawing.Color]::FromArgb(19, 26, 48)
-$cTrack  = [System.Drawing.Color]::FromArgb(44, 52, 78)
-$cLoadG  = [System.Drawing.Color]::FromArgb(52, 211, 153)
-$cLoadA  = [System.Drawing.Color]::FromArgb(251, 191, 36)
-$cLoadR  = [System.Drawing.Color]::FromArgb(248, 113, 113)
+$cMenuBg = (Pc @(19, 26, 48) @(255, 255, 255))
+$cTrack = (Pc @(44, 52, 78) @(214, 220, 235))
+$cLoadG = (Pc @(52, 211, 153) @(14, 159, 110))
+$cLoadA = (Pc @(251, 191, 36) @(180, 83, 9))
+$cLoadR = (Pc @(248, 113, 113) @(220, 38, 38))
 $px = [System.Drawing.GraphicsUnit]::Pixel
 $reg = [System.Drawing.FontStyle]::Regular
 $fVal  = New-Object System.Drawing.Font('Segoe UI Semibold', 17, $reg, $px)
@@ -4394,6 +4574,10 @@ if ($cfg.ContainsKey('Items')) {
     $its = @(([string]$cfg['Items']).Split(',') | ForEach-Object { $_.Trim() } | Where-Object { @('mode', 'dl', 'ul', 'cpu', 'ram', 'gpu', 'dsk') -contains $_ })
     if ($its.Count -gt 0) { $BAR.Items = $its }
 }
+$S.AlertSpeed = 0
+$S.AlertCut = 0
+if ($cfg.ContainsKey('AlertSpeed')) { try { $S.AlertSpeed = [math]::Max(0, [math]::Min(10000, [int]$cfg['AlertSpeed'])) } catch { } }
+if ($cfg.ContainsKey('AlertCut')) { try { $S.AlertCut = [math]::Max(0, [math]::Min(1440, [int]$cfg['AlertCut'])) } catch { } }
 $S.WizDone = ($cfg.ContainsKey('Wizard') -or ($cfg.Count -gt 0))
 $savedWPt = $null
 if ($cfg.ContainsKey('WX') -and $cfg.ContainsKey('WY')) {
@@ -4465,7 +4649,7 @@ function Draw-NetSeg($g, [single]$x, [bool]$down, [double]$val, $hist, $accent) 
     $w2 = 74.0
     $y0 = 31.0
     $h2 = 11.0
-    $base = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(30, 255, 255, 255), [single]1)
+    $base = New-Object System.Drawing.Pen((Get-Ov 30), [single]1)
     $g.DrawLine($base, [single]$x0, [single]($y0 + $h2 + 1), [single]($x0 + $w2), [single]($y0 + $h2 + 1))
     $base.Dispose()
     if ($cnt -ge 2) {
@@ -4560,6 +4744,9 @@ function Save-BarConfig {
             ('Widget=' + [int]$WID.On),
             ('Wizard=' + [int]($S.WizDone -eq $true)),
             ('Items=' + ((@($BAR.Items)) -join ',')),
+            ('Theme=' + $ThemePref),
+            ('AlertSpeed=' + [int]$S.AlertSpeed),
+            ('AlertCut=' + [int]$S.AlertCut),
             ('Cumul=' + [int]$S.CumulOn),
             ('Hotkey=' + [int]$S.HkOn),
             ('HotkeyCombo=' + $S.HkId)
@@ -4621,7 +4808,7 @@ function Draw-Bar($g, [double]$k) {
         $bgb = New-Object System.Drawing.Drawing2D.LinearGradientBrush -ArgumentList $rc, $cBg1, $cBg2, ([single]90)
         $g.FillRectangle($bgb, $rc)
         $bgb.Dispose()
-        $sepPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(34, 255, 255, 255), [single]1)
+        $sepPen = New-Object System.Drawing.Pen((Get-Ov 34), [single]1)
         $sepPen.Dispose()
         $bp = New-Object System.Drawing.Pen($barBorder, [single]1)
         $g.DrawRectangle($bp, [single]0, [single]0, [single]($BAR.W - 1), [single]($BAR.H - 1))
@@ -4639,7 +4826,7 @@ function Draw-Bar($g, [double]$k) {
         $g.DrawEllipse($dp, [single]26, [single]27, [single]9, [single]9)
         $db.Dispose(); $dp.Dispose()
         $g.TranslateTransform([single]34, [single]0)
-        $sepPen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(34, 255, 255, 255), [single]1)
+        $sepPen = New-Object System.Drawing.Pen((Get-Ov 34), [single]1)
         $sx = 0
         foreach ($seg in @($BAR.Layout)) {
             if ($sx -gt 0) { $g.DrawLine($sepPen, [single]$sx, [single]10, [single]$sx, [single]36) }
@@ -4844,7 +5031,7 @@ $barTip.Add_Draw({
         $tb = New-Object System.Drawing.SolidBrush($cMenuBg)
         $de.Graphics.FillRectangle($tb, $de.Bounds)
         $tb.Dispose()
-        $tpen = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(44, 58, 98))
+        $tpen = New-Object System.Drawing.Pen($barBorder)
         $de.Graphics.DrawRectangle($tpen, 0, 0, ($de.Bounds.Width - 1), ($de.Bounds.Height - 1))
         $tpen.Dispose()
         [System.Windows.Forms.TextRenderer]::DrawText($de.Graphics, $de.ToolTipText, $fTip, (New-Object System.Drawing.Point(12, 9)), $cText)
@@ -4852,7 +5039,7 @@ $barTip.Add_Draw({
 })
 
 # ---------- Icone pres de l'horloge et menu ----------
-if ($themed) {
+if ($themed -and (-not $ThemeLight)) {
     try {
         $rend = New-Object System.Windows.Forms.ToolStripProfessionalRenderer((New-Object DarkColors))
         $rend.RoundedEdges = $false
@@ -4929,6 +5116,7 @@ $miCumul = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.cumul'))
 $miHot = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.hotkey'))
 $miLang  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.language'))
 $miWiz   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.wizard'))
+$miSet   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.settings'))
 $miPhone = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.iphone'))
 $miLog   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.log'))
 $miQuit  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.quit'))
@@ -4952,12 +5140,13 @@ $null = $menu.Items.Add((New-Object System.Windows.Forms.ToolStripSeparator))
 $null = $menu.Items.Add($miCumul)
 $null = $menu.Items.Add($miHot)
 $null = $menu.Items.Add($miPhone)
+$null = $menu.Items.Add($miSet)
 $null = $menu.Items.Add($miLang)
 $null = $menu.Items.Add($miWiz)
 $null = $menu.Items.Add($miAuto)
 $null = $menu.Items.Add($miLog)
 $null = $menu.Items.Add($miQuit)
-foreach ($it in @($miOpen, $miHist, $miNet, $miCut, $miBar, $miWid, $miItems, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miWiz, $miAuto, $miLog, $miQuit)) {
+foreach ($it in @($miOpen, $miHist, $miNet, $miCut, $miBar, $miWid, $miItems, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miSet, $miLang, $miWiz, $miAuto, $miLog, $miQuit)) {
     $it.ForeColor = $cText
     $it.BackColor = $cMenuBg
     $it.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
@@ -5487,6 +5676,139 @@ function Show-PinDialog {
     try { $lblFoot.Text = (Get-FootText) } catch { }
 }
 # Assistant de premiere ouverture (reutilise Set-Pin, Show-CertDialog, Set-Autostart, Set-Language)
+# ---------- Fenetre de reglages : chaque case agit tout de suite (reutilise les fonctions des menus) ----------
+function Show-Settings {
+    $d = New-Object System.Windows.Forms.Form
+    $d.Text = (T 'set.title')
+    $d.ClientSize = New-Object System.Drawing.Size(520, 700)
+    $d.StartPosition = 'CenterScreen'
+    $d.FormBorderStyle = 'FixedDialog'
+    $d.MaximizeBox = $false
+    $d.MinimizeBox = $false
+    $d.BackColor = $cBg
+    $d.ForeColor = $cText
+    $d.Font = New-Object System.Drawing.Font('Segoe UI', 9.5)
+    $fH = New-Object System.Drawing.Font('Segoe UI Semibold', 9)
+    $ld = @{ v = $true }
+    $y = 14
+    function Add-Head([string]$txt) {
+        $d.Controls.Add((New-Label $txt.ToUpper() 24 $script:y 472 20 $fH $cMuted 'MiddleLeft'))
+        $script:y = $script:y + 26
+    }
+    function Add-Check([string]$txt, [bool]$val) {
+        $c = New-Object System.Windows.Forms.CheckBox
+        $c.Text = $txt
+        $c.Location = New-Object System.Drawing.Point(28, $script:y)
+        $c.Size = New-Object System.Drawing.Size(468, 24)
+        $c.ForeColor = $cText
+        $c.Checked = $val
+        $d.Controls.Add($c)
+        $script:y = $script:y + 26
+        return $c
+    }
+    function Add-Combo([string]$txt, [string[]]$items, [int]$sel) {
+        $d.Controls.Add((New-Label $txt 28 ($script:y + 2) 200 22 $d.Font $cText 'MiddleLeft'))
+        $c = New-Object System.Windows.Forms.ComboBox
+        $c.DropDownStyle = 'DropDownList'
+        $c.Location = New-Object System.Drawing.Point(236, $script:y)
+        $c.Size = New-Object System.Drawing.Size(260, 26)
+        foreach ($it in $items) { [void]$c.Items.Add($it) }
+        $c.SelectedIndex = $sel
+        $d.Controls.Add($c)
+        $script:y = $script:y + 32
+        return $c
+    }
+    function Add-Num([System.Windows.Forms.CheckBox]$chk, [int]$val, [int]$max, [string]$unit) {
+        $n = New-Object System.Windows.Forms.NumericUpDown
+        $n.Minimum = 1
+        $n.Maximum = $max
+        $n.Value = [math]::Max(1, [math]::Min($max, $val))
+        $n.Location = New-Object System.Drawing.Point(320, ($script:y - 28))
+        $n.Size = New-Object System.Drawing.Size(80, 26)
+        $n.BackColor = $cCard; $n.ForeColor = $cText
+        $d.Controls.Add($n)
+        $d.Controls.Add((New-Label $unit 408 ($script:y - 26) 88 22 $d.Font $cMuted 'MiddleLeft'))
+        return $n
+    }
+    $script:y = 14
+    Add-Head (T 'set.display')
+    $cbBar = Add-Check (T 'menu.bar_full') (-not $BAR.UserHidden)
+    $cbWid = Add-Check (T 'menu.widget') $WID.On
+    $cbDock = Add-Check (T 'menu.dock') $BAR.Dock
+    $cbTop = Add-Check (T 'menu.top') $BAR.Top
+    $selSz = 1
+    if ([math]::Abs($BAR.UserScale - 0.85) -lt 0.01) { $selSz = 0 } elseif ([math]::Abs($BAR.UserScale - 1.25) -lt 0.01) { $selSz = 2 }
+    $coSz = Add-Combo (T 'menu.size') @((T 'menu.small'), (T 'menu.normal'), (T 'menu.big')) $selSz
+    $selTh = 1; if ($ThemePref -eq 'auto') { $selTh = 0 } elseif ($ThemePref -eq 'light') { $selTh = 1 } else { $selTh = 2 }
+    $coTh = Add-Combo (T 'set.theme') @((T 'set.theme_auto'), (T 'set.theme_light'), (T 'set.theme_dark')) $selTh
+    $script:y = $script:y + 6
+    Add-Head (T 'set.general')
+    $cbAuto = Add-Check (T 'menu.auto') (Test-Autostart)
+    $cbCum = Add-Check (T 'menu.cumul') $S.CumulOn
+    $cbHot = Add-Check (T 'menu.hotkey_enable') $S.HkOn
+    if (-not $S.HkOk) { $cbHot.Enabled = $false }
+    $script:y = $script:y + 6
+    Add-Head (T 'set.alerts')
+    $cbAs = Add-Check (T 'set.alert_speed') ($S.AlertSpeed -gt 0)
+    $nuAs = Add-Num $cbAs ([math]::Max(1, [int]$S.AlertSpeed)) 10000 'Mbps'
+    $cbAc = Add-Check (T 'set.alert_cut') ($S.AlertCut -gt 0)
+    $nuAc = Add-Num $cbAc ([math]::Max(1, [int]$S.AlertCut)) 1440 (T 'set.min')
+    $script:y = $script:y + 6
+    Add-Head (T 'set.remote')
+    $btnPw = New-Object System.Windows.Forms.Button
+    $btnPw.Text = (T 'set.pw')
+    $btnPw.Location = New-Object System.Drawing.Point(28, $script:y)
+    $btnPw.Size = New-Object System.Drawing.Size(230, 30)
+    $btnCe = New-Object System.Windows.Forms.Button
+    $btnCe.Text = (T 'pin.cert')
+    $btnCe.Location = New-Object System.Drawing.Point(266, $script:y)
+    $btnCe.Size = New-Object System.Drawing.Size(230, 30)
+    $btnWz = New-Object System.Windows.Forms.Button
+    $btnWz.Text = (T 'menu.wizard')
+    $btnWz.Location = New-Object System.Drawing.Point(28, ($script:y + 38))
+    $btnWz.Size = New-Object System.Drawing.Size(230, 30)
+    $btnCl = New-Object System.Windows.Forms.Button
+    $btnCl.Text = (T 'set.close')
+    $btnCl.Location = New-Object System.Drawing.Point(386, 654)
+    $btnCl.Size = New-Object System.Drawing.Size(110, 32)
+    foreach ($bt in @($btnPw, $btnCe, $btnWz, $btnCl)) { $bt.FlatStyle = 'Flat'; $bt.BackColor = $cCard; $bt.ForeColor = $cText; $d.Controls.Add($bt) }
+    if ($S.Listener -eq $null) { $btnCe.Enabled = $false }
+    $lanIp = Get-LanIp
+    $d.CancelButton = $btnCl
+    $d.AcceptButton = $btnCl
+    $btnCl.Add_Click({ $d.Close() })
+    $btnPw.Add_Click({ try { Show-PinDialog } catch { } })
+    $btnCe.Add_Click({ try { Show-CertDialog $lanIp } catch { } })
+    $btnWz.Add_Click({ $d.Close(); try { Show-Wizard } catch { } })
+    $cbBar.Add_CheckedChanged({ if (-not $ld.v) { if ($cbBar.Checked -eq $BAR.UserHidden) { Switch-Bar } } })
+    $cbWid.Add_CheckedChanged({ if (-not $ld.v) { if ($cbWid.Checked -ne $WID.On) { Switch-Widget } } })
+    $cbDock.Add_CheckedChanged({ if (-not $ld.v) { if ($cbDock.Checked -ne $BAR.Dock) { Set-Dock $cbDock.Checked; $ld.v = $true; $cbDock.Checked = $BAR.Dock; $ld.v = $false } } })
+    $cbTop.Add_CheckedChanged({ if (-not $ld.v) { $BAR.Top = $cbTop.Checked; $barForm.TopMost = $BAR.Top; $wForm.TopMost = $BAR.Top; Save-BarConfig } })
+    $coSz.Add_SelectedIndexChanged({ if (-not $ld.v) { Set-BarScale @(0.85, 1.0, 1.25)[$coSz.SelectedIndex] } })
+    $coTh.Add_SelectedIndexChanged({
+        if ($ld.v) { return }
+        $np = @('auto', 'light', 'dark')[$coTh.SelectedIndex]
+        if ($np -ne $ThemePref) {
+            $script:ThemePref = $np
+            Save-BarConfig
+            try { $tray.ShowBalloonTip(2500, 'ZerkiWatch', (T 'bal.theme_restart'), [System.Windows.Forms.ToolTipIcon]::Info) } catch { }
+            $d.Close()
+            Restart-App
+        }
+    })
+    $cbAuto.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAuto.Checked -ne (Test-Autostart)) { Set-Autostart $cbAuto.Checked } } })
+    $cbCum.Add_CheckedChanged({ if (-not $ld.v) { $S.CumulOn = $cbCum.Checked; Save-BarConfig } })
+    $cbHot.Add_CheckedChanged({ if (-not $ld.v) { $S.HkOn = $cbHot.Checked; Save-BarConfig; Apply-Hotkey } })
+    $cbAs.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAs.Checked) { $S.AlertSpeed = [int]$nuAs.Value } else { $S.AlertSpeed = 0 }; $S.AlHi = 0; $S.AlArm = $true; Save-BarConfig } })
+    $nuAs.Add_ValueChanged({ if ((-not $ld.v) -and $cbAs.Checked) { $S.AlertSpeed = [int]$nuAs.Value; Save-BarConfig } })
+    $cbAc.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAc.Checked) { $S.AlertCut = [int]$nuAc.Value } else { $S.AlertCut = 0 }; $S.AlCutSent = $false; Save-BarConfig } })
+    $nuAc.Add_ValueChanged({ if ((-not $ld.v) -and $cbAc.Checked) { $S.AlertCut = [int]$nuAc.Value; Save-BarConfig } })
+    $ld.v = $false
+    [void]$d.ShowDialog()
+    $d.Dispose()
+    try { Update-Ui } catch { }
+}
+
 function Show-Wizard {
     $lanIp = Get-LanIp
     $d = New-Object System.Windows.Forms.Form
@@ -5593,6 +5915,8 @@ $miLog.Add_Click({
     } catch { }
 })
 $miPhone.Add_Click({ try { Show-PinDialog } catch { Write-Log ('PIN dialog: ' + $_.Exception.Message) } })
+$miSet.Add_Click({ try { Show-Settings } catch { Write-Log ('Settings: ' + $_.Exception.Message) 'st' } })
+$btnSet.Add_Click({ try { Show-Settings } catch { Write-Log ('Settings: ' + $_.Exception.Message) 'st' } })
 $miWiz.Add_Click({ try { Show-Wizard } catch { Write-Log ('Wizard: ' + $_.Exception.Message) 'wz' } })
 $miQuit.Add_Click({ Quit-App })
 $barForm.ContextMenuStrip = $menu
@@ -5992,7 +6316,7 @@ function Draw-Chart($g, [int]$x, [int]$y, [int]$w, [int]$h, $series, [double]$ma
     $py0 = $y + 46
     $pw = $w - 60 - 24
     $ph = $h - 46 - 32
-    $gp = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(26, 255, 255, 255), [single]1)
+    $gp = New-Object System.Drawing.Pen((Get-Ov 26), [single]1)
     for ($i = 0; $i -le 4; $i++) {
         $gy = $py0 + $ph - $ph * $i / 4.0
         $g.DrawLine($gp, [single]$px0, [single]$gy, [single]($px0 + $pw), [single]$gy)
