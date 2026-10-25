@@ -2079,8 +2079,24 @@ public static class MN {
     }
 }
 '@
+# Compiled helper types are cached as a DLL (hash of the source): the C# compiler only runs the first time
+function Add-TypeCached([string]$Code, [string[]]$Refs = @()) {
+    try {
+        $sha = [System.Security.Cryptography.SHA256]::Create()
+        $hs = ([BitConverter]::ToString($sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($Code)))).Replace('-', '').Substring(0, 16)
+        $cdir = Join-Path $logDir 'cache'
+        if (-not (Test-Path -LiteralPath $cdir)) { [void](New-Item -ItemType Directory -Path $cdir -Force) }
+        $dll = Join-Path $cdir ('t' + $hs + '.dll')
+        if (-not (Test-Path -LiteralPath $dll)) {
+            if ($Refs.Count -gt 0) { Add-Type -TypeDefinition $Code -ReferencedAssemblies $Refs -OutputAssembly $dll -OutputType Library } else { Add-Type -TypeDefinition $Code -OutputAssembly $dll -OutputType Library }
+        }
+        Add-Type -Path $dll
+        return
+    } catch { }
+    if ($Refs.Count -gt 0) { Add-Type -TypeDefinition $Code -ReferencedAssemblies $Refs } else { Add-Type -TypeDefinition $Code }
+}
 $native = $false
-try { Add-Type -TypeDefinition $nativeCode; $native = $true } catch { $native = $false }
+try { Add-TypeCached $nativeCode; $native = $true } catch { $native = $false }
 $themeCode = @'
 using System.Drawing;
 using System.Windows.Forms;
@@ -2127,9 +2143,9 @@ public class HotKeyWin : NativeWindow, IDisposable
 }
 '@
 $hkOkTmp = $false
-try { Add-Type -TypeDefinition $hkCode -ReferencedAssemblies 'System.Windows.Forms'; $hkOkTmp = $true } catch { $hkOkTmp = $false }
+try { Add-TypeCached $hkCode @('System.Windows.Forms'); $hkOkTmp = $true } catch { $hkOkTmp = $false }
 $themed = $false
-try { Add-Type -TypeDefinition $themeCode -ReferencedAssemblies 'System.Windows.Forms', 'System.Drawing'; $themed = $true } catch { $themed = $false }
+try { Add-TypeCached $themeCode @('System.Windows.Forms', 'System.Drawing'); $themed = $true } catch { $themed = $false }
 
 
 $Group = 'ZerkiWatch-LocalOnly'
@@ -3554,7 +3570,7 @@ public static class NetEtw
 '@
 $S.EtwOk = $false
 $S.EtwStatus = ''
-try { Add-Type -TypeDefinition $netCode -ReferencedAssemblies 'System.Core'; $S.EtwOk = $true } catch { $S.EtwStatus = 'compilation failed' }
+try { Add-TypeCached $netCode @('System.Core'); $S.EtwOk = $true } catch { $S.EtwStatus = 'compilation failed' }
 
 $S.Dl = 0.0
 $S.Ul = 0.0
