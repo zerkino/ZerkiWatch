@@ -83,6 +83,7 @@ menu.restore=Réactiver Internet
 menu.size=Taille de la barre
 menu.small=Petit
 menu.top=Barre toujours au premier plan
+menu.widget=Widget sur le bureau (déplaçable)
 p.apps=APPLICATIONS
 p.badpw=Mot de passe incorrect.
 p.busy=Le PC est occupé, réessayez.

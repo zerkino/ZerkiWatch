@@ -44,6 +44,7 @@ ZerkiWatch puts your **live internet speed (download / upload), CPU, RAM, GPU an
 ### Network speed in the taskbar (floating bar)
 - A small always-visible **floating bar** (speed, CPU, RAM, GPU, disk); click the dot to toggle.
 - **Integrate into the taskbar** places the bar next to the clock and hides it in full screen.
+- **Desktop widget (movable)**: right-click menu → *Desktop widget*. A second, free-floating bar you can drag anywhere; it works in addition to the taskbar-integrated bar. Position is remembered.
 - Tray icon, right-click menu, start with Windows.
 
 ![Floating bar](docs/images/floating-bar-en.png)

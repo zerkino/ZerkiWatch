@@ -83,6 +83,7 @@ menu.restore=Ripristina Internet
 menu.size=Dimensione barra
 menu.small=Piccola
 menu.top=Barra sempre in primo piano
+menu.widget=Widget sul desktop (spostabile)
 p.apps=APPLICAZIONI
 p.badpw=Password errata.
 p.busy=Il PC è occupato, riprova.

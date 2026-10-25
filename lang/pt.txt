@@ -83,6 +83,7 @@ menu.restore=Restaurar a Internet
 menu.size=Tamanho da barra
 menu.small=Pequeno
 menu.top=Manter a barra no topo
+menu.widget=Widget no ambiente de trabalho (movível)
 p.apps=APLICATIVOS
 p.badpw=Senha incorreta.
 p.busy=O PC está ocupado, tente novamente.

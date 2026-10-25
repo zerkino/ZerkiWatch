@@ -44,6 +44,7 @@ ZerkiWatch affiche votre **débit Internet en direct (réception / envoi), le CP
 ### Débit dans la barre des tâches (barre flottante)
 - Une petite **barre flottante** toujours visible (débit, CPU, RAM, GPU, disque) ; clic sur la pastille pour basculer.
 - **Intégrer à la barre des tâches** place la barre à côté de l'horloge et la cache en plein écran.
+- **Widget sur le bureau (déplaçable)** : menu clic droit → *Widget sur le bureau*. Une seconde barre, libre, que vous placez où vous voulez ; elle s'ajoute à la barre intégrée à la barre des tâches. Position mémorisée.
 - Icône près de l'horloge, menu clic droit, lancement avec Windows.
 
 ![Barre flottante](docs/images/floating-bar-fr.png)

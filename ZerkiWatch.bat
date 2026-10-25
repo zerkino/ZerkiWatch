@@ -166,6 +166,7 @@ menu.restore=Internet wiederherstellen
 menu.size=Leistengr\u00f6\u00dfe
 menu.small=Klein
 menu.top=Leiste im Vordergrund halten
+menu.widget=Desktop-Widget (verschiebbar)
 p.apps=ANWENDUNGEN
 p.badpw=Falsches Passwort.
 p.busy=Der PC ist besch\u00e4ftigt, versuche es erneut.
@@ -388,6 +389,7 @@ menu.restore=Restore Internet
 menu.size=Bar size
 menu.small=Small
 menu.top=Keep bar on top
+menu.widget=Desktop widget (movable)
 p.apps=APPLICATIONS
 p.badpw=Wrong password.
 p.busy=The PC is busy, try again.
@@ -610,6 +612,7 @@ menu.restore=Restablecer Internet
 menu.size=Tama\u00f1o de la barra
 menu.small=Peque\u00f1a
 menu.top=Mantener la barra al frente
+menu.widget=Widget en el escritorio (movible)
 p.apps=APLICACIONES
 p.badpw=Contrase\u00f1a incorrecta.
 p.busy=El PC est\u00e1 ocupado, int\u00e9ntalo de nuevo.
@@ -832,6 +835,7 @@ menu.restore=R\u00e9activer Internet
 menu.size=Taille de la barre
 menu.small=Petit
 menu.top=Barre toujours au premier plan
+menu.widget=Widget sur le bureau (d\u00e9pla\u00e7able)
 p.apps=APPLICATIONS
 p.badpw=Mot de passe incorrect.
 p.busy=Le PC est occup\u00e9, r\u00e9essayez.
@@ -1054,6 +1058,7 @@ menu.restore=Ripristina Internet
 menu.size=Dimensione barra
 menu.small=Piccola
 menu.top=Barra sempre in primo piano
+menu.widget=Widget sul desktop (spostabile)
 p.apps=APPLICAZIONI
 p.badpw=Password errata.
 p.busy=Il PC \u00e8 occupato, riprova.
@@ -1276,6 +1281,7 @@ menu.restore=Restaurar a Internet
 menu.size=Tamanho da barra
 menu.small=Pequeno
 menu.top=Manter a barra no topo
+menu.widget=Widget no ambiente de trabalho (mov\u00edvel)
 p.apps=APLICATIVOS
 p.badpw=Senha incorreta.
 p.busy=O PC est\u00e1 ocupado, tente novamente.
@@ -3387,7 +3393,7 @@ function Update-Mon {
         $pz = ((($nowU - $S.NeedAt).TotalSeconds -gt 15) -and (-not $S.CumulOn))
         try { if ([NetEtw]::Paused -ne $pz) { [NetEtw]::Paused = $pz } } catch { }
     }
-    $slow = ((-not $formOn) -and (-not $barForm.Visible) -and (-not $remoteOn))
+    $slow = ((-not $formOn) -and (-not $barForm.Visible) -and (-not $wForm.Visible) -and (-not $remoteOn))
     try { $S.Hw.Slow = $slow } catch { }
     $trimEvery = 0
     if ($slow) { $trimEvery = 120 } elseif (-not $formOn) { $trimEvery = 300 }
@@ -3402,6 +3408,7 @@ function Update-Mon {
 
     if ((($S.Tick % 20) -eq 3) -and (-not $S.Busy) -and (-not $S.Switching)) { Start-BgWork 'mode' }
     try { Update-Bar } catch { Write-Log ('Update-Bar: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'ub' }
+    try { Update-Widget } catch { Write-Log ('Update-Widget: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'uw' }
     if ($formOn) { try { $pnlRight.Invalidate() } catch { } }
 }
 
@@ -3426,12 +3433,13 @@ function Update-BarTip {
         (T 'tip.click') + $nl +
         (Tf 'tip.ram' @((Format-Bytes $S.RamUsed), (Format-Bytes $S.RamTot), $S.Ram.ToString('0'))) + $nl + $gpuTxt + $nl + $dskTxt)
     if ((($S.Tick % 3) -eq 0) -and ($S.Tip -ne $S.TipShown)) {
-        try { $barTip.SetToolTip($barForm, $S.Tip); $S.TipShown = $S.Tip } catch { }
+        try { $barTip.SetToolTip($barForm, $S.Tip); $barTip.SetToolTip($wForm, $S.Tip); $S.TipShown = $S.Tip } catch { }
     }
 }
 
 function Update-Bar {
     if ($BAR.UserHidden) {
+        if ($WID.On -and $wForm.Visible) { Update-BarTip }
         if ($BAR.Dirty) { $BAR.Dirty = $false; Save-BarConfig }
         return
     }
@@ -4033,6 +4041,12 @@ if ($cfg.ContainsKey('Scale')) { try { $sv = [double]::Parse($cfg['Scale'], $inv
 if ($cfg.ContainsKey('Top')) { $BAR.Top = ($cfg['Top'] -eq '1') }
 if ($cfg.ContainsKey('Bar')) { $BAR.UserHidden = ($cfg['Bar'] -eq '0') }
 if ($cfg.ContainsKey('Dock')) { $BAR.Dock = ($cfg['Dock'] -eq '1') }
+$WID = @{ On = $false; AutoHidden = $false; Dirty = $false; Dragging = $false; DragX = 0; DragY = 0 }
+if ($cfg.ContainsKey('Widget')) { $WID.On = ($cfg['Widget'] -eq '1') }
+$savedWPt = $null
+if ($cfg.ContainsKey('WX') -and $cfg.ContainsKey('WY')) {
+    try { $savedWPt = New-Object System.Drawing.Point([int]$cfg['WX'], [int]$cfg['WY']) } catch { $savedWPt = $null }
+}
 $S.HkList = @(
     @{ Id = 'CtrlAltN'; Txt = 'Ctrl+Alt+N'; Mod = 3; Vk = 0x4E },
     @{ Id = 'CtrlAltI'; Txt = 'Ctrl+Alt+I'; Mod = 3; Vk = 0x49 },
@@ -4190,10 +4204,12 @@ function Save-BarConfig {
             ('Top=' + [int]$BAR.Top),
             ('Bar=' + $barOn),
             ('Dock=' + [int]$BAR.Dock),
+            ('Widget=' + [int]$WID.On),
             ('Cumul=' + [int]$S.CumulOn),
             ('Hotkey=' + [int]$S.HkOn),
             ('HotkeyCombo=' + $S.HkId)
         )
+        try { $lines = $lines + ('WX=' + $wForm.Location.X) + ('WY=' + $wForm.Location.Y) } catch { }
         if ($LangPref -ne '') { $lines = $lines + ('Lang=' + $LangPref) }
         if ($S.DiskCustom) { $lines = $lines + ('Disks=' + (($S.DiskWant.ToArray()) -join ',')) }
         Set-Content -LiteralPath $cfgFile -Value $lines -Encoding ASCII
@@ -4205,6 +4221,7 @@ function Set-BarScale([double]$v) {
     $BAR.UserScale = $v
     Set-BarSize
     $barForm.Location = New-Object System.Drawing.Point([int]($mx - $barForm.Width / 2.0), [int]($my - $barForm.Height / 2.0))
+    try { Set-WidgetSize } catch { }
     Save-BarConfig
 }
 
@@ -4223,13 +4240,12 @@ if ($okPos) { $barForm.Location = $savedPt } else {
 }
 if ($BAR.Dock) { $BAR.FloatPt = $barForm.Location }
 
-$barForm.Add_Paint({
-    param($sender, $pe)
+# Dessin commun a la barre et au widget libre ($k = echelle)
+function Draw-Bar($g, [double]$k) {
     try {
-        $g = $pe.Graphics
         $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
         $g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::AntiAliasGridFit
-        $g.ScaleTransform([single]$BAR.K, [single]$BAR.K)
+        $g.ScaleTransform([single]$k, [single]$k)
         $rc = New-Object System.Drawing.RectangleF -ArgumentList ([single]-2), ([single]-2), ([single]($BAR.W + 4)), ([single]($BAR.H + 4))
         $bgb = New-Object System.Drawing.Drawing2D.LinearGradientBrush -ArgumentList $rc, $cBg1, $cBg2, ([single]90)
         $g.FillRectangle($bgb, $rc)
@@ -4265,7 +4281,8 @@ $barForm.Add_Paint({
         if (@($S.Disks).Count -gt 0) { $d0 = @($S.Disks)[0]; $dpc = [double]$d0.Pct; $dlab = [string]$d0.L }
         Draw-Gauge $g 518 $dlab $dpc 3 $aDsk
     } catch { Write-Log ('Bar paint: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'pb' }
-})
+}
+$barForm.Add_Paint({ param($sender, $pe) Draw-Bar $pe.Graphics $BAR.K })
 
 $barForm.Add_MouseDown({
     param($sender, $me)
@@ -4286,6 +4303,87 @@ $barForm.Add_MouseMove({
 $barForm.Add_MouseUp({ $BAR.Dragging = $false })
 $barForm.Add_MouseDoubleClick({ Show-Main })
 $barForm.Add_LocationChanged({ $BAR.Dirty = $true })
+
+# ---------- Widget libre sur le bureau (en plus de la barre) : reutilise Draw-Bar ----------
+$wForm = New-Object System.Windows.Forms.Form
+$wForm.FormBorderStyle = 'None'
+$wForm.ShowInTaskbar = $false
+$wForm.StartPosition = 'Manual'
+$wForm.TopMost = $BAR.Top
+$wForm.BackColor = $cBg2
+$wForm.Text = 'ZerkiWatch - widget'
+Enable-DoubleBuffer $wForm
+try { if ($form.Icon -ne $null) { $wForm.Icon = $form.Icon } } catch { }
+$wForm.Add_HandleCreated({
+    if ($S.Native) {
+        try { [MN]::NoActivate($wForm.Handle) } catch { }
+        try { [void][MN]::Round($wForm.Handle) } catch { }
+        try { $null = [MN]::Border($wForm.Handle, 0x623A2C) } catch { }
+    }
+})
+$null = $wForm.Handle
+function Set-WidgetSize {
+    $cw = [int][math]::Round($BAR.W * $BAR.UserScale)
+    $ch = [int][math]::Round($BAR.H * $BAR.UserScale)
+    $wForm.ClientSize = New-Object System.Drawing.Size($cw, $ch)
+    if (-not $BAR.DwmRound) {
+        try { $wForm.Region = New-Object System.Drawing.Region((New-RoundPath 0 0 $cw $ch ([int](10 * $BAR.UserScale)))) } catch { }
+    }
+    $wForm.Invalidate()
+}
+function Set-WidgetDefaultPos {
+    $wa = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
+    $px = $wa.Right - $wForm.Width - 40
+    if ($px -lt $wa.Left) { $px = $wa.Left + 10 }
+    $wForm.Location = New-Object System.Drawing.Point($px, ($wa.Top + 60))
+}
+Set-WidgetSize
+$okW = $false
+if ($savedWPt -ne $null) {
+    $wrc = New-Object System.Drawing.Rectangle($savedWPt.X, $savedWPt.Y, $wForm.Width, $wForm.Height)
+    foreach ($sc in [System.Windows.Forms.Screen]::AllScreens) {
+        $ixw = [System.Drawing.Rectangle]::Intersect($wrc, $sc.Bounds)
+        if (($ixw.Width -ge 60) -and ($ixw.Height -ge 20)) { $okW = $true }
+    }
+}
+if ($okW) { $wForm.Location = $savedWPt } else { Set-WidgetDefaultPos }
+$wForm.Add_Paint({ param($sender, $pe) Draw-Bar $pe.Graphics $BAR.UserScale })
+$wForm.Add_MouseDown({
+    param($sender, $me)
+    if ($me.Button -eq [System.Windows.Forms.MouseButtons]::Left) {
+        if ($me.X -lt (34 * $BAR.UserScale)) { Invoke-Toggle; return }
+        if ($S.Native) { try { [MN]::Drag($wForm.Handle) } catch { } }
+        else { $WID.Dragging = $true; $WID.DragX = $me.X; $WID.DragY = $me.Y }
+    }
+})
+$wForm.Add_MouseMove({
+    param($sender, $me)
+    if ((-not $S.Native) -and $WID.Dragging) {
+        $cp = [System.Windows.Forms.Cursor]::Position
+        $wForm.Location = New-Object System.Drawing.Point(($cp.X - $WID.DragX), ($cp.Y - $WID.DragY))
+    }
+})
+$wForm.Add_MouseUp({ $WID.Dragging = $false })
+$wForm.Add_MouseDoubleClick({ Show-Main })
+$wForm.Add_LocationChanged({ $WID.Dirty = $true })
+function Update-Widget {
+    if (-not $WID.On) { return }
+    if ($S.Native) {
+        try {
+            $fs = [MN]::FullScreen()
+            if ($fs -and (-not $WID.AutoHidden)) { $WID.AutoHidden = $true; if ($wForm.Visible) { $wForm.Hide() } }
+            elseif ((-not $fs) -and $WID.AutoHidden) { $WID.AutoHidden = $false; $wForm.Show() }
+            if ($BAR.Top -and $wForm.Visible) { [MN]::KeepTop($wForm.Handle) }
+        } catch { }
+    }
+    if ($WID.Dirty) { $WID.Dirty = $false; Save-BarConfig }
+    if ($wForm.Visible) { $wForm.Invalidate() }
+}
+function Switch-Widget {
+    if ($WID.On) { $WID.On = $false; $wForm.Hide() }
+    else { $WID.On = $true; if (-not $WID.AutoHidden) { $wForm.Show() } }
+    Save-BarConfig
+}
 
 # ---------- Integration a la barre des taches ----------
 function Update-Dock {
@@ -4371,6 +4469,7 @@ $miOpen  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.open'))
 $miNet   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.cut'))
 $miHist  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.history'))
 $miBar   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.bar'))
+$miWid   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.widget'))
 $miTop   = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.top'))
 $miDock  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.dock'))
 $miSize  = New-Object System.Windows.Forms.ToolStripMenuItem((T 'menu.size'))
@@ -4394,6 +4493,7 @@ $null = $menu.Items.Add($miHist)
 $null = $menu.Items.Add($miNet)
 $null = $menu.Items.Add((New-Object System.Windows.Forms.ToolStripSeparator))
 $null = $menu.Items.Add($miBar)
+$null = $menu.Items.Add($miWid)
 $null = $menu.Items.Add($miTop)
 $null = $menu.Items.Add($miDock)
 $null = $menu.Items.Add($miSize)
@@ -4407,7 +4507,7 @@ $null = $menu.Items.Add($miLang)
 $null = $menu.Items.Add($miAuto)
 $null = $menu.Items.Add($miLog)
 $null = $menu.Items.Add($miQuit)
-foreach ($it in @($miOpen, $miHist, $miNet, $miBar, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miAuto, $miLog, $miQuit)) {
+foreach ($it in @($miOpen, $miHist, $miNet, $miBar, $miWid, $miTop, $miDock, $miSize, $miDisks, $miS1, $miS2, $miS3, $miReset, $miCumul, $miHot, $miPhone, $miLang, $miAuto, $miLog, $miQuit)) {
     $it.ForeColor = $cText
     $it.BackColor = $cMenuBg
     $it.Padding = New-Object System.Windows.Forms.Padding(8, 5, 8, 5)
@@ -4493,13 +4593,15 @@ function Switch-Bar {
 function Quit-App {
     $S.Quitting = $true
     try { $tray.Visible = $false } catch { }
-    try { $barForm.Hide(); $form.Hide() } catch { }
+    try { $barForm.Hide(); $wForm.Hide(); $form.Hide() } catch { }
     [System.Windows.Forms.Application]::Exit()
 }
 function Update-MenuText {
     if ($S.Local) { $miNet.Text = (T 'menu.restore') } else { $miNet.Text = (T 'menu.cut') }
     $b1 = $dotOn; if ($BAR.UserHidden) { $b1 = $dotOff }
     $miBar.Text = $b1 + '  ' + (T 'menu.bar_full')
+    $w1 = $dotOff; if ($WID.On) { $w1 = $dotOn }
+    $miWid.Text = $w1 + '  ' + (T 'menu.widget')
     $t1 = $dotOff; if ($BAR.Top) { $t1 = $dotOn }
     $miTop.Text = $t1 + '  ' + (T 'menu.top')
     $d1 = $dotOff; if ($BAR.Dock) { $d1 = $dotOn }
@@ -4520,7 +4622,7 @@ function Switch-Disk([string]$letter) {
     if ($S.DiskWant.Contains($letter)) { $S.DiskWant.Remove($letter) } else { [void]$S.DiskWant.Add($letter) }
     $S.DiskCustom = $true
     Save-BarConfig
-    try { $barForm.Invalidate() } catch { }
+    try { $barForm.Invalidate(); $wForm.Invalidate() } catch { }
 }
 function Update-DiskMenu {
     $miDisks.DropDownItems.Clear()
@@ -4710,11 +4812,12 @@ $miOpen.Add_Click({ Show-Main })
 $miHist.Add_Click({ try { Show-History } catch { Write-Log ('History: ' + $_.Exception.Message) 'sh' } })
 $miNet.Add_Click({ Invoke-Toggle })
 $miBar.Add_Click({ Switch-Bar })
-$miTop.Add_Click({ $BAR.Top = (-not $BAR.Top); $barForm.TopMost = $BAR.Top; Save-BarConfig })
+$miWid.Add_Click({ Switch-Widget })
+$miTop.Add_Click({ $BAR.Top = (-not $BAR.Top); $barForm.TopMost = $BAR.Top; $wForm.TopMost = $BAR.Top; Save-BarConfig })
 $miS1.Add_Click({ Set-BarScale 0.85 })
 $miS2.Add_Click({ Set-BarScale 1.0 })
 $miS3.Add_Click({ Set-BarScale 1.25 })
-$miReset.Add_Click({ if ($BAR.Dock) { Set-Dock $false }; Set-BarDefaultPos; Save-BarConfig })
+$miReset.Add_Click({ if ($BAR.Dock) { Set-Dock $false }; Set-BarDefaultPos; Set-WidgetDefaultPos; Save-BarConfig })
 $miDock.Add_Click({ Set-Dock (-not $BAR.Dock) })
 $miAuto.Add_Click({ Set-Autostart (-not (Test-Autostart)) })
 $miCumul.Add_Click({ $S.CumulOn = (-not $S.CumulOn); Save-BarConfig })
@@ -4727,6 +4830,7 @@ $miLog.Add_Click({
 $miPhone.Add_Click({ try { Show-PinDialog } catch { Write-Log ('PIN dialog: ' + $_.Exception.Message) } })
 $miQuit.Add_Click({ Quit-App })
 $barForm.ContextMenuStrip = $menu
+$wForm.ContextMenuStrip = $menu
 
 $tray = New-Object System.Windows.Forms.NotifyIcon
 if ($form.Icon -ne $null) { $tray.Icon = $form.Icon } else { $tray.Icon = [System.Drawing.SystemIcons]::Application }
@@ -5465,6 +5569,7 @@ $form.Add_FormClosing({
     }
 })
 if (-not $BAR.UserHidden) { $barForm.Show() }
+if ($WID.On) { $wForm.Show() }
 if (-not $startHidden) { $form.Show() }
 Update-Mon
 Write-Log ('Start v' + $APPVER + ' | native=' + $native + ' theme=' + $themed + ' | bar: hidden_by_user=' + $BAR.UserHidden + ' auto_hidden=' + $BAR.AutoHidden + ' visible=' + $barForm.Visible + ' pos=' + $barForm.Location.X + ',' + $barForm.Location.Y + ' taille=' + $barForm.Width + 'x' + $barForm.Height + ' | ecrans=' + [System.Windows.Forms.Screen]::AllScreens.Count + ' | ETW=' + $S.EtwOk)

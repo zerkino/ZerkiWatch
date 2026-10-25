@@ -83,6 +83,7 @@ menu.restore=Internet wiederherstellen
 menu.size=Leistengröße
 menu.small=Klein
 menu.top=Leiste im Vordergrund halten
+menu.widget=Desktop-Widget (verschiebbar)
 p.apps=ANWENDUNGEN
 p.badpw=Falsches Passwort.
 p.busy=Der PC ist beschäftigt, versuche es erneut.

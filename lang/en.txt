@@ -83,6 +83,7 @@ menu.restore=Restore Internet
 menu.size=Bar size
 menu.small=Small
 menu.top=Keep bar on top
+menu.widget=Desktop widget (movable)
 p.apps=APPLICATIONS
 p.badpw=Wrong password.
 p.busy=The PC is busy, try again.
