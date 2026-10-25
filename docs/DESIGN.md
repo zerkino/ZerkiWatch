@@ -81,3 +81,9 @@ A **thin gradient line under the bar** (download blue → GPU pink, already draw
 - 100 %, 125 %, 150 % scaling; one and two monitors.
 - Longest strings (German) fit without clipping.
 - iPhone page: Safari, dark and light, reduced motion, 44 px targets.
+
+## v7 visual identity (revision)
+Concept: an instrument panel. Warm-tinted graphite neutrals (no pure black/grey), flat cards with a 1 px border and 14 px radius, one accent tick per card title, no gradients, no purple/blue glow.
+Dark: bg 17,18,22 / card 25,27,33 / border 44,47,56 / text 238,240,244 / muted 140,146,158. Light: bg 242,241,238 / card white / border 223,220,214 / text 24,24,27.
+Signals: online green 74,222,128, cut coral 255,99,88, download sky 56,189,248, upload sand 244,196,90, apps orange 255,140,90.
+Font: Segoe UI Variable Text when installed, else Segoe UI. Motion under 300 ms, ease-out, reduced motion respected.
