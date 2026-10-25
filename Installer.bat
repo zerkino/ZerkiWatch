@@ -157,7 +157,7 @@ function Install-App {
     $icoSrc = Join-Path $srcDir 'ZerkiWatch.ico'
     $useExe = $false
     if (Test-Path -LiteralPath $exeSrc) { $useExe = $true }
-    elseif (-not (Test-Path -LiteralPath $batSrc)) { throw (L 'nosrc') }
+    if (-not (Test-Path -LiteralPath $batSrc)) { throw (L 'nosrc') }
     if ($useExe) { $mainName = 'ZerkiWatch.exe'; $mainSrc = $exeSrc } else { $mainName = 'ZerkiWatch.bat'; $mainSrc = $batSrc }
 
     Write-Host ''
@@ -169,6 +169,12 @@ function Install-App {
     $main = Join-Path $InstDir $mainName
     if ($mainSrc -ne $main) { Copy-Item -LiteralPath $mainSrc -Destination $main -Force }
     try { Unblock-File -LiteralPath $main -ErrorAction SilentlyContinue } catch { }
+    # ZerkiWatch.exe is a small launcher: it starts ZerkiWatch.bat located in the same folder
+    if ($useExe) {
+        $batDst = Join-Path $InstDir 'ZerkiWatch.bat'
+        if ($batSrc -ne $batDst) { Copy-Item -LiteralPath $batSrc -Destination $batDst -Force }
+        try { Unblock-File -LiteralPath $batDst -ErrorAction SilentlyContinue } catch { }
+    }
     $langSrc = Join-Path $srcDir 'lang'
     if (Test-Path -LiteralPath $langSrc) { Copy-Item -LiteralPath $langSrc -Destination $InstDir -Recurse -Force }
 

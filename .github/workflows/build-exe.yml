@@ -1,14 +1,18 @@
 name: build-exe
-# Release zip = ZerkiWatch.bat + Installer.bat + languages (NO .exe: unsigned PS2EXE files are flagged by
-# Windows Defender as false positives, so releases ship the readable .bat).
-#  - pushing a tag like v6.1.2: checks, packages and attaches the zip to a GitHub Release.
-#  - "Run workflow" button (Actions tab): same, plus an optional PS2EXE test build kept as an artifact only.
+# Builds the release zip on a Windows runner:
+#   ZerkiWatch.exe = tiny launcher compiled from tools/launcher (no embedded script) -> starts ZerkiWatch.bat
+#   ZerkiWatch.bat = the whole program, readable
+# The exe is scanned with Windows Defender on the runner and gets a signed build-provenance attestation.
+#  - pushing a tag like v6.1.2 : builds and attaches the zip to a GitHub Release.
+#  - "Run workflow" button     : same, kept as a downloadable artifact (test).
 on:
   workflow_dispatch:
   push:
     tags: ['v*']
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 jobs:
   build:
     runs-on: windows-latest
@@ -19,29 +23,38 @@ jobs:
         run: |
           powershell -ExecutionPolicy Bypass -File tools\check-syntax.ps1
           powershell -ExecutionPolicy Bypass -File tools\check-lang.ps1
-      - name: Build ZerkiWatch.exe with PS2EXE (manual runs only, never released)
-        if: github.event_name == 'workflow_dispatch'
+      - name: Build ZerkiWatch.exe (launcher)
         shell: powershell
         run: |
-          $t = [IO.File]::ReadAllText("$PWD\ZerkiWatch.bat")
-          $i = $t.IndexOf('#PS' + 'START')
-          [IO.File]::WriteAllText("$PWD\ZerkiWatch-tmp.ps1", $t.Substring($i + 8), [Text.Encoding]::ASCII)
-          Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser | Out-Null
-          Install-Module -Name ps2exe -Scope CurrentUser -Force
-          Import-Module ps2exe
-          Invoke-ps2exe -inputFile "$PWD\ZerkiWatch-tmp.ps1" -outputFile "$PWD\ZerkiWatch.exe" -noConsole -requireAdmin -STA -title 'ZerkiWatch' -iconFile "$PWD\ZerkiWatch.ico"
-          if (-not (Test-Path "$PWD\ZerkiWatch.exe")) { throw 'ZerkiWatch.exe was not created' }
-          Remove-Item "$PWD\ZerkiWatch-tmp.ps1"
+          $csc = Join-Path $env:windir 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
+          & $csc /nologo /target:winexe /optimize+ /out:ZerkiWatch.exe /win32icon:ZerkiWatch.ico /win32manifest:tools\launcher\app.manifest /reference:System.Windows.Forms.dll tools\launcher\ZerkiWatchLauncher.cs
+          if ($LASTEXITCODE -ne 0 -or -not (Test-Path ZerkiWatch.exe)) { throw 'ZerkiWatch.exe was not created' }
+      - name: Windows Defender scan of the exe (informational)
+        continue-on-error: true
+        shell: powershell
+        run: |
+          $mp = Join-Path $env:ProgramFiles 'Windows Defender\MpCmdRun.exe'
+          & $mp -Scan -ScanType 3 -File "$PWD\ZerkiWatch.exe" -DisableRemediation
+          Write-Host "Defender exit code: $LASTEXITCODE (0 = nothing found)"
       - name: Package
         shell: powershell
         run: |
           New-Item -ItemType Directory -Path dist | Out-Null
-          Copy-Item ZerkiWatch.bat, ZerkiWatch.ico, Installer.bat, LICENSE, README.md, README.fr.md dist\
+          Copy-Item ZerkiWatch.exe, ZerkiWatch.bat, ZerkiWatch.ico, Installer.bat, LICENSE, README.md, README.fr.md dist\
           Copy-Item lang dist\lang -Recurse
           Compress-Archive -Path dist\* -DestinationPath ZerkiWatch-windows.zip
-          $h = @((Get-FileHash ZerkiWatch.bat -Algorithm SHA256).Hash + '  ZerkiWatch.bat', (Get-FileHash ZerkiWatch-windows.zip -Algorithm SHA256).Hash + '  ZerkiWatch-windows.zip')
-          if (Test-Path ZerkiWatch.exe) { $h += (Get-FileHash ZerkiWatch.exe -Algorithm SHA256).Hash + '  ZerkiWatch.exe (test build, not released)' }
+          $h = @(
+            (Get-FileHash ZerkiWatch.exe -Algorithm SHA256).Hash + '  ZerkiWatch.exe',
+            (Get-FileHash ZerkiWatch.bat -Algorithm SHA256).Hash + '  ZerkiWatch.bat',
+            (Get-FileHash ZerkiWatch-windows.zip -Algorithm SHA256).Hash + '  ZerkiWatch-windows.zip')
           $h | Set-Content SHA256.txt
+      - name: Attest build provenance
+        continue-on-error: true
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            ZerkiWatch.exe
+            ZerkiWatch-windows.zip
       - uses: actions/upload-artifact@v4
         with:
           name: ZerkiWatch-windows

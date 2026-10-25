@@ -74,7 +74,7 @@ English, Français, Español, Deutsch, Italiano, Português. The language follow
 Put `Installer.bat` next to `ZerkiWatch.bat` (or `ZerkiWatch.exe`), double-click and choose **1 – Install**: copies to `Program Files\ZerkiWatch`, creates desktop / Start menu shortcuts, optional start with Windows, clean uninstall (**2 – Uninstall**, which also restores Internet).
 
 ### Option 3: build an `.exe` yourself (optional)
-Run `Build-EXE.bat` (needs Internet once to download the free [PS2EXE](https://github.com/MScholtes/PS2EXE)). **Not recommended for sharing:** an unsigned `.exe` built this way is often flagged by Windows Defender as a false positive (`Trojan:Win32/...!ml`), which is why releases ship the readable `ZerkiWatch.bat` instead.
+Run `Build-EXE.bat` (needs Internet once to download the free [PS2EXE](https://github.com/MScholtes/PS2EXE)). The `ZerkiWatch.exe` in releases is **not** built this way: it is a tiny launcher (`tools/launcher`) that starts the readable `ZerkiWatch.bat` next to it. A PS2EXE build embeds the whole script and is often flagged by Windows Defender as a false positive.
 
 ### Upgrading from "Mode réseau"
 ZerkiWatch is the new name of *Mode réseau*. On first start it **migrates your settings and history** from `%APPDATA%\ModeReseau`, recognises the old firewall rules (they are replaced the next time you switch mode) and moves the old start-with-Windows task to the new name. Delete the old `Mode-Reseau.bat` afterwards.
