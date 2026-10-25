@@ -331,15 +331,19 @@ ui.box_ok=Router erreichbar
 ui.cores={0} logische Kerne
 ui.cpu=PROZESSOR
 ui.cpu_load=Gesamtauslastung
+ui.cut_for=Trennen f\u00fcr
 ui.disks=DATENTR\u00c4GER
 ui.error=Fehler: {0}
 ui.gpu_default=Grafikkarte
 ui.gpu_load=Grafiklast
 ui.gpu_nocounter=Z\u00e4hler nicht verf\u00fcgbar
 ui.history=Verlauf
+ui.iphone=iPhone
 ui.local=NUR LOKAL
 ui.local_net=Lokales Netzwerk
 ui.local_sub=Das Internet ist f\u00fcr diesen PC getrennt. Das lokale Netzwerk (Router, NAS, Drucker, andere Ger\u00e4te) funktioniert.
+ui.mbps_in=Mbps Empfang
+ui.network=NETZWERK
 ui.no_internet=Kein Internet: Pr\u00fcfe den Router, das Wi-Fi oder ein VPN.
 ui.noact=Keine nennenswerte Aktivit\u00e4t
 ui.nodisk=Kein Datentr\u00e4ger gew\u00e4hlt
@@ -353,6 +357,8 @@ ui.retest=Erneut testen
 ui.send=UPLOAD
 ui.services=WINDOWS-DIENSTE
 ui.settings=Einstellungen
+ui.tab_home=Start
+ui.tab_perf=Leistung
 ui.testing=Teste...
 ui.unreachable=Nicht erreichbar
 ui.vram=VRAM {0} / {1}
@@ -617,15 +623,19 @@ ui.box_ok=Router reachable
 ui.cores={0} logical cores
 ui.cpu=PROCESSOR
 ui.cpu_load=Overall load
+ui.cut_for=Cut for
 ui.disks=DISKS
 ui.error=Error: {0}
 ui.gpu_default=Graphics card
 ui.gpu_load=Graphics load
 ui.gpu_nocounter=Counter unavailable
 ui.history=History
+ui.iphone=iPhone
 ui.local=LOCAL ONLY
 ui.local_net=Local network
 ui.local_sub=The Internet is cut for this PC. The local network (router, NAS, printer, other devices) works.
+ui.mbps_in=Mbps received
+ui.network=NETWORK
 ui.no_internet=No Internet: check the router, the Wi-Fi or a VPN.
 ui.noact=No notable activity
 ui.nodisk=No disk selected
@@ -639,6 +649,8 @@ ui.retest=Retest
 ui.send=UPLOAD
 ui.services=WINDOWS SERVICES
 ui.settings=Settings
+ui.tab_home=Home
+ui.tab_perf=Performance
 ui.testing=Testing...
 ui.unreachable=Unreachable
 ui.vram=VRAM {0} / {1}
@@ -903,15 +915,19 @@ ui.box_ok=Router accesible
 ui.cores={0} n\u00facleos l\u00f3gicos
 ui.cpu=PROCESADOR
 ui.cpu_load=Carga global
+ui.cut_for=Cortar durante
 ui.disks=DISCOS
 ui.error=Error: {0}
 ui.gpu_default=Tarjeta gr\u00e1fica
 ui.gpu_load=Carga gr\u00e1fica
 ui.gpu_nocounter=Contador no disponible
 ui.history=Historial
+ui.iphone=iPhone
 ui.local=SOLO LOCAL
 ui.local_net=Red local
 ui.local_sub=Internet est\u00e1 cortado para este PC. La red local (router, NAS, impresora, otros dispositivos) funciona.
+ui.mbps_in=Mbps recibidos
+ui.network=RED
 ui.no_internet=Sin Internet: revisa el router, el Wi-Fi o una VPN.
 ui.noact=Sin actividad notable
 ui.nodisk=Ning\u00fan disco seleccionado
@@ -925,6 +941,8 @@ ui.retest=Repetir
 ui.send=SUBIDA
 ui.services=SERVICIOS DE WINDOWS
 ui.settings=Ajustes
+ui.tab_home=Inicio
+ui.tab_perf=Rendimiento
 ui.testing=Probando...
 ui.unreachable=Inaccesible
 ui.vram=VRAM {0} / {1}
@@ -1189,15 +1207,19 @@ ui.box_ok=Box joignable
 ui.cores={0} c\u0153urs logiques
 ui.cpu=PROCESSEUR
 ui.cpu_load=Charge globale
+ui.cut_for=Couper pendant
 ui.disks=DISQUES
 ui.error=Erreur : {0}
 ui.gpu_default=Carte graphique
 ui.gpu_load=Charge graphique
 ui.gpu_nocounter=Compteur indisponible
 ui.history=Historique
+ui.iphone=iPhone
 ui.local=LOCAL UNIQUEMENT
 ui.local_net=R\u00e9seau local
 ui.local_sub=Internet est coup\u00e9 pour ce PC. Le r\u00e9seau local (box, NAS, imprimante, autres appareils) fonctionne.
+ui.mbps_in=Mbps en r\u00e9ception
+ui.network=R\u00c9SEAU
 ui.no_internet=Pas d'Internet : v\u00e9rifiez la box, le Wi-Fi ou un VPN.
 ui.noact=Aucune activit\u00e9 notable
 ui.nodisk=Aucun disque choisi
@@ -1211,6 +1233,8 @@ ui.retest=Retester
 ui.send=ENVOI
 ui.services=SERVICES WINDOWS
 ui.settings=R\u00e9glages
+ui.tab_home=Accueil
+ui.tab_perf=Performances
 ui.testing=Test en cours...
 ui.unreachable=Injoignable
 ui.vram=VRAM {0} / {1}
@@ -1475,15 +1499,19 @@ ui.box_ok=Router raggiungibile
 ui.cores={0} core logici
 ui.cpu=PROCESSORE
 ui.cpu_load=Carico complessivo
+ui.cut_for=Interrompi per
 ui.disks=DISCHI
 ui.error=Errore: {0}
 ui.gpu_default=Scheda video
 ui.gpu_load=Carico grafico
 ui.gpu_nocounter=Contatore non disponibile
 ui.history=Cronologia
+ui.iphone=iPhone
 ui.local=SOLO LOCALE
 ui.local_net=Rete locale
 ui.local_sub=Internet \u00e8 disattivato per questo PC. La rete locale (router, NAS, stampante, altri dispositivi) funziona.
+ui.mbps_in=Mbps in ricezione
+ui.network=RETE
 ui.no_internet=Nessun Internet: controlla il router, il Wi-Fi o una VPN.
 ui.noact=Nessuna attivit\u00e0 rilevante
 ui.nodisk=Nessun disco selezionato
@@ -1497,6 +1525,8 @@ ui.retest=Riprova
 ui.send=UPLOAD
 ui.services=SERVIZI WINDOWS
 ui.settings=Impostazioni
+ui.tab_home=Home
+ui.tab_perf=Prestazioni
 ui.testing=Test in corso...
 ui.unreachable=Non raggiungibile
 ui.vram=VRAM {0} / {1}
@@ -1761,15 +1791,19 @@ ui.box_ok=Roteador acess\u00edvel
 ui.cores={0} n\u00facleos l\u00f3gicos
 ui.cpu=PROCESSADOR
 ui.cpu_load=Carga geral
+ui.cut_for=Cortar durante
 ui.disks=DISCOS
 ui.error=Erro: {0}
 ui.gpu_default=Placa de v\u00eddeo
 ui.gpu_load=Carga gr\u00e1fica
 ui.gpu_nocounter=Contador indispon\u00edvel
 ui.history=Hist\u00f3rico
+ui.iphone=iPhone
 ui.local=S\u00d3 LOCAL
 ui.local_net=Rede local
 ui.local_sub=A Internet est\u00e1 cortada para este PC. A rede local (roteador, NAS, impressora, outros dispositivos) funciona.
+ui.mbps_in=Mbps recebidos
+ui.network=REDE
 ui.no_internet=Sem Internet: verifique o roteador, o Wi-Fi ou uma VPN.
 ui.noact=Sem atividade not\u00e1vel
 ui.nodisk=Nenhum disco selecionado
@@ -1783,6 +1817,8 @@ ui.retest=Testar de novo
 ui.send=UPLOAD
 ui.services=SERVI\u00c7OS DO WINDOWS
 ui.settings=Defini\u00e7\u00f5es
+ui.tab_home=In\u00edcio
+ui.tab_perf=Desempenho
 ui.testing=Testando...
 ui.unreachable=Inacess\u00edvel
 ui.vram=VRAM {0} / {1}
@@ -4058,7 +4094,7 @@ $dotChar = [string][char]0x25CF
 
 $form = New-Object System.Windows.Forms.Form
 $form.Text = 'ZerkiWatch'
-$form.ClientSize = New-Object System.Drawing.Size(1160, 640)
+$form.ClientSize = New-Object System.Drawing.Size(1100, 700)
 $form.StartPosition = 'CenterScreen'
 $form.FormBorderStyle = 'FixedSingle'
 $form.MaximizeBox = $false
@@ -4162,22 +4198,8 @@ $valBox = New-Label '' 160 50 178 24 (New-Font 10 $false) $cMuted 'MiddleRight'
 $lblMsg = New-Label '' 14 88 324 44 (New-Font 9 $false) $cMuted 'TopLeft'
 foreach ($c in @($dotNet, $nameNet, $valNet, $dotBox, $nameBox, $valBox, $lblMsg)) { $card.Controls.Add($c) }
 
-$lblFoot = New-Label '' 34 520 360 60 (New-Font 9 $false) $cMuted 'MiddleCenter'
+$lblFoot = New-Label '' 0 664 1100 36 (New-Font 9 $false) $cMuted 'MiddleCenter'
 $form.Controls.Add($lblFoot)
-$form.Add_Paint({
-    param($sender, $pe)
-    try {
-        $g = $pe.Graphics
-        $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
-        $hp = New-RoundPath 24 84 380 532 18
-        $hb = New-Object System.Drawing.SolidBrush($cCard)
-        $g.FillPath($hb, $hp)
-        $hn = New-Object System.Drawing.Pen($cBorder, [single]1)
-        $g.DrawPath($hn, $hp)
-        $hb.Dispose(); $hn.Dispose(); $hp.Dispose()
-    } catch { }
-})
-
 $btnRetest = New-Object System.Windows.Forms.Button
 $btnRetest.Text = (T 'ui.retest')
 $btnRetest.Location = New-Object System.Drawing.Point(790, 18)
@@ -4216,6 +4238,7 @@ $btnSet.ForeColor = $cText
 $btnSet.Font = New-Font 9 $false
 $btnSet.Cursor = [System.Windows.Forms.Cursors]::Hand
 $form.Controls.Add($btnSet)
+foreach ($oc in @($lblTitle, $lblVer, $toggle, $lblStatus, $lblSub, $card, $btnRetest, $btnHist, $btnSet)) { $oc.Visible = $false }
 
 # --- Colonne de droite : debit, applications, services ---
 $cDl = (Pc @(56, 189, 248) @(2, 132, 199))
@@ -4244,8 +4267,8 @@ $sfRight.FormatFlags = [System.Drawing.StringFormatFlags]::NoWrap
 $sfTight = [System.Drawing.StringFormat]::GenericTypographic
 
 $pnlRight = New-Object System.Windows.Forms.Panel
-$pnlRight.Location = New-Object System.Drawing.Point(424, 84)
-$pnlRight.Size = New-Object System.Drawing.Size(712, 532)
+$pnlRight.Location = New-Object System.Drawing.Point(0, 64)
+$pnlRight.Size = New-Object System.Drawing.Size(1100, 600)
 $pnlRight.BackColor = $cBg
 Enable-DoubleBuffer $pnlRight
 $form.Controls.Add($pnlRight)
@@ -4462,26 +4485,114 @@ function Draw-Rows($g, $items, [int]$x, [int]$y0, $accent, [string]$emptyMsg, [i
     }
 }
 
+$S.Tab = 'home'
+$S.HitHead = New-Object System.Collections.ArrayList
+$S.HitMain = New-Object System.Collections.ArrayList
+$fDial = New-Object System.Drawing.Font('Consolas', 34, [System.Drawing.FontStyle]::Bold)
+$fTitle = New-Object System.Drawing.Font($UiFont, 22, [System.Drawing.FontStyle]::Bold)
+$fTab = New-Object System.Drawing.Font($UiFont, 10, [System.Drawing.FontStyle]::Bold)
+$fBrand = New-Object System.Drawing.Font($UiFont, 14, [System.Drawing.FontStyle]::Bold)
+$sfWrapC = New-Object System.Drawing.StringFormat
+$sfWrapC.Alignment = [System.Drawing.StringAlignment]::Center
+$sfWrapC.LineAlignment = [System.Drawing.StringAlignment]::Near
+
+function Add-Hit($list, [string]$n, [int]$x, [int]$y, [int]$w, [int]$h) {
+    [void]$list.Add(@{ n = $n; x = $x; y = $y; w = $w; h = $h })
+}
+function Find-Hit($list, [int]$x, [int]$y) {
+    foreach ($h in $list) {
+        if (($x -ge $h.x) -and ($x -le ($h.x + $h.w)) -and ($y -ge $h.y) -and ($y -le ($h.y + $h.h))) { return [string]$h.n }
+    }
+    return ''
+}
+function Draw-Pill($g, [string]$text, [int]$x, [int]$y, [int]$w, [int]$h, $fill, $border, $fore, $font) {
+    $p = New-RoundPath $x $y $w $h ([int]($h / 2))
+    if ($fill -ne $null) { $fb = New-Object System.Drawing.SolidBrush($fill); $g.FillPath($fb, $p); $fb.Dispose() }
+    if ($border -ne $null) { $pn = New-Object System.Drawing.Pen($border, [single]1); $g.DrawPath($pn, $p); $pn.Dispose() }
+    $tb = New-Object System.Drawing.SolidBrush($fore)
+    $rc = New-Object System.Drawing.RectangleF -ArgumentList ([single]$x), ([single]$y), ([single]$w), ([single]$h)
+    $g.DrawString($text, $font, $tb, $rc, $sfCenter)
+    $tb.Dispose(); $p.Dispose()
+}
+
+$pnlHead = New-Object System.Windows.Forms.Panel
+$pnlHead.Location = New-Object System.Drawing.Point(0, 0)
+$pnlHead.Size = New-Object System.Drawing.Size(1100, 64)
+$pnlHead.BackColor = $cBg
+Enable-DoubleBuffer $pnlHead
+$form.Controls.Add($pnlHead)
+$pnlHead.Add_Paint({
+    param($sender, $pe)
+    try {
+        $g = $pe.Graphics
+        $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
+        $g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::ClearTypeGridFit
+        $S.HitHead.Clear()
+        $g.DrawString('ZERKIWATCH', $fBrand, $bText, [single]24, [single]19)
+        $g.DrawString(('v' + $APPVER), $fSmall, $bMuted, [single]142, [single]24)
+        $bg = New-RoundPath 230 14 264 36 18
+        $bb = New-Object System.Drawing.SolidBrush($cCard); $g.FillPath($bb, $bg); $bb.Dispose()
+        $bp = New-Object System.Drawing.Pen($cBorder, [single]1); $g.DrawPath($bp, $bg); $bp.Dispose(); $bg.Dispose()
+        $tabs = @(@('tab_home', (T 'ui.tab_home'), 233), @('tab_perf', (T 'ui.tab_perf'), 363))
+        foreach ($tb in $tabs) {
+            $sel = ($S.Tab -eq ($tb[0] -replace 'tab_', ''))
+            if ($sel) { Draw-Pill $g $tb[1] $tb[2] 17 128 30 $cText $null $cBg $fTab } else { Draw-Pill $g $tb[1] $tb[2] 17 128 30 $null $null $cMuted $fTab }
+            Add-Hit $S.HitHead $tb[0] $tb[2] 17 128 30
+        }
+        $acts = @(@('test', (T 'ui.retest')), @('hist', (T 'ui.history')), @('phone', (T 'ui.iphone')), @('set', (T 'ui.settings')))
+        $ax = 636
+        foreach ($ac in $acts) {
+            Draw-Pill $g $ac[1] $ax 15 104 34 $null $cBorder $cText $fTab
+            Add-Hit $S.HitHead $ac[0] $ax 15 104 34
+            $ax = $ax + 112
+        }
+        $lp = New-Object System.Drawing.Pen($cBorder, [single]1)
+        $g.DrawLine($lp, 0, 63, 1100, 63)
+        $lp.Dispose()
+    } catch { Write-Log ('Head paint: ' + $_.Exception.Message) 'ph' }
+})
+$pnlHead.Add_MouseMove({ param($s, $e) if ((Find-Hit $S.HitHead $e.X $e.Y) -ne '') { $s.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $s.Cursor = [System.Windows.Forms.Cursors]::Default } })
+$pnlHead.Add_MouseClick({
+    param($s, $e)
+    $h = Find-Hit $S.HitHead $e.X $e.Y
+    try {
+        if ($h -eq 'tab_home') { $S.Tab = 'home'; $pnlHead.Invalidate(); $pnlRight.Invalidate() }
+        elseif ($h -eq 'tab_perf') { $S.Tab = 'perf'; $pnlHead.Invalidate(); $pnlRight.Invalidate() }
+        elseif ($h -eq 'test') { if (-not $S.Busy) { Invoke-Tests } }
+        elseif ($h -eq 'hist') { Show-History }
+        elseif ($h -eq 'phone') { Show-PinDialog }
+        elseif ($h -eq 'set') { Show-Settings }
+    } catch { Write-Log ('Head click: ' + $_.Exception.Message) 'hc' }
+})
+
+$pnlRight.Add_MouseMove({
+    param($s, $e)
+    $h = Find-Hit $S.HitMain $e.X $e.Y
+    if ($h -eq 'dial') { $dx = $e.X - 290; $dy = $e.Y - 165; if (([math]::Sqrt($dx * $dx + $dy * $dy)) -gt 130) { $h = '' } }
+    if ($h -ne '') { $s.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $s.Cursor = [System.Windows.Forms.Cursors]::Default }
+})
+$pnlRight.Add_MouseClick({
+    param($s, $e)
+    $h = Find-Hit $S.HitMain $e.X $e.Y
+    try {
+        if ($h -eq 'dial') {
+            $dx = $e.X - 290; $dy = $e.Y - 165
+            if (([math]::Sqrt($dx * $dx + $dy * $dy)) -le 130) { Invoke-Toggle }
+        } elseif (@('15', '30', '60', 'tomorrow', 'cancel') -contains $h) {
+            $ce = Start-TimedCut $h
+            if ($ce -ne '') { try { $tray.ShowBalloonTip(3500, 'ZerkiWatch', (Tf 'p.err' @($ce)), [System.Windows.Forms.ToolTipIcon]::Warning) } catch { } }
+            Update-Ui
+        }
+    } catch { Write-Log ('Main click: ' + $_.Exception.Message) 'mc' }
+})
+
 $pnlRight.Add_Paint({
     param($sender, $pe)
     try {
         $g = $pe.Graphics
         $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
         $g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::ClearTypeGridFit
-        Draw-NetTile $g 0 0 350 128 $true $S.Dl $S.HistDl $cDl (T 'ui.recv')
-        Draw-NetTile $g 362 0 350 128 $false $S.Ul $S.HistUl $cUl (T 'ui.send')
-
-        $nc = [Environment]::ProcessorCount
-        Draw-RingTile $g 0 140 169 176 (T 'ui.cpu') $S.Cpu $aCpu 0 (T 'ui.cpu_load') (Tf 'ui.cores' @([string]$nc))
-        Draw-RingTile $g 181 140 169 176 (T 'ui.ram') $S.Ram $aRam 1 ((Format-Bytes $S.RamUsed) + ' / ' + (Format-Bytes $S.RamTot)) (T 'ui.ram_used')
-        $gn = [string]$S.GpuName
-        if ($gn -eq '') { $gn = (T 'ui.gpu_default') }
-        $gd = (T 'ui.gpu_load')
-        if ($S.Gpu -lt 0) { $gd = (T 'ui.gpu_nocounter') }
-        if ($S.VramTot -gt 0) { $gd = (Tf 'ui.vram' @((Format-Bytes $S.VramUsed), (Format-Bytes $S.VramTot))) }
-        Draw-RingTile $g 362 140 169 176 'GPU' $S.Gpu $aGpu 2 $gn $gd
-        Draw-DiskTile $g 543 140 169 176 @($S.Disks)
-
+        $S.HitMain.Clear()
         $msg1 = (T 'ui.noact')
         $msg2 = $msg1
         if (-not $S.EtwOk) {
@@ -4491,10 +4602,100 @@ $pnlRight.Add_Paint({
             $msg1 = $S.EtwStatus
             $msg2 = $S.EtwStatus
         }
-        Draw-Card $g 0 328 350 204 (T 'ui.apps')
-        Draw-Rows $g $S.Apps 0 366 $cApp $msg1 318
-        Draw-Card $g 362 328 350 204 (T 'ui.services')
-        Draw-Rows $g $S.Svcs 362 366 $cSvc $msg2 318
+        if ($S.Tab -eq 'perf') {
+            Draw-NetTile $g 20 16 523 128 $true $S.Dl $S.HistDl $cDl (T 'ui.recv')
+            Draw-NetTile $g 557 16 523 128 $false $S.Ul $S.HistUl $cUl (T 'ui.send')
+            $nc = [Environment]::ProcessorCount
+            Draw-RingTile $g 20 158 254 176 (T 'ui.cpu') $S.Cpu $aCpu 0 (T 'ui.cpu_load') (Tf 'ui.cores' @([string]$nc))
+            Draw-RingTile $g 288 158 254 176 (T 'ui.ram') $S.Ram $aRam 1 ((Format-Bytes $S.RamUsed) + ' / ' + (Format-Bytes $S.RamTot)) (T 'ui.ram_used')
+            $gn = [string]$S.GpuName
+            if ($gn -eq '') { $gn = (T 'ui.gpu_default') }
+            $gd = (T 'ui.gpu_load')
+            if ($S.Gpu -lt 0) { $gd = (T 'ui.gpu_nocounter') }
+            if ($S.VramTot -gt 0) { $gd = (Tf 'ui.vram' @((Format-Bytes $S.VramUsed), (Format-Bytes $S.VramTot))) }
+            Draw-RingTile $g 556 158 254 176 'GPU' $S.Gpu $aGpu 2 $gn $gd
+            Draw-DiskTile $g 824 158 256 176 @($S.Disks)
+            Draw-Card $g 20 348 523 232 (T 'ui.apps')
+            Draw-Rows $g $S.Apps 20 386 $cApp $msg1 491
+            Draw-Card $g 557 348 523 232 (T 'ui.services')
+            Draw-Rows $g $S.Svcs 557 386 $cSvc $msg2 491
+            return
+        }
+        # ----- Accueil : cadran -----
+        $isLocal = [bool]$S.Local
+        if ($isLocal) { $ac = $cRed } else { $ac = $cGreen }
+        $cx = 290; $cy = 165; $r = 118
+        $tp = New-Object System.Drawing.Pen($cTrack, [single]14)
+        $g.DrawEllipse($tp, [single]($cx - $r), [single]($cy - $r), [single](2 * $r), [single](2 * $r))
+        $tp.Dispose()
+        if ($isLocal) { $sweep = 360.0 } else { $sweep = [math]::Min(360.0, ([double]$S.Dl / 100.0) * 360.0) }
+        if ($sweep -gt 1) {
+            $ap = New-Object System.Drawing.Pen($ac, [single]14)
+            $ap.StartCap = [System.Drawing.Drawing2D.LineCap]::Round
+            $ap.EndCap = [System.Drawing.Drawing2D.LineCap]::Round
+            $g.DrawArc($ap, [single]($cx - $r), [single]($cy - $r), [single](2 * $r), [single](2 * $r), [single]-90, [single]([math]::Min(359.0, $sweep)))
+            $ap.Dispose()
+        }
+        $ir = 98
+        $ib = New-Object System.Drawing.SolidBrush($cCard)
+        $g.FillEllipse($ib, [single]($cx - $ir), [single]($cy - $ir), [single](2 * $ir), [single](2 * $ir))
+        $ib.Dispose()
+        $ip = New-Object System.Drawing.Pen($cBorder, [single]1)
+        $g.DrawEllipse($ip, [single]($cx - $ir), [single]($cy - $ir), [single](2 * $ir), [single](2 * $ir))
+        $ip.Dispose()
+        $acb = New-Object System.Drawing.SolidBrush($ac)
+        if ($isLocal) { $mt = (T 'bar.local') } else { $mt = (T 'bar.internet') }
+        $rc1 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($cx - 90)), ([single]($cy - 56)), ([single]180), ([single]22)
+        $g.DrawString($mt, $fTab, $acb, $rc1, $sfCenter)
+        $acb.Dispose()
+        $rc2 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($cx - 90)), ([single]($cy - 30)), ([single]180), ([single]56)
+        $g.DrawString(([math]::Round([double]$S.Dl)).ToString('0'), $fDial, $bText, $rc2, $sfCenter)
+        $rc3 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($cx - 90)), ([single]($cy + 30)), ([single]180), ([single]20)
+        $g.DrawString((T 'ui.mbps_in'), $fSmall, $bMuted, $rc3, $sfCenter)
+        Add-Hit $S.HitMain 'dial' ($cx - $r - 6) ($cy - $r - 6) (2 * $r + 12) (2 * $r + 12)
+        $tbr = New-Object System.Drawing.SolidBrush($lblStatus.ForeColor)
+        $rc4 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]304), ([single]540), ([single]36)
+        $g.DrawString($lblStatus.Text, $fTitle, $bText, $rc4, $sfCenter)
+        $tbr.Dispose()
+        $rc5 = New-Object System.Drawing.RectangleF -ArgumentList ([single]70), ([single]346), ([single]440), ([single]44)
+        $g.DrawString($lblSub.Text, $fRow, $bMuted, $rc5, $sfWrapC)
+        if ($S.CutUntil -ne $null) {
+            $back = (Tf 'menu.cut_until' @((([DateTime]$S.CutUntil).ToLocalTime()).ToString('t')))
+            $ab = New-Object System.Drawing.SolidBrush($cAmber)
+            $rc6 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]398), ([single]540), ([single]22)
+            $g.DrawString($back, $fRowV, $ab, $rc6, $sfCenter)
+            $ab.Dispose()
+            Draw-Pill $g (T 'menu.cut_cancel') 150 428 280 36 $null $cBorder $cText $fTab
+            Add-Hit $S.HitMain 'cancel' 150 428 280 36
+        } elseif (-not $isLocal) {
+            $chips = @(@('15', (T 'menu.cut_15'), 104), @('30', (T 'menu.cut_30'), 104), @('60', (T 'menu.cut_60'), 104), @('tomorrow', (T 'menu.cut_tomorrow'), 168))
+            $rc7 = New-Object System.Drawing.RectangleF -ArgumentList ([single]20), ([single]398), ([single]540), ([single]20)
+            $g.DrawString((T 'ui.cut_for'), $fSmall, $bMuted, $rc7, $sfCenter)
+            $px = 38
+            foreach ($cp in $chips) {
+                Draw-Pill $g $cp[1] $px 426 $cp[2] 36 $cCard $cBorder $cText $fTab
+                Add-Hit $S.HitMain $cp[0] $px 426 $cp[2] 36
+                $px = $px + $cp[2] + 8
+            }
+        }
+        # ----- colonne de droite -----
+        Draw-NetTile $g 590 16 238 120 $true $S.Dl $S.HistDl $cDl (T 'ui.recv')
+        Draw-NetTile $g 842 16 238 120 $false $S.Ul $S.HistUl $cUl (T 'ui.send')
+        Draw-Card $g 590 150 490 262 (T 'ui.apps')
+        Draw-Rows $g $S.Apps 590 188 $cApp $msg1 458
+        Draw-Card $g 590 426 490 154 (T 'ui.network')
+        $nb = New-Object System.Drawing.SolidBrush($valNet.ForeColor)
+        $g.DrawString('Internet', $fRowV, $bText, [single]608, [single]462)
+        $rv1 = New-Object System.Drawing.RectangleF -ArgumentList ([single]740), ([single]462), ([single]322), ([single]20)
+        $g.DrawString($valNet.Text, $fRowV, $nb, $rv1, $sfRight)
+        $nb.Dispose()
+        $bb2 = New-Object System.Drawing.SolidBrush($valBox.ForeColor)
+        $g.DrawString($nameBox.Text, $fRowV, $bText, [single]608, [single]492)
+        $rv2 = New-Object System.Drawing.RectangleF -ArgumentList ([single]740), ([single]492), ([single]322), ([single]20)
+        $g.DrawString($valBox.Text, $fRowV, $bb2, $rv2, $sfRight)
+        $bb2.Dispose()
+        $rv3 = New-Object System.Drawing.RectangleF -ArgumentList ([single]608), ([single]524), ([single]454), ([single]44)
+        $g.DrawString($lblMsg.Text, $fSmall, $bMuted, $rv3, $sfEll)
     } catch { Write-Log ('Window paint: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'pw' }
 })
 
@@ -4528,6 +4729,7 @@ function Update-Ui([string]$Known = '') {
     }
     $timer.Start()
     $toggle.Invalidate()
+    try { $pnlRight.Invalidate(); $pnlHead.Invalidate() } catch { }
 }
 
 function Set-Row($Dot, $Val, $Color, [string]$Text) {
