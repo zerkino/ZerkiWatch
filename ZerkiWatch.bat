@@ -5800,6 +5800,9 @@ function Show-Settings {
         $d.Controls.Add((New-Label $txt 28 ($script:y + 2) 200 22 $d.Font $cText 'MiddleLeft'))
         $c = New-Object System.Windows.Forms.ComboBox
         $c.DropDownStyle = 'DropDownList'
+        $c.FlatStyle = 'Standard'
+        $c.DropDownHeight = 200
+        $c.IntegralHeight = $false
         $c.Location = New-Object System.Drawing.Point(236, $script:y)
         $c.Size = New-Object System.Drawing.Size(260, 26)
         foreach ($it in $items) { [void]$c.Items.Add($it) }
@@ -5887,10 +5890,11 @@ function Show-Settings {
     $cbWid.Add_CheckedChanged({ if (-not $ld.v) { if ($cbWid.Checked -ne $WID.On) { Switch-Widget } } })
     $cbDock.Add_CheckedChanged({ if (-not $ld.v) { if ($cbDock.Checked -ne $BAR.Dock) { Set-Dock $cbDock.Checked; $ld.v = $true; $cbDock.Checked = $BAR.Dock; $ld.v = $false } } })
     $cbTop.Add_CheckedChanged({ if (-not $ld.v) { $BAR.Top = $cbTop.Checked; $barForm.TopMost = $BAR.Top; $wForm.TopMost = $BAR.Top; Save-BarConfig } })
-    $coSz.Add_SelectedIndexChanged({ if (-not $ld.v) { Set-BarScale @(0.85, 1.0, 1.25)[$coSz.SelectedIndex] } })
+    $coSz.Add_SelectedIndexChanged({ if (-not $ld.v) { $scl = @(0.85, 1.0, 1.25)[$coSz.SelectedIndex]; Set-BarScale ([double]$scl) } })
     $coTh.Add_SelectedIndexChanged({
         if ($ld.v) { return }
-        $np = @('auto', 'light', 'dark')[$coTh.SelectedIndex]
+        $tl = @('auto', 'light', 'dark')
+        $np = [string]$tl[$coTh.SelectedIndex]
         if ($np -ne $ThemePref) {
             $script:ThemePref = $np
             Save-BarConfig
