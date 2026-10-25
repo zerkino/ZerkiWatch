@@ -5094,12 +5094,13 @@ function Draw-Bar($g, [double]$k) {
         $g.DrawRectangle($bp, [single]0, [single]0, [single]($BAR.W - 1), [single]($BAR.H - 1))
         $bp.Dispose()
         $lr = New-Object System.Drawing.RectangleF -ArgumentList ([single]14), ([single]($BAR.H - 3)), ([single]($BAR.W - 28)), ([single]2)
-        $lb = New-Object System.Drawing.Drawing2D.LinearGradientBrush -ArgumentList $lr, $cDl, $aGpu, ([single]0)
+        if ($S.Local) { $lcol = $cLoadR } else { $lcol = $cLoadG }
+        $lb = New-Object System.Drawing.SolidBrush($lcol)
         $g.FillRectangle($lb, $lr)
         $lb.Dispose()
         if ($barIconBmp -ne $null) { $g.DrawImage($barIconBmp, [single]10, [single]11, [single]24, [single]24) }
         $md = $cLoadG
-        if ($S.Local) { $md = $cLoadA }
+        if ($S.Local) { $md = $cLoadR }
         $db = New-Object System.Drawing.SolidBrush($md)
         $dp = New-Object System.Drawing.Pen($cBg2, [single]1.5)
         $g.FillEllipse($db, [single]26, [single]27, [single]9, [single]9)
@@ -5113,7 +5114,7 @@ function Draw-Bar($g, [double]$k) {
             switch ([string]$seg.k) {
                 'mode' {
                     $mw = (T 'bar.internet'); $mc = $cLoadG
-                    if ($S.Local) { $mw = (T 'bar.local'); $mc = $cLoadA }
+                    if ($S.Local) { $mw = (T 'bar.local'); $mc = $cLoadR }
                     $mb = New-Object System.Drawing.SolidBrush($mc)
                     $g.DrawString($mw, $fLbl, $mb, [single]($sx + 8), [single]($BAR.H / 2 - 9), $sfmt)
                     $mb.Dispose()
