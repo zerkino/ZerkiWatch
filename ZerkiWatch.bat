@@ -4758,6 +4758,18 @@ $barForm.Add_HandleCreated({
 $null = $barForm.Handle
 $barForm.Text = 'ZerkiWatch - monitor'
 
+$BarItemOrder = @('mode', 'dl', 'ul', 'cpu', 'ram', 'gpu', 'dsk')
+$BarItemW = @{ mode = 84; dl = 123; ul = 115; cpu = 90; ram = 90; gpu = 90; dsk = 108 }
+function Update-BarLayout {
+    $lay = New-Object System.Collections.ArrayList
+    $w = 34
+    foreach ($k in $BarItemOrder) {
+        if (@($BAR.Items) -contains $k) { [void]$lay.Add(@{ k = $k; w = $BarItemW[$k] }); $w = $w + $BarItemW[$k] }
+    }
+    $BAR.Layout = $lay.ToArray()
+    $BAR.W = [double]$w
+}
+
 function Set-BarSize {
     Update-BarLayout
     if ($BAR.Dock) { $BAR.K = $BAR.DockK } else { $BAR.K = $BAR.UserScale }
@@ -4837,17 +4849,6 @@ if ($okPos) { $barForm.Location = $savedPt } else {
 if ($BAR.Dock) { $BAR.FloatPt = $barForm.Location }
 
 # Disposition de la barre : les indicateurs choisis ($BAR.Items) dans l'ordre fixe ci-dessous ; $BAR.W en decoule.
-$BarItemW = @{ mode = 84; dl = 123; ul = 115; cpu = 90; ram = 90; gpu = 90; dsk = 108 }
-$BarItemOrder = @('mode', 'dl', 'ul', 'cpu', 'ram', 'gpu', 'dsk')
-function Update-BarLayout {
-    $lay = New-Object System.Collections.ArrayList
-    $w = 34
-    foreach ($k in $BarItemOrder) {
-        if (@($BAR.Items) -contains $k) { [void]$lay.Add(@{ k = $k; w = $BarItemW[$k] }); $w = $w + $BarItemW[$k] }
-    }
-    $BAR.Layout = $lay.ToArray()
-    $BAR.W = [double]$w
-}
 function Get-ToggleW {
     if (@($BAR.Items) -contains 'mode') { return (34 + $BarItemW['mode']) }
     return 34
