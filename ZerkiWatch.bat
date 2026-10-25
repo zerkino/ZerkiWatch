@@ -84,6 +84,12 @@ function Add-LangLines($lines, [string]$code) {
 # LANGDATA BEGIN
 $langData = @'
 [de]
+about.btn=Updates / \u00dcber...
+about.newer=Version {0} ist verf\u00fcgbar.
+about.offline=GitHub nicht erreichbar (offline?).
+about.open=Download-Seite \u00f6ffnen?
+about.startup=Beim Start nach Updates suchen (standardm\u00e4\u00dfig aus)
+about.uptodate=Sie sind auf dem neuesten Stand.
 app.others=Andere (beendete Prozesse)
 app.system=Windows-System (geteilt, Kernel)
 bal.alert_cut=Internet ist seit {0} Min. getrennt.
@@ -364,6 +370,12 @@ wiz.pin=Passwort der iPhone-Fernbedienung (das erzeugte kann bleiben):
 wiz.skip=\u00dcberspringen
 wiz.title=Willkommen bei ZerkiWatch
 [en]
+about.btn=Check for updates...
+about.newer=Version {0} is available.
+about.offline=Could not reach GitHub (offline?).
+about.open=Open the download page?
+about.startup=Check for updates at startup (off by default)
+about.uptodate=You are up to date.
 app.others=Others (ended processes)
 app.system=Windows system (shared, kernel)
 bal.alert_cut=Internet has been cut for {0} min.
@@ -644,6 +656,12 @@ wiz.pin=iPhone remote password (you can keep the generated one):
 wiz.skip=Skip
 wiz.title=Welcome to ZerkiWatch
 [es]
+about.btn=Actualizaciones / acerca de...
+about.newer=Hay una versi\u00f3n {0} disponible.
+about.offline=No se pudo contactar con GitHub (\u00bfsin conexi\u00f3n?).
+about.open=\u00bfAbrir la p\u00e1gina de descarga?
+about.startup=Buscar actualizaciones al iniciar (desactivado por defecto)
+about.uptodate=Est\u00e1 al d\u00eda.
 app.others=Otros (procesos finalizados)
 app.system=Sistema Windows (compartido, kernel)
 bal.alert_cut=Internet lleva cortado {0} min.
@@ -924,6 +942,12 @@ wiz.pin=Contrase\u00f1a del mando del iPhone (puedes conservar la generada):
 wiz.skip=Omitir
 wiz.title=Bienvenido a ZerkiWatch
 [fr]
+about.btn=Mises \u00e0 jour / \u00e0 propos...
+about.newer=La version {0} est disponible.
+about.offline=GitHub injoignable (hors ligne ?).
+about.open=Ouvrir la page de t\u00e9l\u00e9chargement ?
+about.startup=V\u00e9rifier les mises \u00e0 jour au d\u00e9marrage (d\u00e9sactiv\u00e9 par d\u00e9faut)
+about.uptodate=Vous \u00eates \u00e0 jour.
 app.others=Autres (processus termin\u00e9s)
 app.system=Syst\u00e8me Windows (partages, noyau)
 bal.alert_cut=Internet est coup\u00e9 depuis {0} min.
@@ -1204,6 +1228,12 @@ wiz.pin=Mot de passe de la t\u00e9l\u00e9commande iPhone (vous pouvez garder cel
 wiz.skip=Passer
 wiz.title=Bienvenue dans ZerkiWatch
 [it]
+about.btn=Aggiornamenti / informazioni...
+about.newer=\u00c8 disponibile la versione {0}.
+about.offline=GitHub non raggiungibile (offline?).
+about.open=Aprire la pagina di download?
+about.startup=Cerca aggiornamenti all'avvio (disattivato di default)
+about.uptodate=Sei aggiornato.
 app.others=Altri (processi terminati)
 app.system=Sistema Windows (condivisi, kernel)
 bal.alert_cut=Internet \u00e8 interrotto da {0} min.
@@ -1484,6 +1514,12 @@ wiz.pin=Password del telecomando iPhone (puoi tenere quella generata):
 wiz.skip=Salta
 wiz.title=Benvenuto in ZerkiWatch
 [pt]
+about.btn=Atualiza\u00e7\u00f5es / acerca...
+about.newer=A vers\u00e3o {0} est\u00e1 dispon\u00edvel.
+about.offline=GitHub inacess\u00edvel (offline?).
+about.open=Abrir a p\u00e1gina de download?
+about.startup=Procurar atualiza\u00e7\u00f5es ao iniciar (desativado por defeito)
+about.uptodate=Est\u00e1 atualizado.
 app.others=Outros (processos encerrados)
 app.system=Sistema Windows (compartilhado, kernel)
 bal.alert_cut=A Internet est\u00e1 cortada h\u00e1 {0} min.
@@ -2289,6 +2325,22 @@ canvas{width:100%;height:70px;display:block;margin-top:12px}
 #hc1,#hc2{height:150px;margin-top:4px}
 .bar.t{display:flex}
 .lnk{margin-top:30px;font-size:13px;color:#5d6a85;text-decoration:underline;cursor:pointer}
+.t:before{content:"\1F512  ";letter-spacing:0}
+.pills button,.tpills button,.pw button,.cutg button,.pwb button{min-height:44px}
+@media (prefers-color-scheme:light){
+html,body{background:#f4f6fb;color:#0f172a}
+.t,.ct,.sub,.sp i,.sp small,.gt small,.gd,.ct2,.lg{color:#5b6785}
+.card{background:#fff;border-color:#dfe4ef}
+.rv{color:#334155}
+.bar{background:rgba(15,23,42,.08)}
+.trk{stroke:#e2e8f0}
+.pills button,.tpills button,.pw button,.cutg button{background:#fff;border-color:#dfe4ef;color:#334155}
+.pills button.on,.tpills button.on{background:#0284c7;border-color:#0284c7;color:#fff}
+.sw{box-shadow:0 10px 24px rgba(15,23,42,.18)}
+.empty,.lnk{color:#64748b}
+.d{color:#0284c7}.u{color:#7c3aed}.st.g{color:#059669}.st.r{color:#dc2626}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style></head><body>
 <div class="wrap">
 <div class="t">ZERKIWATCH</div>
@@ -4576,6 +4628,7 @@ if ($cfg.ContainsKey('Items')) {
 }
 $S.AlertSpeed = 0
 $S.AlertCut = 0
+$S.UpdCheck = ($cfg.ContainsKey('UpdCheck') -and ([string]$cfg['UpdCheck'] -eq '1'))
 if ($cfg.ContainsKey('AlertSpeed')) { try { $S.AlertSpeed = [math]::Max(0, [math]::Min(10000, [int]$cfg['AlertSpeed'])) } catch { } }
 if ($cfg.ContainsKey('AlertCut')) { try { $S.AlertCut = [math]::Max(0, [math]::Min(1440, [int]$cfg['AlertCut'])) } catch { } }
 $S.WizDone = ($cfg.ContainsKey('Wizard') -or ($cfg.Count -gt 0))
@@ -4745,6 +4798,7 @@ function Save-BarConfig {
             ('Wizard=' + [int]($S.WizDone -eq $true)),
             ('Items=' + ((@($BAR.Items)) -join ',')),
             ('Theme=' + $ThemePref),
+            ('UpdCheck=' + $(if ($S.UpdCheck) { '1' } else { '0' })),
             ('AlertSpeed=' + [int]$S.AlertSpeed),
             ('AlertCut=' + [int]$S.AlertCut),
             ('Cumul=' + [int]$S.CumulOn),
@@ -5625,7 +5679,7 @@ function Show-PinDialog {
     $lanIp = Get-LanIp
     $dlg = New-Object System.Windows.Forms.Form
     $dlg.Text = (T 'pin.title')
-    $dlg.ClientSize = New-Object System.Drawing.Size(380, 190)
+    $dlg.ClientSize = New-Object System.Drawing.Size(380, 370)
     $dlg.StartPosition = 'CenterScreen'
     $dlg.FormBorderStyle = 'FixedDialog'
     $dlg.MaximizeBox = $false
@@ -5646,20 +5700,33 @@ function Show-PinDialog {
     $tb.ForeColor = $cText
     $tb.BorderStyle = 'FixedSingle'
     $lerr = New-Label '' 16 112 348 22 $dlg.Font $cAmber 'MiddleLeft'
+    $pbq = $null
+    if (($S.Listener -ne $null) -and $lanIp) {
+        try {
+            $qb = New-QrBitmap ('https://' + $lanIp + ':' + $RemotePort + '/') 5
+            if ($qb -ne $null) {
+                $pbq = New-Object System.Windows.Forms.PictureBox
+                $pbq.Image = $qb
+                $pbq.SizeMode = 'Zoom'
+                $pbq.Location = New-Object System.Drawing.Point(110, 144)
+                $pbq.Size = New-Object System.Drawing.Size(160, 160)
+            }
+        } catch { $pbq = $null }
+    }
     $ok = New-Object System.Windows.Forms.Button
     $ok.Text = (T 'pin.save')
-    $ok.Location = New-Object System.Drawing.Point(150, 146)
+    $ok.Location = New-Object System.Drawing.Point(150, 326)
     $ok.Size = New-Object System.Drawing.Size(110, 30)
     $ok.FlatStyle = 'Flat'; $ok.BackColor = $cCard; $ok.ForeColor = $cText
     $ca = New-Object System.Windows.Forms.Button
     $ca.Text = (T 'pin.cancel')
-    $ca.Location = New-Object System.Drawing.Point(270, 146)
+    $ca.Location = New-Object System.Drawing.Point(270, 326)
     $ca.Size = New-Object System.Drawing.Size(94, 30)
     $ca.FlatStyle = 'Flat'; $ca.BackColor = $cCard; $ca.ForeColor = $cText
     $ca.Add_Click({ $dlg.Close() })
     $bc = New-Object System.Windows.Forms.Button
     $bc.Text = (T 'pin.cert')
-    $bc.Location = New-Object System.Drawing.Point(16, 146)
+    $bc.Location = New-Object System.Drawing.Point(16, 326)
     $bc.Size = New-Object System.Drawing.Size(124, 30)
     $bc.FlatStyle = 'Flat'; $bc.BackColor = $cCard; $bc.ForeColor = $cText
     $bc.Add_Click({
@@ -5671,12 +5738,34 @@ function Show-PinDialog {
     $dlg.AcceptButton = $ok
     $dlg.CancelButton = $ca
     foreach ($c in @($l1, $l2, $tb, $lerr, $bc, $ok, $ca)) { $dlg.Controls.Add($c) }
+    if ($pbq -ne $null) { $dlg.Controls.Add($pbq) }
     [void]$dlg.ShowDialog()
     $dlg.Dispose()
     try { $lblFoot.Text = (Get-FootText) } catch { }
 }
 # Assistant de premiere ouverture (reutilise Set-Pin, Show-CertDialog, Set-Autostart, Set-Language)
 # ---------- Fenetre de reglages : chaque case agit tout de suite (reutilise les fonctions des menus) ----------
+# ---------- A propos et verification des mises a jour (aucun telechargement automatique) ----------
+function Get-LatestRelease {
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        $r = Invoke-RestMethod -Uri 'https://api.github.com/repos/zerkino/ZerkiWatch/releases/latest' -UserAgent 'ZerkiWatch' -TimeoutSec 6
+        $tag = ([string]$r.tag_name).TrimStart('v','V')
+        return @{ Tag = $tag; Url = [string]$r.html_url; Newer = ([Version]($tag -replace '[^0-9.].*$','') -gt [Version]$APPVER) }
+    } catch { return $null }
+}
+function Show-About {
+    $res = Get-LatestRelease
+    if ($res -eq $null) { $m = (T 'about.offline') }
+    elseif ($res.Newer) { $m = (Tf 'about.newer' @($res.Tag)) }
+    else { $m = (T 'about.uptodate') }
+    $txt = 'ZerkiWatch v' + $APPVER + "`r`nMIT - github.com/zerkino/ZerkiWatch`r`n`r`n" + $m
+    if (($res -ne $null) -and $res.Newer) {
+        $a = [System.Windows.Forms.MessageBox]::Show($txt + "`r`n`r`n" + (T 'about.open'), 'ZerkiWatch', 'YesNo', 'Information')
+        if ($a -eq 'Yes') { try { Start-Process $res.Url } catch { } }
+    } else { [void][System.Windows.Forms.MessageBox]::Show($txt, 'ZerkiWatch', 'OK', 'Information') }
+}
+
 function Show-Settings {
     $d = New-Object System.Windows.Forms.Form
     $d.Text = (T 'set.title')
@@ -5767,11 +5856,22 @@ function Show-Settings {
     $btnWz.Text = (T 'menu.wizard')
     $btnWz.Location = New-Object System.Drawing.Point(28, ($script:y + 38))
     $btnWz.Size = New-Object System.Drawing.Size(230, 30)
+    $btnAb = New-Object System.Windows.Forms.Button
+    $btnAb.Text = (T 'about.btn')
+    $btnAb.Location = New-Object System.Drawing.Point(266, ($script:y + 38))
+    $btnAb.Size = New-Object System.Drawing.Size(230, 30)
+    $cbUp = New-Object System.Windows.Forms.CheckBox
+    $cbUp.Text = (T 'about.startup')
+    $cbUp.Location = New-Object System.Drawing.Point(28, ($script:y + 76))
+    $cbUp.Size = New-Object System.Drawing.Size(468, 24)
+    $cbUp.ForeColor = $cText
+    $cbUp.Checked = [bool]$S.UpdCheck
+    $d.Controls.Add($cbUp)
     $btnCl = New-Object System.Windows.Forms.Button
     $btnCl.Text = (T 'set.close')
     $btnCl.Location = New-Object System.Drawing.Point(386, 654)
     $btnCl.Size = New-Object System.Drawing.Size(110, 32)
-    foreach ($bt in @($btnPw, $btnCe, $btnWz, $btnCl)) { $bt.FlatStyle = 'Flat'; $bt.BackColor = $cCard; $bt.ForeColor = $cText; $d.Controls.Add($bt) }
+    foreach ($bt in @($btnPw, $btnCe, $btnWz, $btnAb, $btnCl)) { $bt.FlatStyle = 'Flat'; $bt.BackColor = $cCard; $bt.ForeColor = $cText; $d.Controls.Add($bt) }
     if ($S.Listener -eq $null) { $btnCe.Enabled = $false }
     $lanIp = Get-LanIp
     $d.CancelButton = $btnCl
@@ -5779,6 +5879,8 @@ function Show-Settings {
     $btnCl.Add_Click({ $d.Close() })
     $btnPw.Add_Click({ try { Show-PinDialog } catch { } })
     $btnCe.Add_Click({ try { Show-CertDialog $lanIp } catch { } })
+    $btnAb.Add_Click({ try { Show-About } catch { } })
+    $cbUp.Add_CheckedChanged({ if (-not $ld.v) { $S.UpdCheck = $cbUp.Checked; Save-BarConfig } })
     $btnWz.Add_Click({ $d.Close(); try { Show-Wizard } catch { } })
     $cbBar.Add_CheckedChanged({ if (-not $ld.v) { if ($cbBar.Checked -eq $BAR.UserHidden) { Switch-Bar } } })
     $cbWid.Add_CheckedChanged({ if (-not $ld.v) { if ($cbWid.Checked -ne $WID.On) { Switch-Widget } } })
@@ -6666,6 +6768,18 @@ if (-not $S.WizDone) {
     $wizTimer.Interval = 1500
     $wizTimer.Add_Tick({ $wizTimer.Stop(); try { Show-Wizard } catch { Write-Log ('Wizard: ' + $_.Exception.Message) 'wz' } })
     $wizTimer.Start()
+}
+if ($S.UpdCheck) {
+    $updTimer = New-Object System.Windows.Forms.Timer
+    $updTimer.Interval = 15000
+    $updTimer.Add_Tick({
+        $updTimer.Stop()
+        try {
+            $r = Get-LatestRelease
+            if (($r -ne $null) -and $r.Newer) { $tray.ShowBalloonTip(6000, 'ZerkiWatch', (Tf 'about.newer' @($r.Tag)), [System.Windows.Forms.ToolTipIcon]::Info) }
+        } catch { }
+    })
+    $updTimer.Start()
 }
 Update-Mon
 Write-Log ('Start v' + $APPVER + ' | native=' + $native + ' theme=' + $themed + ' | bar: hidden_by_user=' + $BAR.UserHidden + ' auto_hidden=' + $BAR.AutoHidden + ' visible=' + $barForm.Visible + ' pos=' + $barForm.Location.X + ',' + $barForm.Location.Y + ' taille=' + $barForm.Width + 'x' + $barForm.Height + ' | ecrans=' + [System.Windows.Forms.Screen]::AllScreens.Count + ' | ETW=' + $S.EtwOk)

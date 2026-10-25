@@ -1,6 +1,12 @@
 # ZerkiWatch - Deutsch
 # Format: key=text   ({0},{1} = values;  \n = line break)
 [de]
+about.btn=Updates / Über...
+about.newer=Version {0} ist verfügbar.
+about.offline=GitHub nicht erreichbar (offline?).
+about.open=Download-Seite öffnen?
+about.startup=Beim Start nach Updates suchen (standardmäßig aus)
+about.uptodate=Sie sind auf dem neuesten Stand.
 app.others=Andere (beendete Prozesse)
 app.system=Windows-System (geteilt, Kernel)
 bal.alert_cut=Internet ist seit {0} Min. getrennt.
