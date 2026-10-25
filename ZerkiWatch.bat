@@ -296,8 +296,12 @@ set.pw=Passwort / Adresse...
 set.remote=iPhone-Fernbedienung
 set.theme=Design
 set.theme_auto=Automatisch (Windows)
+set.theme_blue=Nachtblau
 set.theme_dark=Dunkel
+set.theme_gray=Grau
+set.theme_green=Gr\u00fcn
 set.theme_light=Hell (Beta)
+set.theme_violet=Violett
 set.title=ZerkiWatch-Einstellungen
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
@@ -588,8 +592,12 @@ set.pw=Password / address...
 set.remote=iPhone remote
 set.theme=Theme
 set.theme_auto=Automatic (Windows)
+set.theme_blue=Midnight blue
 set.theme_dark=Dark
+set.theme_gray=Grey
+set.theme_green=Green
 set.theme_light=Light (beta)
+set.theme_violet=Violet
 set.title=ZerkiWatch settings
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
@@ -880,8 +888,12 @@ set.pw=Contrase\u00f1a / direcci\u00f3n...
 set.remote=Mando del iPhone
 set.theme=Tema
 set.theme_auto=Autom\u00e1tico (Windows)
+set.theme_blue=Azul noche
 set.theme_dark=Oscuro
+set.theme_gray=Gris
+set.theme_green=Verde
 set.theme_light=Claro (beta)
+set.theme_violet=Violeta
 set.title=Ajustes de ZerkiWatch
 short.all={0} - Baj. {1} - Sub. {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
@@ -1172,8 +1184,12 @@ set.pw=Mot de passe / adresse...
 set.remote=T\u00e9l\u00e9commande iPhone
 set.theme=Th\u00e8me
 set.theme_auto=Automatique (Windows)
+set.theme_blue=Bleu nuit
 set.theme_dark=Sombre
+set.theme_gray=Gris
+set.theme_green=Vert
 set.theme_light=Clair (b\u00eata)
+set.theme_violet=Violet
 set.title=R\u00e9glages ZerkiWatch
 short.all={0} - Re\u00e7u {1} - Envoi {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
@@ -1464,8 +1480,12 @@ set.pw=Password / indirizzo...
 set.remote=Telecomando iPhone
 set.theme=Tema
 set.theme_auto=Automatico (Windows)
+set.theme_blue=Blu notte
 set.theme_dark=Scuro
+set.theme_gray=Grigio
+set.theme_green=Verde
 set.theme_light=Chiaro (beta)
+set.theme_violet=Viola
 set.title=Impostazioni ZerkiWatch
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
@@ -1756,8 +1776,12 @@ set.pw=Palavra-passe / endere\u00e7o...
 set.remote=Controlo remoto do iPhone
 set.theme=Tema
 set.theme_auto=Autom\u00e1tico (Windows)
+set.theme_blue=Azul noite
 set.theme_dark=Escuro
+set.theme_gray=Cinzento
+set.theme_green=Verde
 set.theme_light=Claro (beta)
+set.theme_violet=Violeta
 set.title=Defini\u00e7\u00f5es do ZerkiWatch
 short.all={0} - Down {1} - Up {2} Mbps - CPU {3} % - RAM {4} %
 short.cpu=CPU {0} %
@@ -1862,14 +1886,24 @@ try {
 } catch { }
 $LangPref = $LangCode
 # Theme: dark (default) | light | auto (follows Windows). Applied at start; changing it restarts the app.
-if (@('dark', 'light', 'auto') -notcontains $ThemePref) { $ThemePref = 'dark' }
+if (@('dark', 'light', 'auto', 'blue', 'violet', 'green', 'gray') -notcontains $ThemePref) { $ThemePref = 'dark' }
 $ThemeLight = ($ThemePref -eq 'light')
 if ($ThemePref -eq 'auto') {
     try { $ThemeLight = ((Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'AppsUseLightTheme' -ErrorAction Stop).AppsUseLightTheme -eq 1) } catch { $ThemeLight = $false }
 }
+$ThemeVariants = @{
+    blue   = @{ '17,18,22' = @(11,17,28); '25,27,33' = @(17,26,43); '44,47,56' = @(33,48,76); '140,146,158' = @(128,146,176); '30,32,39' = @(22,34,58); '52,56,66' = @(44,62,98); '238,240,244' = @(235,242,255); '74,222,129' = @(56,189,248) }
+    violet = @{ '17,18,22' = @(16,13,26); '25,27,33' = @(25,20,41); '44,47,56' = @(48,39,78); '140,146,158' = @(150,138,180); '30,32,39' = @(33,26,56); '52,56,66' = @(62,50,100); '238,240,244' = @(243,238,255); '74,222,129' = @(167,139,250) }
+    green  = @{ '17,18,22' = @(10,19,16); '25,27,33' = @(16,29,24); '44,47,56' = @(31,54,45); '140,146,158' = @(125,160,145); '30,32,39' = @(20,38,31); '52,56,66' = @(40,70,58); '238,240,244' = @(236,250,243); '74,222,129' = @(74,222,128) }
+    gray   = @{ '17,18,22' = @(24,24,24); '25,27,33' = @(33,33,33); '44,47,56' = @(58,58,58); '140,146,158' = @(150,150,150); '30,32,39' = @(40,40,40); '52,56,66' = @(70,70,70); '238,240,244' = @(240,240,240); '74,222,129' = @(200,200,200) }
+}
 function Pc([int[]]$d, [int[]]$l) {
     $v = $d
     if ($ThemeLight) { $v = $l }
+    elseif ($ThemeVariants.ContainsKey($ThemePref)) {
+        $kk = ([string]$d[0] + ',' + [string]$d[1] + ',' + [string]$d[2])
+        if ($ThemeVariants[$ThemePref].ContainsKey($kk)) { $v = $ThemeVariants[$ThemePref][$kk] }
+    }
     return [System.Drawing.Color]::FromArgb($v[0], $v[1], $v[2])
 }
 # Overlay line colour: white on the dark theme, black on the light one
@@ -2253,6 +2287,7 @@ $cCardTop = (Pc @(25, 27, 33) @(255, 255, 255))
 $cBorder = (Pc @(44, 47, 56) @(223, 220, 214))
 $cText = (Pc @(238, 240, 244) @(24, 24, 27))
 $cMuted = (Pc @(140, 146, 158) @(106, 108, 118))
+$cAccent = (Pc @(74, 222, 129) @(22, 163, 74))
 $cGreen = (Pc @(74, 222, 128) @(22, 163, 74))
 $cRed = (Pc @(255, 99, 88) @(220, 38, 38))
 $cAmber = (Pc @(251, 191, 36) @(180, 83, 9))
@@ -4283,7 +4318,7 @@ function Draw-Card($g, [int]$x, [int]$y, [int]$w, [int]$h, [string]$title) {
     $g.DrawPath($pen, $path)
     $pen.Dispose(); $path.Dispose()
     if ($title -ne '') {
-        $tk = New-Object System.Drawing.SolidBrush($cGreen)
+        $tk = New-Object System.Drawing.SolidBrush($cAccent)
         $g.FillRectangle($tk, [single]($x + 18), [single]($y + 17), [single]3, [single]12)
         $tk.Dispose()
         $g.DrawString($title, $fCardT, $bMuted, [single]($x + 28), [single]($y + 14))
@@ -6058,8 +6093,8 @@ function Show-Settings {
     $selSz = 1
     if ([math]::Abs($BAR.UserScale - 0.85) -lt 0.01) { $selSz = 0 } elseif ([math]::Abs($BAR.UserScale - 1.25) -lt 0.01) { $selSz = 2 }
     $coSz = Add-Combo (T 'menu.size') @((T 'menu.small'), (T 'menu.normal'), (T 'menu.big')) $selSz
-    $selTh = 1; if ($ThemePref -eq 'auto') { $selTh = 0 } elseif ($ThemePref -eq 'light') { $selTh = 1 } else { $selTh = 2 }
-    $coTh = Add-Combo (T 'set.theme') @((T 'set.theme_auto'), (T 'set.theme_light'), (T 'set.theme_dark')) $selTh
+    $tlist = @('auto', 'light', 'dark', 'blue', 'violet', 'green', 'gray'); $selTh = [array]::IndexOf($tlist, $ThemePref); if ($selTh -lt 0) { $selTh = 2 }
+    $coTh = Add-Combo (T 'set.theme') @((T 'set.theme_auto'), (T 'set.theme_light'), (T 'set.theme_dark'), (T 'set.theme_blue'), (T 'set.theme_violet'), (T 'set.theme_green'), (T 'set.theme_gray')) $selTh
     $script:y = $script:y + 6
     Add-Head (T 'set.general')
     $cbAuto = Add-Check (T 'menu.auto') (Test-Autostart)
@@ -6119,7 +6154,7 @@ function Show-Settings {
     $coSz.Add_SelectedIndexChanged({ if (-not $ld.v) { $scl = @(0.85, 1.0, 1.25)[$coSz.SelectedIndex]; Set-BarScale ([double]$scl) } })
     $coTh.Add_SelectedIndexChanged({
         if ($ld.v) { return }
-        $tl = @('auto', 'light', 'dark')
+        $tl = @('auto', 'light', 'dark', 'blue', 'violet', 'green', 'gray')
         $np = [string]$tl[$coTh.SelectedIndex]
         if ($np -ne $ThemePref) {
             $script:ThemePref = $np
