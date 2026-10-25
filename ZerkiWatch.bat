@@ -4551,10 +4551,10 @@ $pnlHead.Add_Paint({
         $lp.Dispose()
     } catch { Write-Log ('Head paint: ' + $_.Exception.Message) 'ph' }
 })
-$pnlHead.Add_MouseMove({ param($s, $e) if ((Find-Hit $S.HitHead $e.X $e.Y) -ne '') { $s.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $s.Cursor = [System.Windows.Forms.Cursors]::Default } })
+$pnlHead.Add_MouseMove({ param($snd, $ev) if ((Find-Hit $S.HitHead $ev.X $ev.Y) -ne '') { $snd.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $snd.Cursor = [System.Windows.Forms.Cursors]::Default } })
 $pnlHead.Add_MouseClick({
-    param($s, $e)
-    $h = Find-Hit $S.HitHead $e.X $e.Y
+    param($snd, $ev)
+    $h = Find-Hit $S.HitHead $ev.X $ev.Y
     try {
         if ($h -eq 'tab_home') { $S.Tab = 'home'; $pnlHead.Invalidate(); $pnlRight.Invalidate() }
         elseif ($h -eq 'tab_perf') { $S.Tab = 'perf'; $pnlHead.Invalidate(); $pnlRight.Invalidate() }
@@ -4566,17 +4566,17 @@ $pnlHead.Add_MouseClick({
 })
 
 $pnlRight.Add_MouseMove({
-    param($s, $e)
-    $h = Find-Hit $S.HitMain $e.X $e.Y
-    if ($h -eq 'dial') { $dx = $e.X - 290; $dy = $e.Y - 165; if (([math]::Sqrt($dx * $dx + $dy * $dy)) -gt 130) { $h = '' } }
-    if ($h -ne '') { $s.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $s.Cursor = [System.Windows.Forms.Cursors]::Default }
+    param($snd, $ev)
+    $h = Find-Hit $S.HitMain $ev.X $ev.Y
+    if ($h -eq 'dial') { $dx = $ev.X - 290; $dy = $ev.Y - 165; if (([math]::Sqrt($dx * $dx + $dy * $dy)) -gt 130) { $h = '' } }
+    if ($h -ne '') { $snd.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $snd.Cursor = [System.Windows.Forms.Cursors]::Default }
 })
 $pnlRight.Add_MouseClick({
-    param($s, $e)
-    $h = Find-Hit $S.HitMain $e.X $e.Y
+    param($snd, $ev)
+    $h = Find-Hit $S.HitMain $ev.X $ev.Y
     try {
         if ($h -eq 'dial') {
-            $dx = $e.X - 290; $dy = $e.Y - 165
+            $dx = $ev.X - 290; $dy = $ev.Y - 165
             if (([math]::Sqrt($dx * $dx + $dy * $dy)) -le 130) { Invoke-Toggle }
         } elseif (@('15', '30', '60', 'tomorrow', 'cancel') -contains $h) {
             $ce = Start-TimedCut $h
