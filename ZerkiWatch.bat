@@ -27,7 +27,7 @@ $ErrorActionPreference = 'Stop'
 [System.Windows.Forms.Application]::SetUnhandledExceptionMode([System.Windows.Forms.UnhandledExceptionMode]::CatchException)
 
 # ---------- Version and error log ----------
-$APPVER = '6.1'
+$APPVER = '6.1.1'
 $logDir = Join-Path $env:APPDATA 'ZerkiWatch'
 $oldDataDir = Join-Path $env:APPDATA 'ModeReseau'
 try {
@@ -2644,7 +2644,7 @@ function Initialize-RemoteCert {
     if ($leaf -eq $null) {
         Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -eq $LeafSubject } | Remove-Item -ErrorAction SilentlyContinue
         $san = New-Object System.Collections.ArrayList
-        foreach ($ip in $ips) { [void]$san.Add('IP=' + $ip) }
+        foreach ($ip in $ips) { [void]$san.Add('IPAddress=' + $ip) }
         [void]$san.Add('DNS=' + $env:COMPUTERNAME)
         [void]$san.Add('DNS=localhost')
         $leaf = New-SelfSignedCertificate -Type Custom -Subject $LeafSubject -Signer $ca -KeyUsage DigitalSignature, KeyEncipherment `
