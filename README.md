@@ -79,21 +79,32 @@ Run `Build-EXE.bat` (needs Internet once to download the free [PS2EXE](https://g
 ZerkiWatch is the new name of *Mode réseau*. On first start it **migrates your settings and history** from `%APPDATA%\ModeReseau`, recognises the old firewall rules (they are replaced the next time you switch mode) and moves the old start-with-Windows task to the new name. Delete the old `Mode-Reseau.bat` afterwards.
 
 ## Using the iPhone remote
-1. The address (`http://192.168.x.x:8765`) and the password are shown at the bottom of the main window (tray menu → *iPhone remote…* to read or change them).
-2. Open the address in Safari and enter the password.
-3. Share → **Add to Home Screen**.
+1. The address (`https://192.168.x.x:8765`) and the password are shown at the bottom of the main window (tray menu → *iPhone remote…* to read or change them).
+2. **One-time setup:** install the ZerkiWatch certificate on the iPhone (see below), otherwise Safari shows a security warning.
+3. Open the address in Safari and enter the password.
+4. Share → **Add to Home Screen**.
 
 The default password is **random** (6 digits, generated on first start, stored in `%APPDATA%\ZerkiWatch\password.txt`). Change it from the tray menu: *iPhone remote…*. The link at the bottom of the web page only stores the password in your phone — it does not change the PC password.
+
+### HTTPS certificate on the iPhone (one time)
+ZerkiWatch creates its own local certificate authority (`ZerkiWatch Local CA`, stored in the Windows certificate store of your PC) and a server certificate for your PC's local IP. To make the iPhone trust it:
+1. On the PC: tray menu → *iPhone remote…* → **iPhone certificate**. The public file `ZerkiWatch-CA.cer` is saved on your Desktop and the SHA-256 fingerprint is shown.
+2. Send it to the iPhone (AirDrop, mail, iCloud Drive), or open `https://<PC address>:8765/ca.cer` in Safari (accept the one-time warning: only the public certificate is downloaded) and tap *Allow*.
+3. iPhone: **Settings → Profile Downloaded → Install**.
+4. iPhone: **Settings → General → About → Certificate Trust Settings** → turn **ON** *ZerkiWatch Local CA*.
+5. Compare the SHA-256 fingerprint shown in the certificate details with the one displayed on the PC.
+
+The private key never leaves the PC. If your PC's IP changes, ZerkiWatch re-issues the server certificate on the next start; the iPhone keeps trusting it. If the certificate cannot be set up, the remote does **not** start (no HTTP fallback) and the reason is shown in the main window. After switching from HTTP, re-enter the password once in Safari and re-add the Home Screen icon.
 
 ### Apple Shortcuts
 | Action | Request |
 |---|---|
-| One-line state | `GET /api/short?pin=…` (option `&f=state`, `speed`, `cpu` or `ram`) |
-| Toggle Internet / Local | `GET` or `POST /api/toggle?pin=…` |
+| One-line state | `GET /api/short` + header `X-Pin: <password>` (option `&f=state`, `speed`, `cpu` or `ram`) |
+| Toggle Internet / Local | `GET` or `POST /api/toggle` + header `X-Pin: <password>` |
 
-In the Shortcuts app: **Get Contents of URL**, then **Show Result** or **Show Notification**.
+In the Shortcuts app: **Get Contents of URL** (show *More*, add the header `X-Pin`), then **Show Result** or **Show Notification**.
 
-### API (protected by `X-Pin` header or `?pin=`)
+### API (protected by the `X-Pin` header — the password is never accepted in the URL)
 | Route | Method | Purpose |
 |---|---|---|
 | `/api/status` | GET | state, speed, CPU/RAM/GPU, disks, apps |
@@ -120,7 +131,7 @@ Everything is in `%APPDATA%\ZerkiWatch`:
 
 ## Limits and security
 - **Windows 10/11 only**, with Windows Firewall enabled. Administrator rights required.
-- The iPhone page is **plain HTTP on your local network**: use your own password and never expose the port to the Internet (no port forwarding).
+- The iPhone page is served over **HTTPS on your local network** with a local certificate authority created on your PC. Never expose the port to the Internet (no port forwarding).
 - Local mode allows private addresses (10.x, 172.16–31.x, 192.168.x, link-local). A VPN or a service going through a private address may stay reachable.
 - On Windows 11 the "integrated" bar is a window placed over the taskbar (Microsoft no longer allows real toolbars): it may cover icons on a narrow screen; only the horizontal taskbar of the main screen is handled.
 - Per-app measurement uses Windows network tracing (ETW) and stays on in the background to accumulate totals; a menu switch turns it off.

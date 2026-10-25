@@ -79,21 +79,29 @@ Lancez `Build-EXE.bat` (Internet requis une fois pour télécharger l'outil grat
 ZerkiWatch est le nouveau nom de *Mode réseau*. Au premier lancement, il **récupère vos réglages et votre historique** depuis `%APPDATA%\ModeReseau`, reconnaît les anciennes règles du pare-feu (elles sont remplacées au prochain changement de mode) et renomme l'ancienne tâche de lancement avec Windows. Supprimez ensuite l'ancien `Mode-Reseau.bat`.
 
 ## Utiliser la télécommande iPhone
-1. L'adresse (`http://192.168.x.x:8765`) et le mot de passe sont affichés en bas de la fenêtre principale (menu de l'icône → *Télécommande iPhone…* pour les lire ou les changer).
+1. L'adresse (`https://192.168.x.x:8765`) et le mot de passe sont affichés en bas de la fenêtre principale (menu de l'icône → *Télécommande iPhone…* pour les lire ou les changer).
 2. Ouvrez l'adresse dans Safari et saisissez le mot de passe.
 3. Partager → **Sur l'écran d'accueil**.
 
 Le mot de passe par défaut est **aléatoire** (6 chiffres, généré au premier lancement, stocké dans `%APPDATA%\ZerkiWatch\password.txt`). Changez-le depuis le menu de l'icône : *Télécommande iPhone…*. Le lien en bas de la page web ne fait que mémoriser le mot de passe dans le téléphone, il ne change pas celui du PC.
 
-### Raccourcis Apple
+### Certificat HTTPS sur l'iPhone (une seule fois)
+ZerkiWatch crée sa propre autorité locale (`ZerkiWatch Local CA`, dans le magasin de certificats Windows de votre PC) et un certificat serveur pour l'IP locale du PC. Pour que l'iPhone lui fasse confiance :
+1. Sur le PC : menu de l'icône → *Télécommande iPhone…* → **Certificat iPhone**. Le fichier public `ZerkiWatch-CA.cer` est enregistré sur le Bureau et l'empreinte SHA-256 est affichée.
+2. Envoyez-le à l'iPhone (AirDrop, mail, iCloud Drive), ou ouvrez `https://<adresse du PC>:8765/ca.cer` dans Safari (acceptez l'avertissement unique : seul le certificat public est téléchargé) puis *Autoriser*.
+3. iPhone : **Réglages → Profil téléchargé → Installer**.
+4. iPhone : **Réglages → Général → Informations → Réglages des certificats de confiance** → activez **ZerkiWatch Local CA**.
+5. Comparez l'empreinte SHA-256 des détails du certificat avec celle affichée sur le PC.
+
+La clé privée ne quitte jamais le PC. Si l'IP du PC change, ZerkiWatch réémet le certificat serveur au démarrage suivant ; l'iPhone continue de lui faire confiance. Si le certificat ne peut pas être configuré, la télécommande ne démarre **pas** (pas de repli en HTTP) et la raison s'affiche dans la fenêtre principale. Après le passage depuis HTTP, ressaisissez le mot de passe une fois dans Safari et réajoutez l'icône sur l'écran d'accueil.
 | Action | Requête |
 |---|---|
-| État en une ligne | `GET /api/short?pin=…` (option `&f=state`, `speed`, `cpu` ou `ram`) |
-| Basculer Internet / Local | `GET` ou `POST /api/toggle?pin=…` |
+| État en une ligne | `GET /api/short` + en-tête `X-Pin: <mot de passe>` (option `&f=state`, `speed`, `cpu` ou `ram`) |
+| Basculer Internet / Local | `GET` ou `POST /api/toggle` + en-tête `X-Pin: <mot de passe>` |
 
 Dans l'app Raccourcis : **Obtenir le contenu de l'URL**, puis **Afficher le résultat** ou **Afficher la notification**.
 
-### API (protégée par l'en-tête `X-Pin` ou `?pin=`)
+### API (protégée par l'en-tête `X-Pin` — le mot de passe n'est jamais accepté dans l'URL)
 Voir le tableau dans le [README anglais](README.md#api-protected-by-x-pin-header-or-pin). Après 5 mots de passe erronés, l'accès est bloqué 60 secondes.
 
 ## Données enregistrées
@@ -101,7 +109,7 @@ Tout est dans `%APPDATA%\ZerkiWatch` : `history.csv` (moyennes par minute, 7 jou
 
 ## Limites et sécurité
 - **Windows 10/11 uniquement**, pare-feu Windows actif, droits administrateur requis.
-- La page iPhone est en **HTTP non chiffré sur votre réseau local** : utilisez un mot de passe personnel et n'exposez jamais le port sur Internet (pas de redirection de port).
+- La page iPhone est servie en **HTTPS sur votre réseau local**, avec une autorité de certification locale créée sur votre PC. N'exposez jamais le port sur Internet (pas de redirection de port).
 - Le mode local autorise les adresses privées (10.x, 172.16–31.x, 192.168.x, lien-local) ; un VPN ou un service passant par une adresse privée peut rester joignable.
 - Sous Windows 11, la barre « intégrée » est une fenêtre posée sur la barre des tâches : elle peut recouvrir des icônes sur un écran étroit.
 - La mesure par application utilise le traçage réseau de Windows (ETW) et reste active en arrière-plan ; un interrupteur du menu la coupe.

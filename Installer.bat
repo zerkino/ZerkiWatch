@@ -243,6 +243,9 @@ function Uninstall-App {
             if ($rules.Count -gt 0) { $rules | Remove-NetFirewallRule -ErrorAction SilentlyContinue }
         } catch { }
     }
+    # HTTPS of the iPhone remote: port binding + ZerkiWatch certificates
+    try { $null = & cmd.exe /c 'netsh.exe http delete sslcert ipport=0.0.0.0:8765 2>&1' } catch { }
+    try { Get-ChildItem Cert:\LocalMachine\My | Where-Object { ($_.Subject -eq 'CN=ZerkiWatch iPhone remote') -or ($_.Subject -eq 'CN=ZerkiWatch Local CA') } | Remove-Item -ErrorAction SilentlyContinue } catch { }
 
     Write-Host (L 'rm_auto')
     try { Unregister-ScheduledTask -TaskName 'ZerkiWatch' -Confirm:$false -ErrorAction SilentlyContinue } catch { }

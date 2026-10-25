@@ -98,9 +98,14 @@ bal.minimized=Das Programm l\u00e4uft weiter neben der Uhr. Rechtsklick auf das 
 bal.power=Herunterfahren oder Neustart vom iPhone angefordert: 30 Sekunden zum Abbrechen.
 bal.restored=Internet wiederhergestellt
 bar.title=Systemmonitor
+cert.fail=Zertifikatexport fehlgeschlagen: {0}
+cert.help=Datei gespeichert: {0}\n\nAuf dem iPhone (gleiches WLAN):\n1. Sende diese Datei an das iPhone (AirDrop, Mail, iCloud Drive) oder \u00f6ffne {2} in Safari und tippe auf Erlauben, um das Profil zu laden.\n2. Einstellungen > Profil geladen > Installieren.\n3. Einstellungen > Allgemein > Info > Zertifikatsvertrauenseinstellungen > \u201eZerkiWatch Local CA\u201c aktivieren.\n4. Pr\u00fcfe den SHA-256-Fingerabdruck in den Zertifikatdetails auf dem iPhone:\n{1}\n\n\u00d6ffne danach die Adresse der Fernbedienung erneut.
+err.bind=Zertifikat konnte nicht an den Port gebunden werden ({0})
+err.cert=Problem mit dem HTTPS-Zertifikat, Fernbedienung nicht gestartet: {0}
 err.fatal=Fehler: {0}
 err.fw_disabled=Die Windows-Firewall ist ausgeschaltet ({0}). Schalte sie ein und versuche es erneut.
 err.fw_stopped=Die Windows-Firewall ist angehalten: Das Internet kann nicht blockiert werden.
+err.noca=Kein ZerkiWatch-Zertifikat gefunden. Starte ZerkiWatch als Administrator neu.
 err.oldversion=Eine \u00e4ltere Version von Mode reseau l\u00e4uft noch.\nRechtsklick auf das Symbol neben der Uhr, Beenden w\u00e4hlen, dann das Programm neu starten.
 err.ranges=Die Adressbereiche konnten nicht berechnet werden.
 err.rule_not_created=Firewall-Regel nicht erstellt
@@ -230,6 +235,7 @@ p.usage=AUSLASTUNG
 p.wait=Bitte warten...
 pin.addr=Adresse (gleiches Wi-Fi): {0}
 pin.cancel=Abbrechen
+pin.cert=iPhone-Zertifikat
 pin.invalid=Passwort zu kurz (mindestens 4 Zeichen).
 pin.label=Passwort (mindestens 4 Zeichen):
 pin.noaddr=IP-Adresse des PCs nicht gefunden
@@ -314,9 +320,14 @@ bal.minimized=The program keeps running near the clock. Right-click the icon to 
 bal.power=Shutdown or restart requested from the iPhone: 30 seconds to cancel.
 bal.restored=Internet restored
 bar.title=System monitor
+cert.fail=Certificate export failed: {0}
+cert.help=File saved: {0}\n\nOn the iPhone (same Wi-Fi):\n1. Send this file to the iPhone (AirDrop, mail, iCloud Drive) or open {2} in Safari and tap Allow when asked to download the profile.\n2. Settings > Profile Downloaded > Install.\n3. Settings > General > About > Certificate Trust Settings > turn ON "ZerkiWatch Local CA".\n4. Check the SHA-256 fingerprint in the certificate details on the iPhone:\n{1}\n\nThen open the remote address again.
+err.bind=could not bind the certificate to the port ({0})
+err.cert=HTTPS certificate problem, remote not started: {0}
 err.fatal=Error: {0}
 err.fw_disabled=Windows Firewall is turned off ({0}). Turn it on and try again.
 err.fw_stopped=Windows Firewall is stopped: cannot block the Internet.
+err.noca=No ZerkiWatch certificate found. Restart ZerkiWatch as administrator.
 err.oldversion=An older version of Mode reseau is still running.\nRight-click its icon near the clock, choose Quit, then start the program again.
 err.ranges=Could not compute the address ranges.
 err.rule_not_created=firewall rule not created
@@ -446,6 +457,7 @@ p.usage=USAGE
 p.wait=Please wait...
 pin.addr=Address (same Wi-Fi): {0}
 pin.cancel=Cancel
+pin.cert=iPhone certificate
 pin.invalid=Password too short (4 characters minimum).
 pin.label=Password (4 characters minimum):
 pin.noaddr=PC IP address not found
@@ -530,9 +542,14 @@ bal.minimized=El programa sigue en ejecuci\u00f3n junto al reloj. Haz clic derec
 bal.power=Apagado o reinicio solicitado desde el iPhone: 30 segundos para cancelar.
 bal.restored=Internet restablecido
 bar.title=Monitor del sistema
+cert.fail=Error al exportar el certificado: {0}
+cert.help=Archivo guardado: {0}\n\nEn el iPhone (misma Wi-Fi):\n1. Env\u00eda este archivo al iPhone (AirDrop, correo, iCloud Drive) o abre {2} en Safari y pulsa Permitir para descargar el perfil.\n2. Ajustes > Perfil descargado > Instalar.\n3. Ajustes > General > Informaci\u00f3n > Ajustes de confianza de certificados > activa \u00abZerkiWatch Local CA\u00bb.\n4. Comprueba la huella SHA-256 en los detalles del certificado del iPhone:\n{1}\n\nDespu\u00e9s vuelve a abrir la direcci\u00f3n del mando.
+err.bind=no se pudo asociar el certificado al puerto ({0})
+err.cert=Problema con el certificado HTTPS, mando no iniciado: {0}
 err.fatal=Error: {0}
 err.fw_disabled=El Firewall de Windows est\u00e1 desactivado ({0}). Act\u00edvalo e int\u00e9ntalo de nuevo.
 err.fw_stopped=El Firewall de Windows est\u00e1 detenido: no se puede bloquear Internet.
+err.noca=No se encontr\u00f3 ning\u00fan certificado de ZerkiWatch. Reinicia ZerkiWatch como administrador.
 err.oldversion=Una versi\u00f3n anterior de Mode reseau sigue en ejecuci\u00f3n.\nHaz clic derecho en su icono junto al reloj, elige Salir y vuelve a iniciar el programa.
 err.ranges=No se pudieron calcular los rangos de direcciones.
 err.rule_not_created=regla de firewall no creada
@@ -662,6 +679,7 @@ p.usage=USO
 p.wait=Espera...
 pin.addr=Direcci\u00f3n (mismo Wi-Fi): {0}
 pin.cancel=Cancelar
+pin.cert=Certificado iPhone
 pin.invalid=Contrase\u00f1a demasiado corta (m\u00ednimo 4 caracteres).
 pin.label=Contrase\u00f1a (m\u00ednimo 4 caracteres):
 pin.noaddr=Direcci\u00f3n IP del PC no encontrada
@@ -746,9 +764,14 @@ bal.minimized=Le programme continue pr\u00e8s de l'horloge. Clic droit sur l'ic\
 bal.power=Arr\u00eat ou red\u00e9marrage demand\u00e9 depuis l'iPhone : 30 secondes pour annuler.
 bal.restored=Internet r\u00e9activ\u00e9
 bar.title=Moniteur syst\u00e8me
+cert.fail=\u00c9chec de l'export du certificat : {0}
+cert.help=Fichier enregistr\u00e9 : {0}\n\nSur l'iPhone (m\u00eame Wi-Fi) :\n1. Envoyez ce fichier \u00e0 l'iPhone (AirDrop, mail, iCloud Drive) ou ouvrez {2} dans Safari et appuyez sur Autoriser pour t\u00e9l\u00e9charger le profil.\n2. R\u00e9glages > Profil t\u00e9l\u00e9charg\u00e9 > Installer.\n3. R\u00e9glages > G\u00e9n\u00e9ral > Informations > R\u00e9glages des certificats de confiance > activez \u00ab ZerkiWatch Local CA \u00bb.\n4. V\u00e9rifiez l'empreinte SHA-256 dans les d\u00e9tails du certificat sur l'iPhone :\n{1}\n\nRouvrez ensuite l'adresse de la t\u00e9l\u00e9commande.
+err.bind=impossible de lier le certificat au port ({0})
+err.cert=Probl\u00e8me de certificat HTTPS, t\u00e9l\u00e9commande non d\u00e9marr\u00e9e : {0}
 err.fatal=Erreur : {0}
 err.fw_disabled=Le pare-feu Windows est d\u00e9sactiv\u00e9 ({0}). Activez-le puis recommencez.
 err.fw_stopped=Le pare-feu Windows est arr\u00eat\u00e9 : impossible de bloquer Internet.
+err.noca=Aucun certificat ZerkiWatch trouv\u00e9. Relancez ZerkiWatch en administrateur.
 err.oldversion=Une ancienne version de Mode r\u00e9seau tourne encore.\nFaites un clic droit sur son ic\u00f4ne pr\u00e8s de l'horloge, puis Quitter, et relancez le programme.
 err.ranges=Calcul des plages impossible.
 err.rule_not_created=r\u00e8gle pare-feu non cr\u00e9\u00e9e
@@ -878,6 +901,7 @@ p.usage=CONSOMMATION
 p.wait=Patientez...
 pin.addr=Adresse (m\u00eame Wi-Fi) : {0}
 pin.cancel=Annuler
+pin.cert=Certificat iPhone
 pin.invalid=Mot de passe trop court (4 caract\u00e8res minimum).
 pin.label=Mot de passe (4 caract\u00e8res minimum) :
 pin.noaddr=Adresse IP du PC introuvable
@@ -962,9 +986,14 @@ bal.minimized=Il programma resta attivo vicino all'orologio. Clic destro sull'ic
 bal.power=Arresto o riavvio richiesto dall'iPhone: 30 secondi per annullare.
 bal.restored=Internet ripristinato
 bar.title=Monitor di sistema
+cert.fail=Esportazione del certificato non riuscita: {0}
+cert.help=File salvato: {0}\n\nSu iPhone (stessa Wi-Fi):\n1. Invia questo file all'iPhone (AirDrop, mail, iCloud Drive) oppure apri {2} in Safari e tocca Consenti per scaricare il profilo.\n2. Impostazioni > Profilo scaricato > Installa.\n3. Impostazioni > Generali > Info > Impostazioni certificati attendibili > attiva \u00abZerkiWatch Local CA\u00bb.\n4. Verifica l'impronta SHA-256 nei dettagli del certificato su iPhone:\n{1}\n\nPoi riapri l'indirizzo del telecomando.
+err.bind=impossibile associare il certificato alla porta ({0})
+err.cert=Problema con il certificato HTTPS, telecomando non avviato: {0}
 err.fatal=Errore: {0}
 err.fw_disabled=Windows Firewall \u00e8 disattivato ({0}). Attivalo e riprova.
 err.fw_stopped=Windows Firewall \u00e8 arrestato: impossibile bloccare Internet.
+err.noca=Nessun certificato ZerkiWatch trovato. Riavvia ZerkiWatch come amministratore.
 err.oldversion=Una versione precedente di Mode reseau \u00e8 ancora in esecuzione.\nClic destro sulla sua icona vicino all'orologio, scegli Esci, poi riavvia il programma.
 err.ranges=Impossibile calcolare gli intervalli di indirizzi.
 err.rule_not_created=regola del firewall non creata
@@ -1094,6 +1123,7 @@ p.usage=UTILIZZO
 p.wait=Attendi...
 pin.addr=Indirizzo (stesso Wi-Fi): {0}
 pin.cancel=Annulla
+pin.cert=Certificato iPhone
 pin.invalid=Password troppo corta (minimo 4 caratteri).
 pin.label=Password (minimo 4 caratteri):
 pin.noaddr=Indirizzo IP del PC non trovato
@@ -1178,9 +1208,14 @@ bal.minimized=O programa continua em execu\u00e7\u00e3o perto do rel\u00f3gio. C
 bal.power=Desligamento ou reinicializa\u00e7\u00e3o solicitado pelo iPhone: 30 segundos para cancelar.
 bal.restored=Internet restaurada
 bar.title=Monitor do sistema
+cert.fail=Falha ao exportar o certificado: {0}
+cert.help=Ficheiro guardado: {0}\n\nNo iPhone (mesmo Wi-Fi):\n1. Envie este ficheiro para o iPhone (AirDrop, e-mail, iCloud Drive) ou abra {2} no Safari e toque em Permitir para transferir o perfil.\n2. Defini\u00e7\u00f5es > Perfil transferido > Instalar.\n3. Defini\u00e7\u00f5es > Geral > Informa\u00e7\u00e3o > Defini\u00e7\u00f5es de confian\u00e7a de certificados > ative \u00abZerkiWatch Local CA\u00bb.\n4. Verifique a impress\u00e3o digital SHA-256 nos detalhes do certificado no iPhone:\n{1}\n\nDepois abra novamente o endere\u00e7o do controlo remoto.
+err.bind=n\u00e3o foi poss\u00edvel associar o certificado \u00e0 porta ({0})
+err.cert=Problema com o certificado HTTPS, controlo remoto n\u00e3o iniciado: {0}
 err.fatal=Erro: {0}
 err.fw_disabled=O Firewall do Windows est\u00e1 desativado ({0}). Ative-o e tente novamente.
 err.fw_stopped=O Firewall do Windows est\u00e1 parado: n\u00e3o \u00e9 poss\u00edvel bloquear a Internet.
+err.noca=Nenhum certificado ZerkiWatch encontrado. Reinicie o ZerkiWatch como administrador.
 err.oldversion=Uma vers\u00e3o antiga do Mode reseau ainda est\u00e1 em execu\u00e7\u00e3o.\nClique com o bot\u00e3o direito no \u00edcone dela perto do rel\u00f3gio, escolha Sair e inicie o programa novamente.
 err.ranges=N\u00e3o foi poss\u00edvel calcular as faixas de endere\u00e7os.
 err.rule_not_created=regra de firewall n\u00e3o criada
@@ -1310,6 +1345,7 @@ p.usage=USO
 p.wait=Aguarde...
 pin.addr=Endere\u00e7o (mesmo Wi-Fi): {0}
 pin.cancel=Cancelar
+pin.cert=Certificado iPhone
 pin.invalid=Senha muito curta (m\u00ednimo de 4 caracteres).
 pin.label=Senha (m\u00ednimo de 4 caracteres):
 pin.noaddr=Endere\u00e7o IP do PC n\u00e3o encontrado
@@ -2435,6 +2471,14 @@ function Handle-Remote($ctx) {
         $req = $ctx.Request
         $path = $req.Url.AbsolutePath
         if ($path -eq '/') { Send-Reply $ctx 200 'text/html; charset=utf-8' (Build-Page); return }
+        if ($path -eq '/ca.cer') {
+            if ($req.HttpMethod -ne 'GET') { Send-Json $ctx 405 @{ error = 'method' }; return }
+            $caB = Get-CaBytes
+            if ($caB -eq $null) { Send-Json $ctx 404 @{ error = 'ca' }; return }
+            $ctx.Response.AddHeader('Content-Disposition', 'attachment; filename="ZerkiWatch-CA.cer"')
+            Send-Bytes $ctx 'application/x-x509-ca-cert' $caB
+            return
+        }
         if (($path -eq '/manifest.webmanifest') -or ($path -eq '/icon-180.png') -or ($path -eq '/apple-touch-icon.png') -or ($path -eq '/icon-512.png')) {
             if ($req.HttpMethod -ne 'GET') { Send-Json $ctx 405 @{ error = 'method' }; return }
             if ($path -eq '/manifest.webmanifest') { Send-Reply $ctx 200 'application/manifest+json; charset=utf-8' $S.Manifest; return }
@@ -2447,7 +2491,6 @@ function Handle-Remote($ctx) {
         $nowUtc = [DateTime]::UtcNow
         if ($S.LockUntil -gt $nowUtc) { Send-Json $ctx 429 @{ error = 'locked' }; return }
         $given = $req.Headers['X-Pin']
-        if ([string]::IsNullOrEmpty($given)) { $given = $req.QueryString['pin'] }
         if ($given -ne $S.Pin) {
             $S.Fails = $S.Fails + 1
             if ($S.Fails -ge 5) { $S.LockUntil = $nowUtc.AddSeconds(60); $S.Fails = 0 }
@@ -2521,6 +2564,118 @@ function Handle-Remote($ctx) {
     }
 }
 
+# ---------- HTTPS : autorite locale + certificat serveur (aucune verification desactivee) ----------
+$CaSubject   = 'CN=ZerkiWatch Local CA'
+$LeafSubject = 'CN=ZerkiWatch iPhone remote'
+$SslAppId    = '{6f1b7a3e-4c52-4d0e-9a7b-5a3e0c2d8f41}'
+
+function Get-AllLanIps {
+    $r = New-Object System.Collections.ArrayList
+    foreach ($ni in [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces()) {
+        if ($ni.OperationalStatus -ne [System.Net.NetworkInformation.OperationalStatus]::Up) { continue }
+        $nt = $ni.NetworkInterfaceType.ToString()
+        if ($nt -eq 'Loopback' -or $nt -eq 'Tunnel') { continue }
+        foreach ($ua in $ni.GetIPProperties().UnicastAddresses) {
+            if ($ua.Address.AddressFamily -ne [System.Net.Sockets.AddressFamily]::InterNetwork) { continue }
+            $ip = $ua.Address.ToString()
+            if ($ip.StartsWith('169.254.') -or $ip.StartsWith('127.')) { continue }
+            [void]$r.Add($ip)
+        }
+    }
+    return @($r | Sort-Object -Unique)
+}
+
+function Test-CertHasIp($cert, [string]$ip) {
+    # Lit le SubjectAltName en binaire (le texte de Format() depend de la langue de Windows).
+    $ext = $cert.Extensions | Where-Object { $_.Oid.Value -eq '2.5.29.17' } | Select-Object -First 1
+    if ($ext -eq $null) { return $false }
+    $raw = $ext.RawData
+    $o = @($ip.Split('.') | ForEach-Object { [byte][int]$_ })
+    for ($i = 0; $i -le ($raw.Length - 6); $i++) {
+        if (($raw[$i] -eq 0x87) -and ($raw[$i + 1] -eq 4) -and ($raw[$i + 2] -eq $o[0]) -and ($raw[$i + 3] -eq $o[1]) -and ($raw[$i + 4] -eq $o[2]) -and ($raw[$i + 5] -eq $o[3])) { return $true }
+    }
+    return $false
+}
+
+function Get-CaCert {
+    $now = Get-Date
+    return (Get-ChildItem Cert:\LocalMachine\My | Where-Object { ($_.Subject -eq $CaSubject) -and $_.HasPrivateKey -and ($_.NotAfter -gt $now.AddDays(60)) } | Sort-Object NotAfter -Descending | Select-Object -First 1)
+}
+
+function Get-CaBytes {
+    try {
+        $ca = Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -eq $CaSubject } | Sort-Object NotAfter -Descending | Select-Object -First 1
+        if ($ca -eq $null) { return $null }
+        return $ca.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert)
+    } catch { return $null }
+}
+
+function Get-CaFingerprint {
+    try {
+        $bytes = Get-CaBytes
+        if ($bytes -eq $null) { return '' }
+        $h = [System.Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
+        return ((($h | ForEach-Object { $_.ToString('X2') }) -join ' '))
+    } catch { return '' }
+}
+
+# Retourne le certificat serveur valide (le cree ou le renouvelle si besoin). Leve une exception en cas d'echec.
+function Initialize-RemoteCert {
+    $ips = @(Get-AllLanIps)
+    $ca = Get-CaCert
+    if ($ca -eq $null) {
+        $ca = New-SelfSignedCertificate -Type Custom -Subject $CaSubject -KeyUsage CertSign, CRLSign, DigitalSignature `
+            -KeyAlgorithm RSA -KeyLength 2048 -HashAlgorithm SHA256 -KeyExportPolicy NonExportable `
+            -NotAfter (Get-Date).AddYears(5) -CertStoreLocation Cert:\LocalMachine\My `
+            -TextExtension @('2.5.29.19={critical}{text}CA=true')
+        Write-Log 'HTTPS: local certificate authority created' 'ca'
+    }
+    $now = Get-Date
+    $leaf = Get-ChildItem Cert:\LocalMachine\My | Where-Object { ($_.Subject -eq $LeafSubject) -and $_.HasPrivateKey -and ($_.Issuer -eq $CaSubject) -and ($_.NotAfter -gt $now.AddDays(30)) -and ($_.Thumbprint -ne $ca.Thumbprint) } | Sort-Object NotAfter -Descending | Select-Object -First 1
+    if ($leaf -ne $null) {
+        foreach ($ip in $ips) { if (-not (Test-CertHasIp $leaf $ip)) { $leaf = $null; break } }
+    }
+    if ($leaf -eq $null) {
+        Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -eq $LeafSubject } | Remove-Item -ErrorAction SilentlyContinue
+        $san = New-Object System.Collections.ArrayList
+        foreach ($ip in $ips) { [void]$san.Add('IP=' + $ip) }
+        [void]$san.Add('DNS=' + $env:COMPUTERNAME)
+        [void]$san.Add('DNS=localhost')
+        $leaf = New-SelfSignedCertificate -Type Custom -Subject $LeafSubject -Signer $ca -KeyUsage DigitalSignature, KeyEncipherment `
+            -KeyAlgorithm RSA -KeyLength 2048 -HashAlgorithm SHA256 -NotAfter (Get-Date).AddDays(390) `
+            -CertStoreLocation Cert:\LocalMachine\My `
+            -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.1', ('2.5.29.17={text}' + ($san -join '&')))
+        Write-Log 'HTTPS: server certificate issued' 'lf'
+    }
+    return $leaf
+}
+
+# Lie le certificat au port HTTPS ; verifie le resultat (sinon exception : le serveur ne demarre pas).
+function Set-SslBinding($leaf) {
+    $ipp = '0.0.0.0:' + $RemotePort
+    # cmd /c : evite qu'une sortie stderr de netsh devienne une erreur terminante ($ErrorActionPreference = 'Stop').
+    $null = & cmd.exe /c ('netsh.exe http delete sslcert ipport=' + $ipp + ' 2>&1')
+    $out = & cmd.exe /c ('netsh.exe http add sslcert ipport=' + $ipp + ' certhash=' + $leaf.Thumbprint + ' appid=' + $SslAppId + ' certstorename=MY 2>&1')
+    if ($LASTEXITCODE -ne 0) { throw (Tf 'err.bind' @((($out | Out-String).Trim()))) }
+    $chk = (& cmd.exe /c ('netsh.exe http show sslcert ipport=' + $ipp + ' 2>&1') | Out-String)
+    if ($chk.ToUpper().Replace(' ', '').IndexOf($leaf.Thumbprint.ToUpper()) -lt 0) { throw (Tf 'err.bind' @('binding not found')) }
+}
+
+function Remove-SslBinding {
+    try { $null = & cmd.exe /c ('netsh.exe http delete sslcert ipport=0.0.0.0:' + $RemotePort + ' 2>&1') } catch { }
+}
+
+# Exporte la cle PUBLIQUE de l'autorite sur le Bureau (pour l'installer sur l'iPhone). Retourne le chemin.
+function Export-CaFile {
+    $bytes = Get-CaBytes
+    if ($bytes -eq $null) { throw (T 'err.noca') }
+    $dir = [Environment]::GetFolderPath('Desktop')
+    if ([string]::IsNullOrEmpty($dir) -or -not (Test-Path -LiteralPath $dir)) { $dir = $cfgDir }
+    $p = Join-Path $dir 'ZerkiWatch-CA.cer'
+    [System.IO.File]::WriteAllBytes($p, $bytes)
+    return $p
+}
+
 function Start-Remote {
     $S.Pin = Get-Pin
     $ruleOk = $true
@@ -2531,8 +2686,16 @@ function Start-Remote {
             -Protocol TCP -LocalPort $RemotePort -RemoteAddress LocalSubnet -Profile Any -Enabled True | Out-Null
     } catch { $ruleOk = $false }
     try {
+        $leafCert = Initialize-RemoteCert
+        Set-SslBinding $leafCert
+    } catch {
+        $S.RemoteError = (Tf 'err.cert' @($_.Exception.Message))
+        Write-Log ('HTTPS certificate: ' + $_.Exception.Message) 'cert'
+        return $false
+    }
+    try {
         $l = New-Object System.Net.HttpListener
-        $l.Prefixes.Add('http://+:' + $RemotePort + '/')
+        $l.Prefixes.Add('https://+:' + $RemotePort + '/')
         $l.Start()
         $S.Listener = $l
         $S.Task = $l.GetContextAsync()
@@ -2548,6 +2711,7 @@ function Stop-Remote {
     try { if ($S.Listener -ne $null) { $S.Listener.Close() } } catch { }
     $S.Listener = $null
     $S.Task = $null
+    Remove-SslBinding
     try { Get-NetFirewallRule -Group $RuleGroup -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue; Get-NetFirewallRule -Group $LegacyRuleGroup -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue } catch { }
 }
 
@@ -4494,7 +4658,7 @@ function Show-PinDialog {
     $dlg.ForeColor = $cText
     $dlg.Font = New-Object System.Drawing.Font('Segoe UI', 9.5)
     if ($S.Listener -eq $null) { $addr = (T 'pin.off') }
-    elseif ($lanIp) { $addr = (Tf 'pin.addr' @('http://' + $lanIp + ':' + $RemotePort)) }
+    elseif ($lanIp) { $addr = (Tf 'pin.addr' @('https://' + $lanIp + ':' + $RemotePort)) }
     else { $addr = (T 'pin.noaddr') }
     $l1 = New-Label $addr 16 16 348 24 $dlg.Font $cText 'MiddleLeft'
     $l2 = New-Label (T 'pin.label') 16 56 348 22 $dlg.Font $cMuted 'MiddleLeft'
@@ -4517,12 +4681,26 @@ function Show-PinDialog {
     $ca.Size = New-Object System.Drawing.Size(94, 30)
     $ca.FlatStyle = 'Flat'; $ca.BackColor = $cCard; $ca.ForeColor = $cText
     $ca.Add_Click({ $dlg.Close() })
+    $bc = New-Object System.Windows.Forms.Button
+    $bc.Text = (T 'pin.cert')
+    $bc.Location = New-Object System.Drawing.Point(16, 146)
+    $bc.Size = New-Object System.Drawing.Size(124, 30)
+    $bc.FlatStyle = 'Flat'; $bc.BackColor = $cCard; $bc.ForeColor = $cText
+    $bc.Add_Click({
+        try {
+            $cp = Export-CaFile
+            $fp = Get-CaFingerprint
+            $addrC = 'https://' + $lanIp + ':' + $RemotePort + '/ca.cer'
+            [void][System.Windows.Forms.MessageBox]::Show((Tf 'cert.help' @($cp, $fp, $addrC)), (T 'pin.title'))
+            Start-Process -FilePath 'explorer.exe' -ArgumentList ('/select,"' + $cp + '"')
+        } catch { $lerr.Text = (Tf 'cert.fail' @($_.Exception.Message)) }
+    })
     $ok.Add_Click({
         if (Set-Pin $tb.Text) { $dlg.Close() } else { $lerr.Text = (T 'pin.invalid') }
     })
     $dlg.AcceptButton = $ok
     $dlg.CancelButton = $ca
-    foreach ($c in @($l1, $l2, $tb, $lerr, $ok, $ca)) { $dlg.Controls.Add($c) }
+    foreach ($c in @($l1, $l2, $tb, $lerr, $bc, $ok, $ca)) { $dlg.Controls.Add($c) }
     [void]$dlg.ShowDialog()
     $dlg.Dispose()
     try { $lblFoot.Text = (Get-FootText) } catch { }
@@ -5263,7 +5441,7 @@ $remoteOn = Start-Remote
 function Get-FootText {
     $lanIp = Get-LanIp
     if ($S.Listener -ne $null) {
-        if ($lanIp) { $t = (Tf 'foot.remote' @(('http://' + $lanIp + ':' + $RemotePort), $S.Pin)) }
+        if ($lanIp) { $t = (Tf 'foot.remote' @(('https://' + $lanIp + ':' + $RemotePort), $S.Pin)) }
         else { $t = (Tf 'foot.noip' @($RemotePort, $S.Pin)) }
     } else { $t = (Tf 'foot.off' @($S.RemoteError)) }
     if (($S.Listener -ne $null) -and ($S.RemoteError -ne '')) { $t = $t + "`n" + '(' + $S.RemoteError + ')' }

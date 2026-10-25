@@ -10,7 +10,7 @@
 | `NetEtw` (C#) | Starts a Windows ETW trace (`Microsoft-Windows-Kernel-Network` through `logman`) and aggregates bytes per process for the per-app / per-service bandwidth. |
 | Firewall logic | Computes "everything except private ranges" as IP intervals and creates two Windows Firewall block rules (in / out), group `ZerkiWatch-LocalOnly`. Removing the group = Internet mode. |
 | UI | WinForms + GDI+ custom-drawn window, floating bar, taskbar docking, tray icon and menu, history window. |
-| Remote | `HttpListener` on port 8765, a firewall rule limited to `LocalSubnet`, a password check (header `X-Pin` or `?pin=`) with 5-failure / 60 s lock-out, and the web page (`$PageHtml`) built per language by `Build-Page`. |
+| Remote | `HttpListener` on `https://+:8765/` (local CA + server certificate in `Cert:\LocalMachine\My`, bound with `netsh http add sslcert`; no HTTP fallback), a firewall rule limited to `LocalSubnet`, a password check (header `X-Pin` only) with 5-failure / 60 s lock-out, and the web page (`$PageHtml`) built per language by `Build-Page`. |
 | History | `history.csv`, `totals.csv`, `apps.csv` in `%APPDATA%\ZerkiWatch`. |
 
 ## Languages
