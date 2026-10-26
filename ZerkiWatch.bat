@@ -28,7 +28,7 @@ $ErrorActionPreference = 'Stop'
 [System.Windows.Forms.Application]::SetUnhandledExceptionMode([System.Windows.Forms.UnhandledExceptionMode]::CatchException)
 
 # ---------- Version and error log ----------
-$APPVER = '6.1.3'
+$APPVER = '7.0.0'
 $logDir = Join-Path $env:APPDATA 'ZerkiWatch'
 $oldDataDir = Join-Path $env:APPDATA 'ModeReseau'
 try {

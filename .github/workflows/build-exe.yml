@@ -7,6 +7,15 @@ name: build-exe
 #  - "Run workflow" button     : same, kept as a downloadable artifact (test).
 on:
   workflow_dispatch:
+    inputs:
+      release:
+        description: 'Create the GitHub Release (and the tag) from this run'
+        type: boolean
+        default: false
+      tag:
+        description: 'Tag to create when release is ticked (must start with v)'
+        type: string
+        default: 'v7.0.0'
   push:
     tags: ['v*']
 permissions:
@@ -74,13 +83,15 @@ jobs:
             ZerkiWatch-Setup.exe
             SHA256.txt
       - name: Attach to the GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') || (github.event_name == 'workflow_dispatch' && inputs.release)
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+          target_commitish: ${{ github.sha }}
           files: |
             ZerkiWatch-windows.zip
             ZerkiWatch-Setup.exe
             ZerkiWatch.bat
             SHA256.txt
           body_path: .github/release-notes.md
-          name: ZerkiWatch ${{ github.ref_name }}
+          name: ZerkiWatch ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}

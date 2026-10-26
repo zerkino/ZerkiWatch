@@ -64,6 +64,15 @@ English, Français, Español, Deutsch, Italiano, Português. The language follow
 
 ## Install
 
+### Recommended: installer or portable zip (from the [latest release](../../releases/latest))
+- **`ZerkiWatch-Setup.exe`**: a normal Windows installer (Program Files, Start menu, optional shortcut, clean uninstall from *Apps*).
+- **`ZerkiWatch-windows.zip`**: portable. Unzip anywhere, run `ZerkiWatch.exe` (a tiny launcher that starts the readable `ZerkiWatch.bat` next to it).
+
+**Verify what you download** (free, no trust needed):
+- Every file is built by GitHub Actions from this repository's source, and carries a signed build attestation. With the [GitHub CLI](https://cli.github.com): `gh attestation verify ZerkiWatch-Setup.exe --repo zerkino/ZerkiWatch` (same for the zip).
+- `SHA256.txt` lists the SHA-256 of each file: compare with `Get-FileHash <file>` in PowerShell.
+- The files are not code-signed (a certificate costs money), so Windows SmartScreen may warn on first run: choose *More info, Run anyway*. The program itself is a readable script, nothing is hidden in the exe.
+
 ### Option 1: just run it
 1. Download `ZerkiWatch.bat` (and `ZerkiWatch.ico` if you want the icon).
 2. Double-click and accept the administrator prompt (needed to change the firewall).
