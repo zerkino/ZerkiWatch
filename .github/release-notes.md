@@ -1,5 +1,11 @@
 ## ZerkiWatch 7.0.0
 
+![Home, dark theme](https://raw.githubusercontent.com/zerkino/ZerkiWatch/main/docs/images/v7-home-dark.png)
+![Home, light theme](https://raw.githubusercontent.com/zerkino/ZerkiWatch/main/docs/images/v7-home-light.png)
+![Floating bar, mini, desktop widget and alert](https://raw.githubusercontent.com/zerkino/ZerkiWatch/main/docs/images/v7-widgets.png)
+
+*Design previews of the v7 interface (rendered mock-ups, the real window follows the same layout and colours). / Aperçus du design v7 (maquettes rendues, la vraie fenêtre suit la même disposition et les mêmes couleurs).*
+
 ### English
 **New**
 - Redesigned interface: a central dial (its ring follows live traffic; click to cut or restore Internet), tabs Home / Performance, graphite design system, light / dark / auto and four colour themes (midnight blue, violet, green, grey)
