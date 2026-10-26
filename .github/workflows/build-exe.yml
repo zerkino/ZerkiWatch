@@ -52,7 +52,7 @@ jobs:
         shell: powershell
         run: |
           choco install innosetup -y --no-progress
-          $m = Select-String -Path ZerkiWatch.bat -Pattern "^\$APPVER = '([^']+)'" | Select-Object -First 1
+          $m = Select-String -Path ZerkiWatch.bat -Pattern '^\$APPVER = ''([^'']+)''' | Select-Object -First 1
           $ver = $m.Matches[0].Groups[1].Value
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DAppVer=$ver" tools\installer\ZerkiWatch.iss
           if (-not (Test-Path dist-setup\ZerkiWatch-Setup.exe)) { throw 'ZerkiWatch-Setup.exe was not created' }
