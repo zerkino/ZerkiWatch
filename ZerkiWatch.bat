@@ -19,6 +19,7 @@ if "%ARG%"=="" (
 exit /b
 #PSSTART
 try {
+$T0 = [DateTime]::UtcNow
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.Numerics
@@ -54,6 +55,9 @@ function Write-Log([string]$msg, [string]$key = '') {
         }
         Add-Content -LiteralPath $logFile -Value ((Get-Date -Format 'yyyy-MM-dd HH:mm:ss') + '  ' + $msg) -Encoding ASCII
     } catch { }
+}
+function Mark-Step([string]$name) {
+    try { Write-Log ('STARTUP +' + ([int]([DateTime]::UtcNow - $T0).TotalMilliseconds) + ' ms : ' + $name) } catch { }
 }
 [System.Windows.Forms.Application]::add_ThreadException({ param($s2, $e2) try { Write-Log ('UI error: ' + $e2.Exception.Message) 'thr' } catch { } })
 
@@ -1943,6 +1947,7 @@ function Test-OldRun {
     }
     return $false
 }
+Mark-Step 'libraries loaded, checking old version'
 $oldRun = Test-OldRun
 if ($oldRun) {
     Write-Log 'Previous Mode reseau version detected, stopping it'
@@ -2096,6 +2101,7 @@ function Add-TypeCached([string]$Code, [string[]]$Refs = @()) {
     if ($Refs.Count -gt 0) { Add-Type -TypeDefinition $Code -ReferencedAssemblies $Refs } else { Add-Type -TypeDefinition $Code }
 }
 $native = $false
+Mark-Step 'before native types'
 try { Add-TypeCached $nativeCode; $native = $true } catch { $native = $false }
 $themeCode = @'
 using System.Drawing;
@@ -2146,6 +2152,7 @@ $hkOkTmp = $false
 try { Add-TypeCached $hkCode @('System.Windows.Forms'); $hkOkTmp = $true } catch { $hkOkTmp = $false }
 $themed = $false
 try { Add-TypeCached $themeCode @('System.Windows.Forms', 'System.Drawing'); $themed = $true } catch { $themed = $false }
+Mark-Step 'native, hotkey and theme types ready'
 
 
 $Group = 'ZerkiWatch-LocalOnly'
@@ -3568,6 +3575,7 @@ public static class NetEtw
     }
 }
 '@
+Mark-Step 'before ETW type'
 $S.EtwOk = $false
 $S.EtwStatus = ''
 try { Add-TypeCached $netCode @('System.Core'); $S.EtwOk = $true } catch { $S.EtwStatus = 'compilation failed' }
@@ -4143,6 +4151,7 @@ function New-Label([string]$Text, [int]$X, [int]$Y, [int]$W, [int]$H, $Font, $Co
 
 $dotChar = [string][char]0x25CF
 
+Mark-Step 'ETW and workers ready, building main window'
 $form = New-Object System.Windows.Forms.Form
 $form.Text = 'ZerkiWatch'
 $form.ClientSize = New-Object System.Drawing.Size(1100, 700)
@@ -4851,7 +4860,9 @@ $btnRetest.Add_Click({ if (-not $S.Busy) { Invoke-Tests } })
 $btnHist.Add_Click({ try { Show-History } catch { Write-Log ('History: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'sh' } })
 $form.Add_Shown({ Invoke-Tests })
 
+Mark-Step 'main window built, reading mode (firewall)'
 $S.Local = ((Get-Mode) -eq 'LOCAL')
+Mark-Step 'mode read'
 Load-CutState
 if ($S.Local) { $S.Pos = 0.0 } else { $S.Pos = 1.0 }
 Update-Ui
@@ -6306,6 +6317,7 @@ $miQuit.Add_Click({ Quit-App })
 $barForm.ContextMenuStrip = $menu
 $wForm.ContextMenuStrip = $menu
 
+Mark-Step 'before tray and menus'
 $tray = New-Object System.Windows.Forms.NotifyIcon
 if ($form.Icon -ne $null) { $tray.Icon = $form.Icon } else { $tray.Icon = [System.Drawing.SystemIcons]::Application }
 $tray.Text = 'ZerkiWatch'
@@ -7044,7 +7056,9 @@ $form.Add_FormClosing({
 })
 if (-not $BAR.UserHidden) { $barForm.Show() }
 if ($WID.On) { $wForm.Show() }
+Mark-Step 'before showing the window'
 if (-not $startHidden) { $form.Show() }
+Mark-Step 'window shown'
 if (-not $S.WizDone) {
     $wizTimer = New-Object System.Windows.Forms.Timer
     $wizTimer.Interval = 1500
@@ -7064,6 +7078,7 @@ if ($S.UpdCheck) {
     $updTimer.Start()
 }
 Update-Mon
+Mark-Step 'first refresh done'
 Write-Log ('Start v' + $APPVER + ' | native=' + $native + ' theme=' + $themed + ' | bar: hidden_by_user=' + $BAR.UserHidden + ' auto_hidden=' + $BAR.AutoHidden + ' visible=' + $barForm.Visible + ' pos=' + $barForm.Location.X + ',' + $barForm.Location.Y + ' taille=' + $barForm.Width + 'x' + $barForm.Height + ' | ecrans=' + [System.Windows.Forms.Screen]::AllScreens.Count + ' | ETW=' + $S.EtwOk)
 if ($BAR.UserHidden) {
     try { $tray.ShowBalloonTip(4000, 'ZerkiWatch', (T 'bal.bar_hidden'), [System.Windows.Forms.ToolTipIcon]::Info) } catch { }
