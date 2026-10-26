@@ -3229,7 +3229,8 @@ function Handle-Remote($ctx) {
 $CaSubject   = 'CN=ZerkiWatch Local CA'
 $LeafSubject = 'CN=ZerkiWatch iPhone remote'
 $SslAppId    = '{6f1b7a3e-4c52-4d0e-9a7b-5a3e0c2d8f41}'
-
+# Certificate helpers live in one text block so the same code can run on the UI thread and in a background runspace
+$RemoteFnSrc = @'
 function Get-AllLanIps {
     $r = New-Object System.Collections.ArrayList
     foreach ($ni in [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces()) {
@@ -3263,24 +3264,6 @@ function Get-CaCert {
     return (Get-ChildItem Cert:\LocalMachine\My | Where-Object { ($_.Subject -eq $CaSubject) -and $_.HasPrivateKey -and ($_.NotAfter -gt $now.AddDays(60)) } | Sort-Object NotAfter -Descending | Select-Object -First 1)
 }
 
-function Get-CaBytes {
-    try {
-        $ca = Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -eq $CaSubject } | Sort-Object NotAfter -Descending | Select-Object -First 1
-        if ($ca -eq $null) { return $null }
-        return $ca.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert)
-    } catch { return $null }
-}
-
-function Get-CaFingerprint {
-    try {
-        $bytes = Get-CaBytes
-        if ($bytes -eq $null) { return '' }
-        $h = [System.Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
-        return ((($h | ForEach-Object { $_.ToString('X2') }) -join ' '))
-    } catch { return '' }
-}
-
-# Retourne le certificat serveur valide (le cree ou le renouvelle si besoin). Leve une exception en cas d'echec.
 function Initialize-RemoteCert {
     $ips = @(Get-AllLanIps)
     $ca = Get-CaCert
@@ -3311,7 +3294,6 @@ function Initialize-RemoteCert {
     return $leaf
 }
 
-# Lie le certificat au port HTTPS ; verifie le resultat (sinon exception : le serveur ne demarre pas).
 function Set-SslBinding($leaf) {
     $ipp = '0.0.0.0:' + $RemotePort
     # cmd /c : evite qu'une sortie stderr de netsh devienne une erreur terminante ($ErrorActionPreference = 'Stop').
@@ -3321,6 +3303,30 @@ function Set-SslBinding($leaf) {
     $chk = (& cmd.exe /c ('netsh.exe http show sslcert ipport=' + $ipp + ' 2>&1') | Out-String)
     if ($chk.ToUpper().Replace(' ', '').IndexOf($leaf.Thumbprint.ToUpper()) -lt 0) { throw (Tf 'err.bind' @('binding not found')) }
 }
+'@
+. ([scriptblock]::Create($RemoteFnSrc))
+
+
+
+
+function Get-CaBytes {
+    try {
+        $ca = Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -eq $CaSubject } | Sort-Object NotAfter -Descending | Select-Object -First 1
+        if ($ca -eq $null) { return $null }
+        return $ca.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert)
+    } catch { return $null }
+}
+
+function Get-CaFingerprint {
+    try {
+        $bytes = Get-CaBytes
+        if ($bytes -eq $null) { return '' }
+        $h = [System.Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
+        return ((($h | ForEach-Object { $_.ToString('X2') }) -join ' '))
+    } catch { return '' }
+}
+
+
 
 function Remove-SslBinding {
     try { $null = & cmd.exe /c ('netsh.exe http delete sslcert ipport=0.0.0.0:' + $RemotePort + ' 2>&1') } catch { }
@@ -3335,6 +3341,64 @@ function Export-CaFile {
     $p = Join-Path $dir 'ZerkiWatch-CA.cer'
     [System.IO.File]::WriteAllBytes($p, $bytes)
     return $p
+}
+
+# Prepares the iPhone remote (firewall rule, certificates, HTTPS binding) in a background runspace so the PC window never waits for it
+function Start-RemoteAsync {
+    $S.Pin = Get-Pin
+    $bgSrc = @'
+param($RuleGroup, $LegacyRuleGroup, $RemotePort, $CaSubject, $LeafSubject, $SslAppId, $FnSrc)
+$ErrorActionPreference = 'Stop'
+function Write-Log([string]$msg, [string]$key = '') { }
+function Tf([string]$k, $a) { return ($k + ': ' + (@($a) -join ' ')) }
+. ([scriptblock]::Create($FnSrc))
+$res = @{ ok = $true; err = ''; ruleOk = $true }
+try {
+    Get-NetFirewallRule -Group $RuleGroup -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue
+    Get-NetFirewallRule -Group $LegacyRuleGroup -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue
+    New-NetFirewallRule -DisplayName 'ZerkiWatch - iPhone remote' -Group $RuleGroup -Direction Inbound -Action Allow -Protocol TCP -LocalPort $RemotePort -RemoteAddress LocalSubnet -Profile Any -Enabled True | Out-Null
+} catch { $res.ruleOk = $false }
+try {
+    $leaf = Initialize-RemoteCert
+    Set-SslBinding $leaf
+} catch { $res.ok = $false; $res.err = $_.Exception.Message }
+$res
+'@
+    try {
+        $S.RemotePs = [powershell]::Create()
+        [void]$S.RemotePs.AddScript($bgSrc).AddArgument($RuleGroup).AddArgument($LegacyRuleGroup).AddArgument($RemotePort).AddArgument($CaSubject).AddArgument($LeafSubject).AddArgument($SslAppId).AddArgument($RemoteFnSrc)
+        $S.RemoteH = $S.RemotePs.BeginInvoke()
+    } catch {
+        $S.RemoteH = $null
+        Write-Log ('Remote prepare: ' + $_.Exception.Message) 'rp'
+    }
+}
+
+# Called from a timer: when the background preparation is done, start the listener (fast) on the UI thread
+function Poll-RemoteStart {
+    if ($S.RemoteH -eq $null) { return $true }
+    if (-not $S.RemoteH.IsCompleted) { return $false }
+    $res = $null
+    try { $out = @($S.RemotePs.EndInvoke($S.RemoteH)); if ($out.Count -gt 0) { $res = $out[0] } } catch { $res = @{ ok = $false; err = $_.Exception.Message; ruleOk = $true } }
+    $S.RemoteH = $null
+    try { $S.RemotePs.Dispose() } catch { }
+    $S.RemotePs = $null
+    if (($res -eq $null) -or (-not $res.ok)) {
+        $em = 'unknown'
+        if ($res -ne $null) { $em = [string]$res.err }
+        $S.RemoteError = (Tf 'err.cert' @($em))
+        Write-Log ('HTTPS certificate: ' + $em) 'cert'
+        return $true
+    }
+    try {
+        $l = New-Object System.Net.HttpListener
+        $l.Prefixes.Add('https://+:' + $RemotePort + '/')
+        $l.Start()
+        $S.Listener = $l
+        $S.Task = $l.GetContextAsync()
+        if (-not $res.ruleOk) { $S.RemoteError = (T 'err.rule_not_created') }
+    } catch { $S.RemoteError = $_.Exception.Message }
+    return $true
 }
 
 function Start-Remote {
@@ -7067,12 +7131,17 @@ Mark-Step 'before showing the window'
 if (-not $startHidden) { $form.Show() }
 Mark-Step 'window shown'
 Start-BgWork 'mode'
+Start-RemoteAsync
 $remoteTimer = New-Object System.Windows.Forms.Timer
-$remoteTimer.Interval = 300
+$remoteTimer.Interval = 500
 $remoteTimer.Add_Tick({
-    $remoteTimer.Stop()
-    try { [void](Start-Remote); $lblFoot.Text = (Get-FootText) } catch { Write-Log ('Remote start: ' + $_.Exception.Message) 'rs' }
-    Mark-Step 'iPhone remote ready (after the window)'
+    try {
+        if (Poll-RemoteStart) {
+            $remoteTimer.Stop()
+            $lblFoot.Text = (Get-FootText)
+            Mark-Step 'iPhone remote ready (background)'
+        }
+    } catch { $remoteTimer.Stop(); Write-Log ('Remote start: ' + $_.Exception.Message) 'rs' }
 })
 $remoteTimer.Start()
 if (-not $S.WizDone) {
