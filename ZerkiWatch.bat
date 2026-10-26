@@ -4778,6 +4778,7 @@ $timer.Add_Tick({
 function Update-Ui([string]$Known = '') {
     if ($Known -eq '') { $Known = Get-Mode }
     $S.Local = ($Known -eq 'LOCAL')
+    try { if ($S.LastModeW -ne $Known) { $S.LastModeW = $Known; Set-Content -LiteralPath $modeFile -Value $Known -Encoding ASCII } } catch { }
     if ($S.Local) {
         $lblStatus.Text = (T 'ui.local')
         $lblStatus.ForeColor = $cRed
@@ -4861,11 +4862,16 @@ $btnHist.Add_Click({ try { Show-History } catch { Write-Log ('History: ' + $_.Ex
 $form.Add_Shown({ Invoke-Tests })
 
 Mark-Step 'main window built, reading mode (firewall)'
-$S.Local = ((Get-Mode) -eq 'LOCAL')
+# Last known mode is read from a tiny file (instant); the real firewall state is checked in the background right after the window shows
+$modeFile = Join-Path $cfgDir 'mode.txt'
+$cachedMode = ''
+try { if (Test-Path -LiteralPath $modeFile) { $cachedMode = ([string](Get-Content -LiteralPath $modeFile -TotalCount 1)).Trim().ToUpper() } } catch { }
+if (@('LOCAL', 'INTERNET') -notcontains $cachedMode) { $cachedMode = (Get-Mode) }
+$S.Local = ($cachedMode -eq 'LOCAL')
 Mark-Step 'mode read'
 Load-CutState
 if ($S.Local) { $S.Pos = 0.0 } else { $S.Pos = 1.0 }
-Update-Ui
+Update-Ui $cachedMode
 
 # ---------- Barre flottante (CPU, RAM, debit) ----------
 $cBg1 = (Pc @(30, 32, 39) @(244, 242, 238))
@@ -7021,13 +7027,14 @@ if ($S.EtwOk) {
     try { [NetEtw]::Start((Join-Path $cfgDir 'etw')) } catch { $S.EtwOk = $false; $S.EtwStatus = $_.Exception.Message }
 }
 try { Update-Adapters } catch { }
+Mark-Step 'tray and menus built'
 $monTimer = New-Object System.Windows.Forms.Timer
 $monTimer.Interval = 1000
 $monTimer.Add_Tick({ try { Update-Mon } catch { Write-Log ('Update-Mon: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'um' } })
 $monTimer.Start()
 
 # Telecommande iPhone
-$remoteOn = Start-Remote
+$remoteOn = $false
 function Get-FootText {
     $lanIp = Get-LanIp
     if ($S.Listener -ne $null) {
@@ -7059,6 +7066,15 @@ if ($WID.On) { $wForm.Show() }
 Mark-Step 'before showing the window'
 if (-not $startHidden) { $form.Show() }
 Mark-Step 'window shown'
+Start-BgWork 'mode'
+$remoteTimer = New-Object System.Windows.Forms.Timer
+$remoteTimer.Interval = 300
+$remoteTimer.Add_Tick({
+    $remoteTimer.Stop()
+    try { [void](Start-Remote); $lblFoot.Text = (Get-FootText) } catch { Write-Log ('Remote start: ' + $_.Exception.Message) 'rs' }
+    Mark-Step 'iPhone remote ready (after the window)'
+})
+$remoteTimer.Start()
 if (-not $S.WizDone) {
     $wizTimer = New-Object System.Windows.Forms.Timer
     $wizTimer.Interval = 1500
