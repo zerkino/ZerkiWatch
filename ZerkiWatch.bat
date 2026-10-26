@@ -2031,6 +2031,8 @@ public static class MN {
         if (!GlobalMemoryStatusEx(ref m)) return new double[] { 0, 0, 0 };
         return new double[] { m.dwMemoryLoad, (double)m.ullTotalPhys, (double)m.ullAvailPhys };
     }
+    [DllImport("shell32.dll")] static extern int SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string id);
+    public static void SetAppId(string id) { try { SetCurrentProcessExplicitAppUserModelID(id); } catch { } }
     public static void DpiAware() { try { SetProcessDPIAware(); } catch { } }
     public static void Drag(IntPtr h) { ReleaseCapture(); SendMessage(h, 0xA1, (IntPtr)2, IntPtr.Zero); }
     public static void NoActivate(IntPtr h) { int s = GetWL(h, -20); SetWL(h, -20, s | 0x80 | 0x08000000); }
@@ -2153,6 +2155,7 @@ try { Add-TypeCached $hkCode @('System.Windows.Forms'); $hkOkTmp = $true } catch
 $themed = $false
 try { Add-TypeCached $themeCode @('System.Windows.Forms', 'System.Drawing'); $themed = $true } catch { $themed = $false }
 Mark-Step 'native, hotkey and theme types ready'
+if ($native) { try { [MN]::SetAppId('zerkino.ZerkiWatch') } catch { } }
 
 
 $Group = 'ZerkiWatch-LocalOnly'
@@ -2163,6 +2166,8 @@ $ExtraIPv4 = @()
 $ExtraIPv6 = @()
 
 # ---------- Calcul des plages (tout sauf le reseau local) ----------
+# Mode-switch and network-test code lives in one text block: it runs on the UI thread and in a background runspace
+$ModeFnSrc = @'
 function ConvertTo-Big([string]$Ip) {
     $b = [System.Net.IPAddress]::Parse($Ip).GetAddressBytes()
     [Array]::Reverse($b)
@@ -2302,6 +2307,9 @@ function Test-Box {
     if ($gw -and $gw.NextHop -and ($gw.NextHop -ne '0.0.0.0')) { return (Test-Ping $gw.NextHop) }
     return $false
 }
+
+'@
+. ([scriptblock]::Create($ModeFnSrc))
 
 # ---------- Interface graphique ----------
 $cBg = (Pc @(17, 18, 22) @(229, 227, 221))
@@ -4524,13 +4532,13 @@ function Draw-RingTile($g, [int]$x, [int]$y, [int]$w, [int]$h, [string]$title, [
     $g.DrawString($title, $fCardT, $bMuted, [single]($x + 40), [single]($y + 17))
     $col = Get-RingColor $accent $pct
     $cx = $x + $w / 2.0
-    $cy = $y + 84
-    Draw-Ring $g $cx $cy 92 9 $pct $col
+    $cy = $y + 78
+    Draw-Ring $g $cx $cy 84 9 $pct $col
     $rt = New-Object System.Drawing.RectangleF -ArgumentList ([single]($cx - 40)), ([single]($cy - 18)), ([single]80), ([single]36)
     $g.DrawString((Format-Pct $pct), $fPctBig, $bText, $rt, $sfCenter)
-    $r1 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x + 8)), ([single]($y + $h - 46)), ([single]($w - 16)), ([single]18)
+    $r1 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x + 8)), ([single]($y + $h - 42)), ([single]($w - 16)), ([single]18)
     $g.DrawString($d1, $fRowV, $bText, $r1, $sfCenter)
-    $r2 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x + 8)), ([single]($y + $h - 26)), ([single]($w - 16)), ([single]16)
+    $r2 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x + 8)), ([single]($y + $h - 22)), ([single]($w - 16)), ([single]16)
     $g.DrawString($d2, $fSmall, $bMuted, $r2, $sfCenter)
 }
 
@@ -4752,7 +4760,11 @@ $pnlRight.Add_Paint({
         $tp = New-Object System.Drawing.Pen($cTrack, [single]14)
         $g.DrawEllipse($tp, [single]($cx - $r), [single]($cy - $r), [single](2 * $r), [single](2 * $r))
         $tp.Dispose()
-        if ($isLocal) { $sweep = 360.0 } else { $sweep = [math]::Min(360.0, ([double]$S.Dl / 100.0) * 360.0) }
+        if ($S.Switching) {
+            $el = ([DateTime]::UtcNow - [DateTime]$S.SwStart).TotalSeconds
+            $sweep = 360.0 * 0.94 * (1.0 - [math]::Exp(-$el / 2.2))
+            $ac = $cAmber
+        } elseif ($isLocal) { $sweep = 360.0 } else { $sweep = [math]::Min(360.0, ([double]$S.Dl / 100.0) * 360.0) }
         if ($sweep -gt 1) {
             $ap = New-Object System.Drawing.Pen($ac, [single]14)
             $ap.StartCap = [System.Drawing.Drawing2D.LineCap]::Round
@@ -4863,21 +4875,13 @@ function Set-Row($Dot, $Val, $Color, [string]$Text) {
     $Val.Text = $Text
 }
 
-function Invoke-Tests {
-    $S.Busy = $true
-    Set-Row $dotNet $valNet $cMuted (T 'ui.testing')
-    Set-Row $dotBox $valBox $cMuted (T 'ui.testing')
-    $lblMsg.Text = ''
-    [System.Windows.Forms.Application]::DoEvents()
-    $net = Test-Internet
-    $box = Test-Box
+function Apply-TestResults([bool]$net, [bool]$box) {
     if ($S.Local) {
         if ($net) { Set-Row $dotNet $valNet $cAmber (T 'ui.accessible_bang') } else { Set-Row $dotNet $valNet $cGreen (T 'ui.blocked') }
     } else {
         if ($net) { Set-Row $dotNet $valNet $cGreen (T 'ui.accessible') } else { Set-Row $dotNet $valNet $cAmber (T 'ui.unreachable') }
     }
     if ($box) { Set-Row $dotBox $valBox $cGreen (T 'ui.box_ok') } else { Set-Row $dotBox $valBox $cMuted (T 'ui.box_noping') }
-
     if ($S.Local -and $net) {
         $lblMsg.ForeColor = $cAmber
         $lblMsg.Text = (T 'ui.warn_still')
@@ -4891,33 +4895,98 @@ function Invoke-Tests {
         $lblMsg.ForeColor = $cGreen
         $lblMsg.Text = (T 'ui.all_ok')
     }
+}
+
+# Switch (target LOCAL / INTERNET) and/or run the network tests in a background runspace: the window keeps animating
+$swBgSrc = @'
+param($Group, $LegacyGroups, $ExtraIPv4, $ExtraIPv6, $FnSrc, $Target, $Msgs)
+$ErrorActionPreference = 'Stop'
+Add-Type -AssemblyName System.Numerics
+function T([string]$k) { if ($Msgs.ContainsKey($k)) { return [string]$Msgs[$k] }; return $k }
+function Tf([string]$k, [object[]]$a) { try { return [string]::Format((T $k), $a) } catch { return (T $k) } }
+. ([scriptblock]::Create($FnSrc))
+$res = @{ ok = $true; err = ''; net = $false; box = $false }
+if ($Target -ne '') {
+    try { if ($Target -eq 'LOCAL') { Set-ModeLocal } else { Set-ModeInternet } } catch { $res.ok = $false; $res.err = $_.Exception.Message }
+}
+if ($res.ok) {
+    try { $res.net = [bool](Test-Internet) } catch { }
+    try { $res.box = [bool](Test-Box) } catch { }
+}
+$res
+'@
+$swMsgs = @{}
+foreach ($mk in @('err.rules_left', 'err.fw_stopped', 'err.fw_disabled', 'err.ranges', 'err.rules_inactive')) { $swMsgs[$mk] = (T $mk) }
+$S.SwH = $null
+$S.SwPs = $null
+$S.SwTarget = ''
+$S.SwStart = [DateTime]::UtcNow
+
+function Start-NetJob([string]$target) {
+    if ($S.SwH -ne $null) { return }
+    $S.Busy = $true
+    $S.SwTarget = $target
+    $S.SwStart = [DateTime]::UtcNow
+    if ($target -ne '') {
+        $S.Switching = $true
+        $lblStatus.Text = (T 'ui.wait')
+        $lblStatus.ForeColor = $cMuted
+    }
+    Set-Row $dotNet $valNet $cMuted (T 'ui.testing')
+    Set-Row $dotBox $valBox $cMuted (T 'ui.testing')
+    $lblMsg.Text = ''
+    try {
+        $S.SwPs = [powershell]::Create()
+        [void]$S.SwPs.AddScript($swBgSrc).AddArgument($Group).AddArgument($LegacyGroups).AddArgument($ExtraIPv4).AddArgument($ExtraIPv6).AddArgument($ModeFnSrc).AddArgument($target).AddArgument($swMsgs)
+        $S.SwH = $S.SwPs.BeginInvoke()
+        $swTimer.Start()
+    } catch {
+        $S.SwH = $null
+        $S.Switching = $false
+        $S.Busy = $false
+        $lblMsg.ForeColor = $cRed
+        $lblMsg.Text = (Tf 'ui.error' @($_.Exception.Message))
+    }
+    try { $pnlRight.Invalidate() } catch { }
+}
+
+function Poll-NetJob {
+    if ($S.SwH -eq $null) { $swTimer.Stop(); return }
+    if (-not $S.SwH.IsCompleted) { try { $pnlRight.Invalidate() } catch { }; return }
+    $swTimer.Stop()
+    $res = $null
+    try { $out = @($S.SwPs.EndInvoke($S.SwH)); if ($out.Count -gt 0) { $res = $out[0] } } catch { $res = @{ ok = $false; err = $_.Exception.Message; net = $false; box = $false } }
+    try { $S.SwPs.Dispose() } catch { }
+    $S.SwH = $null
+    $S.SwPs = $null
+    $target = $S.SwTarget
+    $S.Switching = $false
     $S.Busy = $false
+    if ($res -eq $null) { $res = @{ ok = $false; err = 'no result'; net = $false; box = $false } }
+    if ($res.ok) {
+        if ($target -ne '') { Update-Ui $target } else { Update-Ui ([string]$(if ($S.Local) { 'LOCAL' } else { 'INTERNET' })) }
+        Apply-TestResults ([bool]$res.net) ([bool]$res.box)
+        try { if ($target -ne '') { Update-Bar } } catch { }
+    } else {
+        $prev = 'INTERNET'; if ($target -eq 'INTERNET') { $prev = 'LOCAL' }
+        Update-Ui $prev
+        $lblMsg.ForeColor = $cRed
+        $lblMsg.Text = (Tf 'ui.error' @([string]$res.err))
+    }
+    try { $pnlRight.Invalidate(); $pnlHead.Invalidate(); $toggle.Invalidate() } catch { }
+}
+$swTimer = New-Object System.Windows.Forms.Timer
+$swTimer.Interval = 33
+$swTimer.Add_Tick({ try { Poll-NetJob } catch { $swTimer.Stop(); $S.SwH = $null; $S.Switching = $false; $S.Busy = $false; Write-Log ('Net job: ' + $_.Exception.Message) 'nj' } })
+
+function Invoke-Tests {
+    if ($S.SwH -ne $null) { return }
+    Start-NetJob ''
 }
 
 function Invoke-Toggle {
     if ($S.Busy) { return }
-    $S.Busy = $true
-    $S.Switching = $true
-    $lblStatus.Text = (T 'ui.wait')
-    $lblStatus.ForeColor = $cMuted
-    $toggle.Invalidate()
-    [System.Windows.Forms.Application]::DoEvents()
-    try {
-        if ((Get-Mode) -eq 'LOCAL') { Set-ModeInternet } else { Set-ModeLocal }
-        $S.Switching = $false
-        $S.Busy = $false
-        Update-Ui
-        Invoke-Tests
-    } catch {
-        $S.Switching = $false
-        $S.Busy = $false
-        Update-Ui
-        $lblMsg.ForeColor = $cRed
-        $lblMsg.Text = (Tf 'ui.error' @($_.Exception.Message))
-    }
-    $S.Switching = $false
-    $S.Busy = $false
-    $toggle.Invalidate()
+    if ($S.Local) { Start-NetJob 'INTERNET' } else { Start-NetJob 'LOCAL' }
 }
 
 $toggle.Add_Click({ Invoke-Toggle })
