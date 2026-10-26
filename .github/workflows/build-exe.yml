@@ -48,18 +48,30 @@ jobs:
             (Get-FileHash ZerkiWatch.bat -Algorithm SHA256).Hash + '  ZerkiWatch.bat',
             (Get-FileHash ZerkiWatch-windows.zip -Algorithm SHA256).Hash + '  ZerkiWatch-windows.zip')
           $h | Set-Content SHA256.txt
+      - name: Build ZerkiWatch-Setup.exe (Inno Setup)
+        shell: powershell
+        run: |
+          choco install innosetup -y --no-progress
+          $m = Select-String -Path ZerkiWatch.bat -Pattern "^\$APPVER = '([^']+)'" | Select-Object -First 1
+          $ver = $m.Matches[0].Groups[1].Value
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DAppVer=$ver" tools\installer\ZerkiWatch.iss
+          if (-not (Test-Path dist-setup\ZerkiWatch-Setup.exe)) { throw 'ZerkiWatch-Setup.exe was not created' }
+          Copy-Item dist-setup\ZerkiWatch-Setup.exe .
+          (Get-FileHash ZerkiWatch-Setup.exe -Algorithm SHA256).Hash + '  ZerkiWatch-Setup.exe' | Add-Content SHA256.txt
       - name: Attest build provenance
         continue-on-error: true
         uses: actions/attest-build-provenance@v2
         with:
           subject-path: |
             ZerkiWatch.exe
+            ZerkiWatch-Setup.exe
             ZerkiWatch-windows.zip
       - uses: actions/upload-artifact@v4
         with:
           name: ZerkiWatch-windows
           path: |
             ZerkiWatch-windows.zip
+            ZerkiWatch-Setup.exe
             SHA256.txt
       - name: Attach to the GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
@@ -67,6 +79,7 @@ jobs:
         with:
           files: |
             ZerkiWatch-windows.zip
+            ZerkiWatch-Setup.exe
             ZerkiWatch.bat
             SHA256.txt
           body_path: .github/release-notes.md
