@@ -2033,6 +2033,10 @@ public static class MN {
     }
     [DllImport("shell32.dll")] static extern int SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string id);
     public static void SetAppId(string id) { try { SetCurrentProcessExplicitAppUserModelID(id); } catch { } }
+    [DllImport("user32.dll")] static extern IntPtr SetThreadDpiAwarenessContext(IntPtr ctx);
+    public static long DpiCtx(long ctx) { try { return (long)SetThreadDpiAwarenessContext((IntPtr)ctx); } catch { return 0; } }
+    [DllImport("user32.dll")] static extern uint GetDpiForSystem();
+    public static double Scale() { long o = DpiCtx(-2); try { return GetDpiForSystem() / 96.0; } catch { return 1.0; } finally { DpiCtx(o); } }
     public static void DpiAware() { try { SetProcessDPIAware(); } catch { } }
     public static void Drag(IntPtr h) { ReleaseCapture(); SendMessage(h, 0xA1, (IntPtr)2, IntPtr.Zero); }
     public static void NoActivate(IntPtr h) { int s = GetWL(h, -20); SetWL(h, -20, s | 0x80 | 0x08000000); }
@@ -2156,6 +2160,12 @@ $themed = $false
 try { Add-TypeCached $themeCode @('System.Windows.Forms', 'System.Drawing'); $themed = $true } catch { $themed = $false }
 Mark-Step 'native, hotkey and theme types ready'
 if ($native) { try { [MN]::SetAppId('zerkino.ZerkiWatch') } catch { } }
+# Dialogs built with standard controls are made DPI-aware (sharp text) only while they are open; the rest of the app is unchanged
+function Enter-Dpi { try { if ($native) { return [MN]::DpiCtx(-2) } } catch { }; return 0 }
+function Exit-Dpi($old) { try { if ($old -ne 0) { [void][MN]::DpiCtx([long]$old) } } catch { } }
+$DS = 1.0
+if ($native) { try { $DS = [double][MN]::Scale() } catch { $DS = 1.0 }; if (($DS -lt 1.0) -or ($DS -gt 4.0)) { $DS = 1.0 } }
+function Set-DpiScale($f) { try { $f.AutoScaleDimensions = New-Object System.Drawing.SizeF(96, 96); $f.AutoScaleMode = [System.Windows.Forms.AutoScaleMode]::Dpi } catch { } }
 
 
 $Group = 'ZerkiWatch-LocalOnly'
@@ -4226,7 +4236,7 @@ $dotChar = [string][char]0x25CF
 Mark-Step 'ETW and workers ready, building main window'
 $form = New-Object System.Windows.Forms.Form
 $form.Text = 'ZerkiWatch'
-$form.ClientSize = New-Object System.Drawing.Size(1100, 700)
+$form.ClientSize = New-Object System.Drawing.Size([int](1100 * $DS), [int](700 * $DS))
 $form.StartPosition = 'CenterScreen'
 $form.FormBorderStyle = 'FixedSingle'
 $form.MaximizeBox = $false
@@ -4330,7 +4340,7 @@ $valBox = New-Label '' 160 50 178 24 (New-Font 10 $false) $cMuted 'MiddleRight'
 $lblMsg = New-Label '' 14 88 324 44 (New-Font 9 $false) $cMuted 'TopLeft'
 foreach ($c in @($dotNet, $nameNet, $valNet, $dotBox, $nameBox, $valBox, $lblMsg)) { $card.Controls.Add($c) }
 
-$lblFoot = New-Label '' 0 664 1100 36 (New-Font 9 $false) $cMuted 'MiddleCenter'
+$lblFoot = New-Label '' 0 ([int](664 * $DS)) ([int](1100 * $DS)) ([int](36 * $DS)) (New-Font 9 $false) $cMuted 'MiddleCenter'
 $form.Controls.Add($lblFoot)
 $btnRetest = New-Object System.Windows.Forms.Button
 $btnRetest.Text = (T 'ui.retest')
@@ -4377,17 +4387,17 @@ $cDl = (Pc @(56, 189, 248) @(2, 132, 199))
 $cUl = (Pc @(244, 196, 90) @(180, 120, 10))
 $cApp = (Pc @(255, 140, 90) @(234, 88, 12))
 $cSvc = (Pc @(45, 212, 191) @(13, 148, 136))
-$fCardT = New-Object System.Drawing.Font('Segoe UI Semibold', 8.5)
-$fBig   = New-Object System.Drawing.Font('Segoe UI Semibold', 20)
-$fPctBig = New-Object System.Drawing.Font('Segoe UI Semibold', 17)
+$fCardT = New-Object System.Drawing.Font('Segoe UI Semibold', [single](8.5 * 96 / 72), [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+$fBig   = New-Object System.Drawing.Font('Segoe UI Semibold', [single](20 * 96 / 72), [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+$fPctBig = New-Object System.Drawing.Font('Segoe UI Semibold', [single](17 * 96 / 72), [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
 $sfCenter = New-Object System.Drawing.StringFormat
 $sfCenter.Alignment = [System.Drawing.StringAlignment]::Center
 $sfCenter.LineAlignment = [System.Drawing.StringAlignment]::Center
 $sfCenter.Trimming = [System.Drawing.StringTrimming]::EllipsisCharacter
 $sfCenter.FormatFlags = [System.Drawing.StringFormatFlags]::NoWrap
-$fSmall = New-Object System.Drawing.Font('Segoe UI', 9)
-$fRow   = New-Object System.Drawing.Font('Segoe UI', 9.5)
-$fRowV  = New-Object System.Drawing.Font('Segoe UI Semibold', 9.5)
+$fSmall = New-Object System.Drawing.Font('Segoe UI', [single](9 * 96 / 72), [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+$fRow   = New-Object System.Drawing.Font('Segoe UI', [single](9.5 * 96 / 72), [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+$fRowV  = New-Object System.Drawing.Font('Segoe UI Semibold', [single](9.5 * 96 / 72), [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
 $bText  = New-Object System.Drawing.SolidBrush($cText)
 $bMuted = New-Object System.Drawing.SolidBrush($cMuted)
 $sfEll = New-Object System.Drawing.StringFormat
@@ -4399,8 +4409,8 @@ $sfRight.FormatFlags = [System.Drawing.StringFormatFlags]::NoWrap
 $sfTight = [System.Drawing.StringFormat]::GenericTypographic
 
 $pnlRight = New-Object System.Windows.Forms.Panel
-$pnlRight.Location = New-Object System.Drawing.Point(0, 64)
-$pnlRight.Size = New-Object System.Drawing.Size(1100, 600)
+$pnlRight.Location = New-Object System.Drawing.Point(0, [int](64 * $DS))
+$pnlRight.Size = New-Object System.Drawing.Size([int](1100 * $DS), [int](600 * $DS))
 $pnlRight.BackColor = $cBg
 Enable-DoubleBuffer $pnlRight
 $form.Controls.Add($pnlRight)
@@ -4620,10 +4630,10 @@ function Draw-Rows($g, $items, [int]$x, [int]$y0, $accent, [string]$emptyMsg, [i
 $S.Tab = 'home'
 $S.HitHead = New-Object System.Collections.ArrayList
 $S.HitMain = New-Object System.Collections.ArrayList
-$fDial = New-Object System.Drawing.Font('Consolas', 34, [System.Drawing.FontStyle]::Bold)
-$fTitle = New-Object System.Drawing.Font($UiFont, 22, [System.Drawing.FontStyle]::Bold)
-$fTab = New-Object System.Drawing.Font($UiFont, 10, [System.Drawing.FontStyle]::Bold)
-$fBrand = New-Object System.Drawing.Font($UiFont, 14, [System.Drawing.FontStyle]::Bold)
+$fDial = New-Object System.Drawing.Font('Consolas', [single](34 * 96 / 72), [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
+$fTitle = New-Object System.Drawing.Font($UiFont, [single](22 * 96 / 72), [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
+$fTab = New-Object System.Drawing.Font($UiFont, [single](10 * 96 / 72), [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
+$fBrand = New-Object System.Drawing.Font($UiFont, [single](14 * 96 / 72), [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
 $sfWrapC = New-Object System.Drawing.StringFormat
 $sfWrapC.Alignment = [System.Drawing.StringAlignment]::Center
 $sfWrapC.LineAlignment = [System.Drawing.StringAlignment]::Near
@@ -4649,7 +4659,7 @@ function Draw-Pill($g, [string]$text, [int]$x, [int]$y, [int]$w, [int]$h, $fill,
 
 $pnlHead = New-Object System.Windows.Forms.Panel
 $pnlHead.Location = New-Object System.Drawing.Point(0, 0)
-$pnlHead.Size = New-Object System.Drawing.Size(1100, 64)
+$pnlHead.Size = New-Object System.Drawing.Size([int](1100 * $DS), [int](64 * $DS))
 $pnlHead.BackColor = $cBg
 Enable-DoubleBuffer $pnlHead
 $form.Controls.Add($pnlHead)
@@ -4659,6 +4669,7 @@ $pnlHead.Add_Paint({
         $g = $pe.Graphics
         $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
         $g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::ClearTypeGridFit
+        $g.ScaleTransform([single]$DS, [single]$DS)
         $S.HitHead.Clear()
         $g.DrawString('ZERKIWATCH', $fBrand, $bText, [single]24, [single]19)
         $g.DrawString(('v' + $APPVER), $fSmall, $bMuted, [single]142, [single]24)
@@ -4683,10 +4694,10 @@ $pnlHead.Add_Paint({
         $lp.Dispose()
     } catch { Write-Log ('Head paint: ' + $_.Exception.Message) 'ph' }
 })
-$pnlHead.Add_MouseMove({ param($snd, $ev) if ((Find-Hit $S.HitHead $ev.X $ev.Y) -ne '') { $snd.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $snd.Cursor = [System.Windows.Forms.Cursors]::Default } })
+$pnlHead.Add_MouseMove({ param($snd, $ev) if ((Find-Hit $S.HitHead ([int]($ev.X / $DS)) ([int]($ev.Y / $DS))) -ne '') { $snd.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $snd.Cursor = [System.Windows.Forms.Cursors]::Default } })
 $pnlHead.Add_MouseClick({
     param($snd, $ev)
-    $h = Find-Hit $S.HitHead $ev.X $ev.Y
+    $h = Find-Hit $S.HitHead ([int]($ev.X / $DS)) ([int]($ev.Y / $DS))
     try {
         if ($h -eq 'tab_home') { $S.Tab = 'home'; $pnlHead.Invalidate(); $pnlRight.Invalidate() }
         elseif ($h -eq 'tab_perf') { $S.Tab = 'perf'; $pnlHead.Invalidate(); $pnlRight.Invalidate() }
@@ -4699,16 +4710,16 @@ $pnlHead.Add_MouseClick({
 
 $pnlRight.Add_MouseMove({
     param($snd, $ev)
-    $h = Find-Hit $S.HitMain $ev.X $ev.Y
-    if ($h -eq 'dial') { $dx = $ev.X - 290; $dy = $ev.Y - 200; if (([math]::Sqrt($dx * $dx + $dy * $dy)) -gt 130) { $h = '' } }
+    $h = Find-Hit $S.HitMain ([int]($ev.X / $DS)) ([int]($ev.Y / $DS))
+    if ($h -eq 'dial') { $dx = ($ev.X / $DS) - 290; $dy = ($ev.Y / $DS) - 200; if (([math]::Sqrt($dx * $dx + $dy * $dy)) -gt 130) { $h = '' } }
     if ($h -ne '') { $snd.Cursor = [System.Windows.Forms.Cursors]::Hand } else { $snd.Cursor = [System.Windows.Forms.Cursors]::Default }
 })
 $pnlRight.Add_MouseClick({
     param($snd, $ev)
-    $h = Find-Hit $S.HitMain $ev.X $ev.Y
+    $h = Find-Hit $S.HitMain ([int]($ev.X / $DS)) ([int]($ev.Y / $DS))
     try {
         if ($h -eq 'dial') {
-            $dx = $ev.X - 290; $dy = $ev.Y - 200
+            $dx = ($ev.X / $DS) - 290; $dy = ($ev.Y / $DS) - 200
             if (([math]::Sqrt($dx * $dx + $dy * $dy)) -le 130) { Invoke-Toggle }
         } elseif (@('15', '30', '60', 'tomorrow', 'cancel') -contains $h) {
             $ce = Start-TimedCut $h
@@ -4724,6 +4735,7 @@ $pnlRight.Add_Paint({
         $g = $pe.Graphics
         $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
         $g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::ClearTypeGridFit
+        $g.ScaleTransform([single]$DS, [single]$DS)
         $S.HitMain.Clear()
         $msg1 = (T 'ui.noact')
         $msg2 = $msg1
@@ -5669,7 +5681,7 @@ function Set-Autostart([bool]$on) {
 }
 function Show-Main {
     try {
-        $form.Show()
+        $ao = Enter-Dpi; try { $form.Show() } finally { Exit-Dpi $ao }
         if ($form.WindowState -eq [System.Windows.Forms.FormWindowState]::Minimized) { $form.WindowState = [System.Windows.Forms.FormWindowState]::Normal }
         $form.Activate()
         $form.BringToFront()
@@ -6066,7 +6078,9 @@ function Show-CertDialog($lanIp) {
     $fp = Get-CaFingerprint
     $url = ''
     if ($lanIp) { $url = 'https://' + $lanIp + ':' + $RemotePort + '/ca.cer' }
+    $dpiOld = Enter-Dpi
     $d = New-Object System.Windows.Forms.Form
+    Set-DpiScale $d
     $d.Text = (T 'pin.cert')
     $d.ClientSize = New-Object System.Drawing.Size(520, 700)
     $d.StartPosition = 'CenterScreen'
@@ -6098,6 +6112,7 @@ function Show-CertDialog($lanIp) {
     $d.AcceptButton = $okb
     $d.Controls.Add($okb)
     [void]$d.ShowDialog()
+    Exit-Dpi $dpiOld
     $d.Dispose()
     if ($bmp -ne $null) { $bmp.Dispose() }
     try { Start-Process -FilePath 'explorer.exe' -ArgumentList ('/select,"' + $cp + '"') } catch { }
@@ -6105,7 +6120,9 @@ function Show-CertDialog($lanIp) {
 
 function Show-PinDialog {
     $lanIp = Get-LanIp
+    $dpiOld = Enter-Dpi
     $dlg = New-Object System.Windows.Forms.Form
+    Set-DpiScale $dlg
     $dlg.Text = (T 'pin.title')
     $dlg.ClientSize = New-Object System.Drawing.Size(380, 370)
     $dlg.StartPosition = 'CenterScreen'
@@ -6168,6 +6185,7 @@ function Show-PinDialog {
     foreach ($c in @($l1, $l2, $tb, $lerr, $bc, $ok, $ca)) { $dlg.Controls.Add($c) }
     if ($pbq -ne $null) { $dlg.Controls.Add($pbq) }
     [void]$dlg.ShowDialog()
+    Exit-Dpi $dpiOld
     $dlg.Dispose()
     try { $lblFoot.Text = (Get-FootText) } catch { }
 }
@@ -6195,9 +6213,11 @@ function Show-About {
 }
 
 function Show-Settings {
+    $dpiOld = Enter-Dpi
     $d = New-Object System.Windows.Forms.Form
+    Set-DpiScale $d
     $d.Text = (T 'set.title')
-    $d.ClientSize = New-Object System.Drawing.Size(520, 700)
+    $d.ClientSize = New-Object System.Drawing.Size(520, 612)
     $d.StartPosition = 'CenterScreen'
     $d.FormBorderStyle = 'FixedDialog'
     $d.MaximizeBox = $false
@@ -6238,18 +6258,21 @@ function Show-Settings {
         $script:y = $script:y + 32
         return $c
     }
-    function Add-Num([System.Windows.Forms.CheckBox]$chk, [int]$val, [int]$max, [string]$unit) {
-        $n = New-Object System.Windows.Forms.NumericUpDown
-        $n.Minimum = 1
-        $n.Maximum = $max
-        $n.Value = [math]::Max(1, [math]::Min($max, $val))
-        $n.Location = New-Object System.Drawing.Point(320, ($script:y - 28))
-        $n.Size = New-Object System.Drawing.Size(80, 26)
-        $n.BackColor = $cCard; $n.ForeColor = $cText
-        $d.Controls.Add($n)
-        $d.Controls.Add((New-Label $unit 408 ($script:y - 26) 88 22 $d.Font $cMuted 'MiddleLeft'))
-        return $n
+    function Add-Preset($chk, $vals, [int]$cur, [string]$unit) {
+        $c = New-Object System.Windows.Forms.ComboBox
+        $c.DropDownStyle = 'DropDownList'
+        $c.Location = New-Object System.Drawing.Point(352, ($script:y - 29))
+        $c.Size = New-Object System.Drawing.Size(144, 26)
+        $best = 0
+        for ($i = 0; $i -lt $vals.Count; $i++) {
+            [void]$c.Items.Add(([string]$vals[$i] + ' ' + $unit))
+            if ([math]::Abs($vals[$i] - $cur) -lt [math]::Abs($vals[$best] - $cur)) { $best = $i }
+        }
+        $c.SelectedIndex = $best
+        $d.Controls.Add($c)
+        return $c
     }
+    function Get-PresetValue($c) { return [int](([string]$c.SelectedItem).Split(' ')[0]) }
     $script:y = 14
     Add-Head (T 'set.display')
     $cbBar = Add-Check (T 'menu.bar_full') (-not $BAR.UserHidden)
@@ -6270,9 +6293,11 @@ function Show-Settings {
     $script:y = $script:y + 6
     Add-Head (T 'set.alerts')
     $cbAs = Add-Check (T 'set.alert_speed') ($S.AlertSpeed -gt 0)
-    $nuAs = Add-Num $cbAs ([math]::Max(1, [int]$S.AlertSpeed)) 10000 'Mbps'
+    $cbAs.Width = 320
+    $nuAs = Add-Preset $cbAs @(10, 25, 50, 100, 250, 500, 1000) ([int]$(if ($S.AlertSpeed -gt 0) { $S.AlertSpeed } else { 50 })) 'Mbps'
     $cbAc = Add-Check (T 'set.alert_cut') ($S.AlertCut -gt 0)
-    $nuAc = Add-Num $cbAc ([math]::Max(1, [int]$S.AlertCut)) 1440 (T 'set.min')
+    $cbAc.Width = 320
+    $nuAc = Add-Preset $cbAc @(5, 15, 30, 60, 120, 240) ([int]$(if ($S.AlertCut -gt 0) { $S.AlertCut } else { 30 })) (T 'set.min')
     $script:y = $script:y + 6
     Add-Head (T 'set.remote')
     $btnPw = New-Object System.Windows.Forms.Button
@@ -6300,7 +6325,7 @@ function Show-Settings {
     $d.Controls.Add($cbUp)
     $btnCl = New-Object System.Windows.Forms.Button
     $btnCl.Text = (T 'set.close')
-    $btnCl.Location = New-Object System.Drawing.Point(386, 654)
+    $btnCl.Location = New-Object System.Drawing.Point(386, 566)
     $btnCl.Size = New-Object System.Drawing.Size(110, 32)
     foreach ($bt in @($btnPw, $btnCe, $btnWz, $btnAb, $btnCl)) { $bt.FlatStyle = 'Flat'; $bt.BackColor = $cCard; $bt.ForeColor = $cText; $d.Controls.Add($bt) }
     if ($S.Listener -eq $null) { $btnCe.Enabled = $false }
@@ -6333,19 +6358,22 @@ function Show-Settings {
     $cbAuto.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAuto.Checked -ne (Test-Autostart)) { Set-Autostart $cbAuto.Checked } } })
     $cbCum.Add_CheckedChanged({ if (-not $ld.v) { $S.CumulOn = $cbCum.Checked; Save-BarConfig } })
     $cbHot.Add_CheckedChanged({ if (-not $ld.v) { $S.HkOn = $cbHot.Checked; Save-BarConfig; Apply-Hotkey } })
-    $cbAs.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAs.Checked) { $S.AlertSpeed = [int]$nuAs.Value } else { $S.AlertSpeed = 0 }; $S.AlHi = 0; $S.AlArm = $true; Save-BarConfig } })
-    $nuAs.Add_ValueChanged({ if ((-not $ld.v) -and $cbAs.Checked) { $S.AlertSpeed = [int]$nuAs.Value; Save-BarConfig } })
-    $cbAc.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAc.Checked) { $S.AlertCut = [int]$nuAc.Value } else { $S.AlertCut = 0 }; $S.AlCutSent = $false; Save-BarConfig } })
-    $nuAc.Add_ValueChanged({ if ((-not $ld.v) -and $cbAc.Checked) { $S.AlertCut = [int]$nuAc.Value; Save-BarConfig } })
+    $cbAs.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAs.Checked) { $S.AlertSpeed = (Get-PresetValue $nuAs) } else { $S.AlertSpeed = 0 }; $S.AlHi = 0; $S.AlArm = $true; Save-BarConfig } })
+    $nuAs.Add_SelectedIndexChanged({ if ((-not $ld.v) -and $cbAs.Checked) { $S.AlertSpeed = (Get-PresetValue $nuAs); Save-BarConfig } })
+    $cbAc.Add_CheckedChanged({ if (-not $ld.v) { if ($cbAc.Checked) { $S.AlertCut = (Get-PresetValue $nuAc) } else { $S.AlertCut = 0 }; $S.AlCutSent = $false; Save-BarConfig } })
+    $nuAc.Add_SelectedIndexChanged({ if ((-not $ld.v) -and $cbAc.Checked) { $S.AlertCut = (Get-PresetValue $nuAc); Save-BarConfig } })
     $ld.v = $false
     [void]$d.ShowDialog()
+    Exit-Dpi $dpiOld
     $d.Dispose()
     try { Update-Ui } catch { }
 }
 
 function Show-Wizard {
     $lanIp = Get-LanIp
+    $dpiOld = Enter-Dpi
     $d = New-Object System.Windows.Forms.Form
+    Set-DpiScale $d
     $d.Text = (T 'wiz.title')
     $d.ClientSize = New-Object System.Drawing.Size(480, 430)
     $d.StartPosition = 'CenterScreen'
@@ -6424,6 +6452,7 @@ function Show-Wizard {
     $d.Controls.Add($bf)
     $d.Controls.Add($bs)
     [void]$d.ShowDialog()
+    Exit-Dpi $dpiOld
     $d.Dispose()
     try { $lblFoot.Text = (Get-FootText) } catch { }
     if ($S.WizLang -ne $null) { $pl = [string]$S.WizLang; $S.WizLang = $null; Set-Language $pl }
@@ -7197,7 +7226,7 @@ $form.Add_FormClosing({
 if (-not $BAR.UserHidden) { $barForm.Show() }
 if ($WID.On) { $wForm.Show() }
 Mark-Step 'before showing the window'
-if (-not $startHidden) { $form.Show() }
+if (-not $startHidden) { $ao = Enter-Dpi; try { $form.Show() } finally { Exit-Dpi $ao } }
 Mark-Step 'window shown'
 Start-BgWork 'mode'
 Start-RemoteAsync
