@@ -49,8 +49,8 @@ Source: "..\..\lang\*.txt"; DestDir: "{app}\lang"; Flags: ignoreversion
 Source: "cleanup.ps1"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{autoprograms}\ZerkiWatch"; Filename: "{app}\ZerkiWatch.exe"; IconFilename: "{app}\ZerkiWatch.ico"
-Name: "{autodesktop}\ZerkiWatch"; Filename: "{app}\ZerkiWatch.exe"; IconFilename: "{app}\ZerkiWatch.ico"; Tasks: desktopicon
+Name: "{autoprograms}\ZerkiWatch"; Filename: "{app}\ZerkiWatch.exe"; IconFilename: "{app}\ZerkiWatch.ico"; AppUserModelID: "zerkino.ZerkiWatch"
+Name: "{autodesktop}\ZerkiWatch"; Filename: "{app}\ZerkiWatch.exe"; IconFilename: "{app}\ZerkiWatch.ico"; AppUserModelID: "zerkino.ZerkiWatch"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\ZerkiWatch.exe"; Description: "{cm:LaunchProgram,ZerkiWatch}"; Flags: nowait postinstall skipifsilent
