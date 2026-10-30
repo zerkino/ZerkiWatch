@@ -5169,7 +5169,7 @@ $pnlRight.Add_Paint({
         $tp.Dispose()
         if ($S.Switching) {
             $el = ([DateTime]::UtcNow - [DateTime]$S.SwStart).TotalSeconds
-            $sweep = 360.0 * 0.94 * (1.0 - [math]::Exp(-$el / 2.2))
+            $sweep = 360.0 * 0.94 * (1.0 - [math]::Exp(-$el / 0.4))
             $ac = $cAmber
         } elseif ($isLocal) { $sweep = 360.0 } else { $sweep = [math]::Min(360.0, ([double]$S.Dl / 100.0) * 360.0) }
         if ($sweep -gt 1) {
@@ -5374,6 +5374,8 @@ function Start-NetJob([string]$target) {
 function Poll-NetJob {
     if ($S.SwH -eq $null) { $swTimer.Stop(); return }
     if (-not $S.SwH.IsCompleted) { try { Invalidate-Dial } catch { }; return }
+    # the switch is now much faster than the ring animation: keep the ring turning for at least 0.9 s so it can be seen
+    if ($S.Switching -and (([DateTime]::UtcNow - $S.SwStart).TotalMilliseconds -lt 900)) { try { Invalidate-Dial } catch { }; return }
     $swTimer.Stop()
     $res = $null
     try { $out = @($S.SwPs.EndInvoke($S.SwH)); if ($out.Count -gt 0) { $res = $out[0] } } catch { $res = @{ ok = $false; err = $_.Exception.Message; net = $false; box = $false } }
