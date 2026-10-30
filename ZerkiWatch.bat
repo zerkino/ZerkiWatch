@@ -4256,19 +4256,6 @@ function Update-Adapters {
 
 function Get-EtwRows { return [NetEtw]::Snapshot() }
 
-function Get-ServiceMap {
-    $map = @{}
-    try {
-        foreach ($sv in (Get-CimInstance -ClassName Win32_Service -Filter "State='Running'" -ErrorAction Stop)) {
-            $spid = [int]$sv.ProcessId
-            if ($spid -le 0) { continue }
-            if (-not $map.ContainsKey($spid)) { $map[$spid] = New-Object 'System.Collections.Generic.List[string]' }
-            $map[$spid].Add([string]$sv.DisplayName)
-        }
-    } catch { }
-    return $map
-}
-
 function Get-AppLabel([int]$procId) {
     if ($S.NameCache.ContainsKey($procId)) { return $S.NameCache[$procId] }
     $label = ''
@@ -4291,6 +4278,65 @@ function Convert-Top($tbl) {
         $out += @{ n = [string]$k; m = [math]::Round([double]$tbl[$k], 2) }
     }
     return $out
+}
+
+$svcCode = @'
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+public static class SvcMap {
+    [StructLayout(LayoutKind.Sequential)]
+    struct ENUM_SERVICE_STATUS_PROCESS {
+        public IntPtr lpServiceName;
+        public IntPtr lpDisplayName;
+        public int dwServiceType, dwCurrentState, dwControlsAccepted, dwWin32ExitCode, dwServiceSpecificExitCode, dwCheckPoint, dwWaitHint;
+        public int dwProcessId;
+        public int dwServiceFlags;
+    }
+    [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)] static extern IntPtr OpenSCManager(string machine, string db, int access);
+    [DllImport("advapi32.dll", SetLastError = true)] static extern bool CloseServiceHandle(IntPtr h);
+    [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    static extern bool EnumServicesStatusEx(IntPtr scm, int infoLevel, int serviceType, int serviceState, IntPtr buf, int bufSize, out int bytesNeeded, out int servicesReturned, ref int resumeHandle, string groupName);
+    // "pid|DisplayName" for every running Win32 service that owns a process (same lines the PowerShell code builds from WMI today)
+    public static string[] Running() {
+        List<string> res = new List<string>();
+        IntPtr scm = OpenSCManager(null, null, 0x0004);
+        if (scm == IntPtr.Zero) return res.ToArray();
+        try {
+            int need = 0, count = 0, resume = 0;
+            EnumServicesStatusEx(scm, 0, 0x30, 0x1, IntPtr.Zero, 0, out need, out count, ref resume, null);
+            if (need <= 0) return res.ToArray();
+            int size = need + 8192;
+            IntPtr buf = Marshal.AllocHGlobal(size);
+            try {
+                resume = 0;
+                if (!EnumServicesStatusEx(scm, 0, 0x30, 0x1, buf, size, out need, out count, ref resume, null)) return res.ToArray();
+                int stride = Marshal.SizeOf(typeof(ENUM_SERVICE_STATUS_PROCESS));
+                for (int i = 0; i < count; i++) {
+                    ENUM_SERVICE_STATUS_PROCESS e = (ENUM_SERVICE_STATUS_PROCESS)Marshal.PtrToStructure(new IntPtr(buf.ToInt64() + (long)i * stride), typeof(ENUM_SERVICE_STATUS_PROCESS));
+                    if (e.dwProcessId <= 0) continue;
+                    res.Add(e.dwProcessId.ToString() + "|" + Marshal.PtrToStringUni(e.lpDisplayName));
+                }
+            } finally { Marshal.FreeHGlobal(buf); }
+        } finally { CloseServiceHandle(scm); }
+        return res.ToArray();
+    }
+}
+'@
+$S.SvcNative = $false
+try { Add-TypeCached $svcCode; $S.SvcNative = $true } catch { }
+function Update-SvcMap {
+    $map = @{}
+    foreach ($ln in [SvcMap]::Running()) {
+        $p = ([string]$ln).Split('|', 2)
+        if ($p.Count -lt 2) { continue }
+        $spid = 0
+        if (-not [int]::TryParse($p[0], [ref]$spid)) { continue }
+        if (-not $map.ContainsKey($spid)) { $map[$spid] = New-Object 'System.Collections.Generic.List[string]' }
+        $map[$spid].Add($p[1])
+    }
+    if ($map.Count -gt 0) { $S.SvcMap = $map }
+    $S.SvcStamp = [DateTime]::UtcNow
 }
 
 function Start-BgWork([string]$kind) {
@@ -4341,7 +4387,7 @@ function Poll-Bg {
 function Update-Procs {
     if (-not $S.EtwOk) { return }
     $rows = Get-EtwRows
-    if ((([DateTime]::UtcNow - $S.SvcStamp).TotalSeconds -gt 30) -and (([DateTime]::UtcNow - $S.SvcAsk).TotalSeconds -gt 30)) { $S.SvcAsk = [DateTime]::UtcNow; Start-BgWork 'svc' }
+    if ((([DateTime]::UtcNow - $S.SvcStamp).TotalSeconds -gt 30) -and (([DateTime]::UtcNow - $S.SvcAsk).TotalSeconds -gt 30)) { $S.SvcAsk = [DateTime]::UtcNow; if ($S.SvcNative) { try { Update-SvcMap } catch { Start-BgWork 'svc' } } else { Start-BgWork 'svc' } }
     $apps = @{}
     $svcs = @{}
     foreach ($row in $rows) {
@@ -4479,6 +4525,7 @@ function Update-Mon {
 }
 
 function Update-BarTip {
+    if (($S.Tick % 3) -ne 0) { return }   # the text is only applied every 3rd tick: do not build it for nothing
     $nl = "`n"
     $linkTxt = (T 'tip.unknown')
     if ($S.LinkMbps -gt 0) { $linkTxt = $S.LinkMbps.ToString('0') + ' Mbps' }
@@ -5644,8 +5691,6 @@ function Draw-Bar($g, [double]$k) {
         $bgb = New-Object System.Drawing.Drawing2D.LinearGradientBrush -ArgumentList $rc, $cBg1, $cBg2, ([single]90)
         $g.FillRectangle($bgb, $rc)
         $bgb.Dispose()
-        $sepPen = New-Object System.Drawing.Pen((Get-Ov 34), [single]1)
-        $sepPen.Dispose()
         $bp = New-Object System.Drawing.Pen($barBorder, [single]1)
         $g.DrawRectangle($bp, [single]0, [single]0, [single]($BAR.W - 1), [single]($BAR.H - 1))
         $bp.Dispose()
@@ -6543,6 +6588,36 @@ function Get-LatestRelease {
         return @{ Tag = $tag; Url = [string]$r.html_url; Newer = ([Version]($tag -replace '[^0-9.].*$','') -gt [Version]$APPVER) }
     } catch { return $null }
 }
+function Start-UpdateCheck {
+    $S.UpdTask = $null
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        $wc = New-Object System.Net.WebClient
+        $wc.Headers.Add('User-Agent', 'ZerkiWatch')
+        $S.UpdWc = $wc
+        $S.UpdStart = [DateTime]::UtcNow
+        $S.UpdTask = $wc.DownloadStringTaskAsync('https://api.github.com/repos/zerkino/ZerkiWatch/releases/latest')
+    } catch { $S.UpdTask = $null }
+}
+# Call from a timer (500 ms). Returns $true when finished; the answer is in $S.UpdResult ($null = offline, else @{ Tag; Url; Newer }).
+function Poll-UpdateCheck {
+    if ($S.UpdTask -eq $null) { return $true }
+    if (-not $S.UpdTask.IsCompleted) {
+        if (([DateTime]::UtcNow - $S.UpdStart).TotalSeconds -gt 8) { try { $S.UpdWc.CancelAsync() } catch { } }
+        return $false
+    }
+    $S.UpdResult = $null
+    try {
+        if ((-not $S.UpdTask.IsFaulted) -and (-not $S.UpdTask.IsCanceled)) {
+            $r = ConvertFrom-Json $S.UpdTask.Result
+            $tag = ([string]$r.tag_name).TrimStart('v', 'V')
+            $S.UpdResult = @{ Tag = $tag; Url = [string]$r.html_url; Newer = ([Version]($tag -replace '[^0-9.].*$', '') -gt [Version]$APPVER) }
+        }
+    } catch { }
+    $S.UpdTask = $null
+    return $true
+}
+
 function Show-About {
     $res = Get-LatestRelease
     if ($res -eq $null) { $m = (T 'about.offline') }
@@ -7172,7 +7247,7 @@ function Save-AppDays {
 
 function Update-AppAcc {
     if (-not $S.EtwOk) { return }
-    if ((([DateTime]::UtcNow - $S.SvcStamp).TotalSeconds -gt 30) -and (([DateTime]::UtcNow - $S.SvcAsk).TotalSeconds -gt 30)) { $S.SvcAsk = [DateTime]::UtcNow; Start-BgWork 'svc' }
+    if ((([DateTime]::UtcNow - $S.SvcStamp).TotalSeconds -gt 30) -and (([DateTime]::UtcNow - $S.SvcAsk).TotalSeconds -gt 30)) { $S.SvcAsk = [DateTime]::UtcNow; if ($S.SvcNative) { try { Update-SvcMap } catch { Start-BgWork 'svc' } } else { Start-BgWork 'svc' } }
     if ($S.SvcMap.Count -eq 0) { return }
     $rows = [NetEtw]::TakeTotals()
     if ($rows.Count -eq 0) { return }
@@ -7632,14 +7707,23 @@ if (-not $S.WizDone) {
     $wizTimer.Start()
 }
 if ($S.UpdCheck) {
+    # the check runs in the background (WebClient async) and is read by a 500 ms timer: no more freeze up to 6 s, 15 s after the start
+    $updPoll = New-Object System.Windows.Forms.Timer
+    $updPoll.Interval = 500
+    $updPoll.Add_Tick({
+        try {
+            if (Poll-UpdateCheck) {
+                $updPoll.Stop()
+                $r = $S.UpdResult
+                if (($r -ne $null) -and $r.Newer) { $tray.ShowBalloonTip(6000, 'ZerkiWatch', (Tf 'about.newer' @($r.Tag)), [System.Windows.Forms.ToolTipIcon]::Info) }
+            }
+        } catch { $updPoll.Stop() }
+    })
     $updTimer = New-Object System.Windows.Forms.Timer
     $updTimer.Interval = 15000
     $updTimer.Add_Tick({
         $updTimer.Stop()
-        try {
-            $r = Get-LatestRelease
-            if (($r -ne $null) -and $r.Newer) { $tray.ShowBalloonTip(6000, 'ZerkiWatch', (Tf 'about.newer' @($r.Tag)), [System.Windows.Forms.ToolTipIcon]::Info) }
-        } catch { }
+        try { Start-UpdateCheck; $updPoll.Start() } catch { }
     })
     $updTimer.Start()
 }
