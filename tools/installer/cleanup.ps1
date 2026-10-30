@@ -11,3 +11,4 @@ foreach ($g in @('ZerkiWatch-LocalOnly', 'ZerkiWatch-Remote', 'ModeReseau-LocalU
 Get-ChildItem Cert:\LocalMachine\My | Where-Object { ($_.Subject -eq 'CN=ZerkiWatch iPhone remote') -or ($_.Subject -eq 'CN=ZerkiWatch Local CA') } | Remove-Item
 Unregister-ScheduledTask -TaskName 'ZerkiWatch' -Confirm:$false
 Unregister-ScheduledTask -TaskName 'ModeReseau' -Confirm:$false
+Remove-Item -LiteralPath (Join-Path $env:ProgramData 'ZerkiWatch') -Recurse -Force

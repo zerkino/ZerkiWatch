@@ -19,3 +19,6 @@ jobs:
       - name: Firewall engine (COM, throw-away rules)
         shell: powershell
         run: powershell -ExecutionPolicy Bypass -File tools\test-fw.ps1
+      - name: Compiled-type cache folder (ACL and owner)
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File tools\test-cache.ps1

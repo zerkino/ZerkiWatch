@@ -2183,25 +2183,64 @@ public static class MN {
     }
 }
 '@
-# Compiled helper types are cached as a DLL (hash of the source): the C# compiler only runs the first time
+# Compiled helper types are cached as a DLL (hash of the source): the C# compiler only runs the first time.
+# The cache lives in %ProgramData%\ZerkiWatch\cache, a folder only SYSTEM and Administrators can write (this process is elevated and loads these DLLs).
+# A DLL that is not owned by Administrators/SYSTEM is deleted and rebuilt. If no safe folder is available the code is compiled in memory.
+$cacheState = @{ done = $false; dir = $null }
+function Get-CacheDir {
+    if ($cacheState.done) { return $cacheState.dir }
+    $cacheState.done = $true
+    $cdir = Join-Path $env:ProgramData 'ZerkiWatch\cache'
+    try {
+        $di = New-Object System.IO.DirectoryInfo($cdir)
+        if (-not $di.Exists) { $di.Create() }
+        $adm = New-Object System.Security.Principal.SecurityIdentifier('S-1-5-32-544')
+        $sys = New-Object System.Security.Principal.SecurityIdentifier('S-1-5-18')
+        $acl = New-Object System.Security.AccessControl.DirectorySecurity
+        $acl.SetOwner($adm)
+        $acl.SetAccessRuleProtection($true, $false)
+        $inh = [System.Security.AccessControl.InheritanceFlags]'ContainerInherit, ObjectInherit'
+        $prp = [System.Security.AccessControl.PropagationFlags]::None
+        $alw = [System.Security.AccessControl.AccessControlType]::Allow
+        foreach ($sid in @($adm, $sys)) {
+            $acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule($sid, [System.Security.AccessControl.FileSystemRights]::FullControl, $inh, $prp, $alw)))
+        }
+        $di.SetAccessControl($acl)
+        $cacheState.dir = $cdir
+        return $cdir
+    } catch { Write-Log ('Type cache folder unavailable, compiling in memory: ' + $_.Exception.Message); return $null }
+}
+function Test-AdminOwned([string]$path) {
+    try {
+        $own = ([System.IO.File]::GetAccessControl($path)).GetOwner([System.Security.Principal.SecurityIdentifier]).Value
+        return (@('S-1-5-32-544', 'S-1-5-18') -contains $own)
+    } catch { return $false }
+}
 function Add-TypeCached([string]$Code, [string[]]$Refs = @()) {
     try {
-        $sha = [System.Security.Cryptography.SHA256]::Create()
-        $hs = ([BitConverter]::ToString($sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($Code)))).Replace('-', '').Substring(0, 16)
-        $cdir = Join-Path $logDir 'cache'
-        if (-not (Test-Path -LiteralPath $cdir)) { [void](New-Item -ItemType Directory -Path $cdir -Force) }
-        $dll = Join-Path $cdir ('t' + $hs + '.dll')
-        if (-not (Test-Path -LiteralPath $dll)) {
-            if ($Refs.Count -gt 0) { Add-Type -TypeDefinition $Code -ReferencedAssemblies $Refs -OutputAssembly $dll -OutputType Library } else { Add-Type -TypeDefinition $Code -OutputAssembly $dll -OutputType Library }
+        $cdir = Get-CacheDir
+        if ($cdir) {
+            $sha = [System.Security.Cryptography.SHA256]::Create()
+            $hs = ([BitConverter]::ToString($sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($Code)))).Replace('-', '').Substring(0, 16)
+            $dll = Join-Path $cdir ('t' + $hs + '.dll')
+            if ((Test-Path -LiteralPath $dll) -and (-not (Test-AdminOwned $dll))) { Write-Log ('Type cache: removed a DLL that is not owned by Administrators: ' + $dll); Remove-Item -LiteralPath $dll -Force }
+            if (-not (Test-Path -LiteralPath $dll)) {
+                if ($Refs.Count -gt 0) { Add-Type -TypeDefinition $Code -ReferencedAssemblies $Refs -OutputAssembly $dll -OutputType Library } else { Add-Type -TypeDefinition $Code -OutputAssembly $dll -OutputType Library }
+                # owner = Administrators whatever the "default owner" policy of this PC says (the check below only trusts that owner)
+                try { $fsec = New-Object System.Security.AccessControl.FileSecurity; $fsec.SetOwner((New-Object System.Security.Principal.SecurityIdentifier('S-1-5-32-544'))); [System.IO.File]::SetAccessControl($dll, $fsec) } catch { }
+            }
+            if (Test-AdminOwned $dll) { Add-Type -Path $dll; return }
         }
-        Add-Type -Path $dll
-        return
     } catch { }
+    # no safe cache: compile in memory (slower, still correct)
+    Write-Log 'Type cache: compiling in memory'
     if ($Refs.Count -gt 0) { Add-Type -TypeDefinition $Code -ReferencedAssemblies $Refs } else { Add-Type -TypeDefinition $Code }
 }
 $native = $false
 Mark-Step 'before native types'
 try { Add-TypeCached $nativeCode; $native = $true } catch { $native = $false }
+# the old cache folder was writable by any program of the user: remove it (it is never read again)
+try { $oldCache = Join-Path $logDir 'cache'; if (Test-Path -LiteralPath $oldCache) { Remove-Item -LiteralPath $oldCache -Recurse -Force } } catch { }
 $themeCode = @'
 using System.Drawing;
 using System.Windows.Forms;
