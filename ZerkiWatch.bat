@@ -61,6 +61,8 @@ function Perf-Flush {
         $PerfAcc[$k] = [double[]]@(0.0, 0.0, 0.0)
     }
 }
+# No Test-Path / Get-Item / Add-Content on every line: the rotation check runs once every 50 lines.
+$logState = @{ n = 0 }
 function Write-Log([string]$msg, [string]$key = '') {
     try {
         if ($key -ne '') {
@@ -68,11 +70,14 @@ function Write-Log([string]$msg, [string]$key = '') {
             if ($logLast.ContainsKey($key) -and (($n - $logLast[$key]).TotalSeconds -lt 60)) { return }
             $logLast[$key] = $n
         }
-        if (-not (Test-Path -LiteralPath $logDir)) { New-Item -ItemType Directory -Path $logDir -Force | Out-Null }
-        if ((Test-Path -LiteralPath $logFile) -and ((Get-Item -LiteralPath $logFile).Length -gt 400000)) {
-            Move-Item -LiteralPath $logFile -Destination ($logFile + '.old') -Force
+        if (($logState.n % 50) -eq 0) {
+            if (-not [System.IO.Directory]::Exists($logDir)) { [void][System.IO.Directory]::CreateDirectory($logDir) }
+            $fi = New-Object System.IO.FileInfo($logFile)
+            if ($fi.Exists -and ($fi.Length -gt 400000)) { Move-Item -LiteralPath $logFile -Destination ($logFile + '.old') -Force }
         }
-        Add-Content -LiteralPath $logFile -Value ((Get-Date -Format 'yyyy-MM-dd HH:mm:ss') + '  ' + $msg) -Encoding ASCII
+        $logState.n = $logState.n + 1
+        $stamp = [DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+        [System.IO.File]::AppendAllText($logFile, ($stamp + '  ' + $msg + [Environment]::NewLine), [System.Text.Encoding]::ASCII)
     } catch { }
 }
 function Mark-Step([string]$name) {
@@ -85,15 +90,38 @@ function Mark-Step([string]$name) {
 # Extra languages can be added without touching the code: drop a file xx.txt in
 # "lang" next to the program, or in %APPDATA%\ZerkiWatch\lang.
 $LangDb = @{}
-function ConvertFrom-LangEsc([string]$s) {
-    $s = $s.Replace('\n', "`n")
-    return [regex]::Replace($s, '\\u([0-9a-fA-F]{4})', ([System.Text.RegularExpressions.MatchEvaluator]{ param($m) [string][char][Convert]::ToInt32($m.Groups[1].Value, 16) }))
+# Languages are kept as raw text per language; only the active language + en + fr are parsed (T and the iPhone page read only those).
+# The other embedded languages only get their "lang.name", so the language menus still list them. Set-Language restarts the app.
+$LangRaw = @{}
+function Unescape-Lang([string]$s) {
+    if ($s.IndexOf('\') -lt 0) { return $s }
+    $sb = New-Object System.Text.StringBuilder($s.Length)
+    $n = $s.Length
+    $i = 0
+    while ($i -lt $n) {
+        $c = $s[$i]
+        if (($c -eq '\') -and (($i + 1) -lt $n)) {
+            $d = $s[$i + 1]
+            if ($d -eq 'n') { [void]$sb.Append("`n"); $i += 2; continue }
+            if (($d -eq 'u') -and (($i + 5) -lt $n)) {
+                $v = 0
+                if ([int]::TryParse($s.Substring($i + 2, 4), [System.Globalization.NumberStyles]::AllowHexSpecifier, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$v)) { [void]$sb.Append([char]$v); $i += 6; continue }
+            }
+        }
+        [void]$sb.Append($c)
+        $i++
+    }
+    return $sb.ToString()
 }
+function ConvertFrom-LangEsc([string]$s) { return (Unescape-Lang $s) }
 function Add-LangLines($lines, [string]$code) {
+    if ($lines -is [string]) { $lines = $lines.Split("`n") }
     foreach ($ln in $lines) {
         $t = ([string]$ln).Trim()
-        if (($t -eq '') -or $t.StartsWith('#')) { continue }
-        if ($t -match '^\[([A-Za-z\-]{2,10})\]$') {
+        if ($t.Length -lt 2) { continue }
+        $c0 = $t[0]
+        if ($c0 -eq '#') { continue }
+        if (($c0 -eq '[') -and ($t -match '^\[([A-Za-z\-]{2,10})\]$')) {
             $code = $Matches[1].ToLower()
             if (-not $LangDb.ContainsKey($code)) { $LangDb[$code] = @{} }
             continue
@@ -101,9 +129,35 @@ function Add-LangLines($lines, [string]$code) {
         $i = $t.IndexOf('=')
         if (($i -lt 1) -or ($code -eq '')) { continue }
         if (-not $LangDb.ContainsKey($code)) { $LangDb[$code] = @{} }
-        $LangDb[$code][$t.Substring(0, $i).Trim()] = ConvertFrom-LangEsc ($t.Substring($i + 1))
+        $LangDb[$code][$t.Substring(0, $i).Trim()] = Unescape-Lang ($t.Substring($i + 1))
     }
 }
+# Cuts the embedded text into one raw section per language (no parsing) and registers each code with its "lang.name"
+function Split-LangData([string]$text) {
+    $ms = [regex]::Matches($text, '(?m)^\[([A-Za-z\-]{2,10})\][ \t\r]*$')
+    for ($k = 0; $k -lt $ms.Count; $k++) {
+        $code = $ms[$k].Groups[1].Value.ToLower()
+        $a = $ms[$k].Index
+        $b = $text.Length
+        if (($k + 1) -lt $ms.Count) { $b = $ms[$k + 1].Index }
+        $sec = $text.Substring($a, $b - $a)
+        if ($LangRaw.ContainsKey($code)) { $LangRaw[$code] = $LangRaw[$code] + "`n" + $sec } else { $LangRaw[$code] = $sec }
+        if (-not $LangDb.ContainsKey($code)) { $LangDb[$code] = @{} }
+        $p = $sec.IndexOf("`nlang.name=")
+        if ($p -ge 0) {
+            $e = $sec.IndexOf("`n", $p + 1)
+            if ($e -lt 0) { $e = $sec.Length }
+            $LangDb[$code]['lang.name'] = Unescape-Lang ($sec.Substring($p + 11, $e - $p - 11).Trim())
+        }
+    }
+}
+function Ensure-Lang([string]$code) {
+    if (-not $LangRaw.ContainsKey($code)) { return }
+    $txt = $LangRaw[$code]
+    $LangRaw.Remove($code)
+    Add-LangLines $txt.Split("`n") $code
+}
+function Ensure-AllLang { foreach ($c in @($LangRaw.Keys)) { Ensure-Lang $c } }
 # LANGDATA BEGIN
 $langData = @'
 [de]
@@ -1883,16 +1937,28 @@ wiz.pin=Palavra-passe do controlo remoto do iPhone (pode manter a gerada):
 wiz.skip=Saltar
 wiz.title=Bem-vindo ao ZerkiWatch
 '@
+$langHash = @{ 'de' = '0ce7902f7bd6e8d9'; 'en' = '107c266858febf78'; 'es' = '30eb1df90df9ae97'; 'fr' = '0a7dc610cbb1f84e'; 'it' = '51858612cfeb8c9a'; 'pt' = 'f1d6ea0d99df479f' }
 # LANGDATA END
-Add-LangLines ($langData -split "`n") ''
+function Get-TextHash([string]$s) {
+    $norm = $s.Replace("`r`n", "`n").Trim()
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    return ([BitConverter]::ToString($sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($norm)))).Replace('-', '').Substring(0, 16).ToLower()
+}
+Split-LangData $langData
+Mark-Step 'languages split'
 try {
     $selfPath0 = $env:SELF
     if (-not $selfPath0) { $selfPath0 = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName }
     foreach ($ld in @((Join-Path (Split-Path -Parent $selfPath0) 'lang'), (Join-Path $logDir 'lang'))) {
-        if (Test-Path -LiteralPath $ld) {
-            foreach ($lf in @(Get-ChildItem -LiteralPath $ld -Filter '*.txt' -ErrorAction SilentlyContinue)) {
-                try { Add-LangLines ([System.IO.File]::ReadAllLines($lf.FullName, [System.Text.Encoding]::UTF8)) ($lf.BaseName.ToLower()) } catch { }
-            }
+        if (-not [System.IO.Directory]::Exists($ld)) { continue }
+        foreach ($lfPath in [System.IO.Directory]::GetFiles($ld, '*.txt')) {
+            try {
+                $lcode = [System.IO.Path]::GetFileNameWithoutExtension($lfPath).ToLower()
+                $txt = [System.IO.File]::ReadAllText($lfPath, [System.Text.Encoding]::UTF8)
+                if ($langHash.ContainsKey($lcode) -and ((Get-TextHash $txt) -eq $langHash[$lcode])) { continue }   # same as the embedded copy: nothing to load
+                Ensure-AllLang                                                                                     # a real override: embedded first, the file on top (old order)
+                Add-LangLines ($txt.Split("`n")) $lcode
+            } catch { }
         }
     }
 } catch { }
@@ -1944,6 +2010,10 @@ if (($LangCode -eq '') -or (-not $LangDb.ContainsKey($LangCode))) {
     } catch { }
 }
 if (-not $LangDb.ContainsKey($LangCode)) { $LangCode = 'fr' }
+Ensure-Lang $LangCode
+Ensure-Lang 'en'
+Ensure-Lang 'fr'
+Mark-Step 'languages parsed'
 $LangCulture = [System.Globalization.CultureInfo]::InvariantCulture
 try { $LangCulture = New-Object System.Globalization.CultureInfo($LangCode) } catch { }
 function T([string]$k) {
@@ -1962,9 +2032,11 @@ $createdNew = $false
 $mutex = New-Object System.Threading.Mutex($true, 'Local\ZerkiWatchApp', [ref]$createdNew)
 $showEvt = New-Object System.Threading.EventWaitHandle($false, [System.Threading.EventResetMode]::AutoReset, 'Local\ZerkiWatchShow')
 if (-not $createdNew) { [void]$showEvt.Set(); exit }
+# OpenExisting throws (and PowerShell builds an error record) 3 times at EVERY normal launch: TryOpenExisting does not.
 function Test-OldRun {
     foreach ($nm in @('Local\ModeReseauApp', 'Local\ModeReseauApp51', 'Local\ModeReseauApp54')) {
-        try { $om = [System.Threading.Mutex]::OpenExisting($nm); $om.Dispose(); return $true } catch { }
+        $om = $null
+        try { if ([System.Threading.Mutex]::TryOpenExisting($nm, [ref]$om)) { $om.Dispose(); return $true } } catch { }
     }
     return $false
 }
@@ -6558,19 +6630,28 @@ function Load-History {
             $cut = (Get-Date).AddDays(-7)
             $keep = New-Object System.Collections.ArrayList
             $total = 0
-            foreach ($ln in [System.IO.File]::ReadAllLines($histFile)) {
-                $total++
-                $p = $ln.Split(',')
-                if ($p.Count -lt 8) { continue }
-                try {
-                    $dt = [DateTime]::ParseExact($p[0], 'yyyyMMddHHmm', $invc)
-                    if ($dt -lt $cut) { continue }
-                    $rec = New-Object 'double[]' 8
-                    $rec[0] = [double](Get-MinIdx $dt)
-                    for ($i = 1; $i -lt 8; $i++) { $rec[$i] = [double]::Parse($p[$i], $invc) }
-                    [void]$S.HistMem.Add($rec)
-                    [void]$keep.Add($ln)
-                } catch { }
+            if ($S.HistNative) {
+                $all = [System.IO.File]::ReadAllLines($histFile)
+                $total = $all.Length
+                $keepL = New-Object 'System.Collections.Generic.List[string]'
+                $recs = [HistParse]::Parse($all, $histEpoch, $cut, $keepL)
+                $S.HistMem.AddRange($recs)
+                $keep.AddRange($keepL)
+            } else {
+                foreach ($ln in [System.IO.File]::ReadAllLines($histFile)) {
+                    $total++
+                    $p = $ln.Split(',')
+                    if ($p.Count -lt 8) { continue }
+                    try {
+                        $dt = [DateTime]::ParseExact($p[0], 'yyyyMMddHHmm', $invc)
+                        if ($dt -lt $cut) { continue }
+                        $rec = New-Object 'double[]' 8
+                        $rec[0] = [double](Get-MinIdx $dt)
+                        for ($i = 1; $i -lt 8; $i++) { $rec[$i] = [double]::Parse($p[$i], $invc) }
+                        [void]$S.HistMem.Add($rec)
+                        [void]$keep.Add($ln)
+                    } catch { }
+                }
             }
             if ($keep.Count -ne $total) { [System.IO.File]::WriteAllLines($histFile, [string[]]$keep.ToArray()) }
         }
@@ -6749,6 +6830,35 @@ function Get-HistPayload([string]$range) {
     return $o
 }
 
+$histCode = @'
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+public static class HistParse {
+    // Same result as the PowerShell loop in Load-History: records [minuteIndex, dl, ul, cpu, ram, gpu, rx, tx] newer than cutoff.
+    public static List<double[]> Parse(string[] lines, DateTime epoch, DateTime cutoff, List<string> keepLines) {
+        List<double[]> res = new List<double[]>(lines.Length);
+        CultureInfo inv = CultureInfo.InvariantCulture;
+        foreach (string ln in lines) {
+            string[] p = ln.Split(',');
+            if (p.Length < 8) continue;
+            DateTime dt;
+            if (!DateTime.TryParseExact(p[0], "yyyyMMddHHmm", inv, DateTimeStyles.None, out dt)) continue;
+            if (dt < cutoff) continue;
+            double[] rec = new double[8];
+            rec[0] = Math.Floor((dt - epoch).TotalMinutes);
+            bool ok = true;
+            for (int i = 1; i < 8; i++) { if (!double.TryParse(p[i], NumberStyles.Float, inv, out rec[i])) { ok = false; break; } }
+            if (!ok) continue;
+            res.Add(rec);
+            keepLines.Add(ln);
+        }
+        return res;
+    }
+}
+'@
+$S.HistNative = $false
+try { Add-TypeCached $histCode; $S.HistNative = $true } catch { }
 Load-History
 Mark-Step 'history loaded'
 

@@ -53,6 +53,17 @@ foreach ($f in @(Get-ChildItem -LiteralPath (Join-Path $root 'lang') -Filter '*.
 $bi = $bat.IndexOf("`$langData = @'"); $be = $bat.IndexOf("'@", $bi + 10)
 $emb = $bat.Substring($bi, $be - $bi).Split("`n").Count - 2
 if ($emb -ne $cnt) { Write-Host ('Embedded data is out of date (' + $emb + ' vs ' + $cnt + ' lines). Run tools\embed-lang.ps1'); $bad++ }
+# the $langHash line (start-up skips lang\*.txt files identical to the embedded copy) must match the files
+$hm = [regex]::Match($bat, '(?m)^\$langHash = @\{(.*)\}\s*$')
+if (-not $hm.Success) { Write-Host 'The $langHash line is missing in ZerkiWatch.bat. Run tools\embed-lang.ps1'; $bad++ }
+else {
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    foreach ($f in @(Get-ChildItem -LiteralPath (Join-Path $root 'lang') -Filter '*.txt')) {
+        $norm = [System.IO.File]::ReadAllText($f.FullName, [System.Text.Encoding]::UTF8).Replace("`r`n", "`n").Trim()
+        $hh = ([BitConverter]::ToString($sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($norm)))).Replace('-', '').Substring(0, 16).ToLower()
+        if ($hm.Groups[1].Value -notmatch ("'" + $f.BaseName.ToLower() + "' = '" + $hh + "'")) { Write-Host ('$langHash is out of date for ' + $f.BaseName + '. Run tools\embed-lang.ps1'); $bad++ }
+    }
+}
 foreach ($c in ($langs.Keys | Sort-Object)) { Write-Host ('  ' + $c + ': ' + $langs[$c].Count + ' keys') }
 if ($bad -gt 0) { Write-Host ($bad.ToString() + ' problem(s).'); exit 1 }
 Write-Host 'Language files OK.'
