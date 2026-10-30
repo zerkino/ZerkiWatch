@@ -60,6 +60,7 @@ function Perf-Flush {
         if ($a[0] -gt 0) { Write-Log ('PERF ' + $k + ' n=' + [int]$a[0] + ' avg=' + ($a[1] / $a[0]).ToString('0.0', [System.Globalization.CultureInfo]::InvariantCulture) + ' ms max=' + $a[2].ToString('0.0', [System.Globalization.CultureInfo]::InvariantCulture) + ' ms') }
         $PerfAcc[$k] = [double[]]@(0.0, 0.0, 0.0)
     }
+    try { if ($S.EtwOk) { Write-Log ('PERF etw cycles=' + [NetEtw]::Cycles + ' busy=' + [NetEtw]::BusyMs + ' ms (since start) window=' + [NetEtw]::WindowMs + ' ms') } } catch { }
 }
 # No Test-Path / Get-Item / Add-Content on every line: the rotation check runs once every 50 lines.
 $logState = @{ n = 0 }
@@ -3813,6 +3814,9 @@ public static class NetEtw
     static Dictionary<int, double[]> tot = new Dictionary<int, double[]>();
     public static volatile string Status = "starting";
     public static volatile bool Paused;
+    public static volatile int WindowMs = 3000;   // length of one capture window (the PowerShell side lengthens it when nobody looks at the per-app lists)
+    public static long Cycles;                    // finished capture cycles
+    public static long BusyMs;                    // ms spent in logman start / stop and in the parse
 
     static int RunTool(string exe, string args)
     {
@@ -3857,6 +3861,7 @@ public static class NetEtw
             try
             {
                 try { if (File.Exists(etl)) File.Delete(etl); } catch { }
+                Stopwatch busy = Stopwatch.StartNew();
                 int rc = RunTool("logman.exe", "start " + SessionName + " -p \"Microsoft-Windows-Kernel-Network\" 0x30 0xFF -o \"" + etl + "\" -ets -bs 128 -nb 16 64 -max 64");
                 if (rc != 0)
                 {
@@ -3864,12 +3869,16 @@ public static class NetEtw
                     Wait(6000);
                     continue;
                 }
+                Interlocked.Add(ref BusyMs, busy.ElapsedMilliseconds);
                 Stopwatch sw = Stopwatch.StartNew();
-                Wait(3000);
+                Wait(WindowMs);
+                busy.Restart();
                 RunTool("logman.exe", "stop " + SessionName + " -ets");
                 double secs = Math.Max(0.5, sw.Elapsed.TotalSeconds);
                 if (!run) break;
                 Parse(etl, secs);
+                Interlocked.Add(ref BusyMs, busy.ElapsedMilliseconds);
+                Interlocked.Increment(ref Cycles);
             }
             catch (Exception ex)
             {
@@ -4502,6 +4511,9 @@ function Update-Mon {
     if ($S.EtwOk) {
         $pz = ((($nowU - $S.NeedAt).TotalSeconds -gt 15) -and (-not $S.CumulOn))
         try { if ([NetEtw]::Paused -ne $pz) { [NetEtw]::Paused = $pz } } catch { }
+        $wm = 3000
+        if (($nowU - $S.NeedAt).TotalSeconds -gt 15) { $wm = 6000 }
+        try { if ([NetEtw]::WindowMs -ne $wm) { [NetEtw]::WindowMs = $wm } } catch { }
     }
     $slow = ((-not $formOn) -and (-not $barForm.Visible) -and (-not $wForm.Visible) -and (-not $remoteOn))
     try { $S.Hw.Slow = $slow } catch { }
