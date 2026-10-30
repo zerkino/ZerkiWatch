@@ -1,0 +1,23 @@
+name: bench
+on:
+  workflow_dispatch:
+jobs:
+  bench:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bench (Windows PowerShell 5.1)
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File tools\bench.ps1 | Tee-Object -FilePath bench.txt
+      - name: Smoke test (starts the real app for about 2 minutes)
+        shell: powershell
+        continue-on-error: true
+        run: powershell -ExecutionPolicy Bypass -File tools\smoke.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bench
+          path: |
+            bench.txt
+            smoke-screen.png
+            smoke-log.txt

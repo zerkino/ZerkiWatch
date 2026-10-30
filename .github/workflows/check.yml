@@ -13,3 +13,6 @@ jobs:
       - name: Language files
         shell: powershell
         run: powershell -ExecutionPolicy Bypass -File tools\check-lang.ps1
+      - name: C# blocks compile (Windows PowerShell 5.1)
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File tools\check-csharp.ps1

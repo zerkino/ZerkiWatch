@@ -42,6 +42,25 @@ try {
 } catch { }
 $logFile = Join-Path $logDir 'log.txt'
 $logLast = @{}
+$PerfS = @{ On = $false; At = [DateTime]::UtcNow }
+$PerfAcc = @{}
+function Perf-Add([string]$name, [long]$t0) {
+    $ms = ([Diagnostics.Stopwatch]::GetTimestamp() - $t0) * 1000.0 / [Diagnostics.Stopwatch]::Frequency
+    $a = $PerfAcc[$name]
+    if ($a -eq $null) { $a = [double[]]@(0.0, 0.0, 0.0); $PerfAcc[$name] = $a }   # count, total ms, max ms
+    $a[0] = $a[0] + 1
+    $a[1] = $a[1] + $ms
+    if ($ms -gt $a[2]) { $a[2] = $ms }
+    if (([DateTime]::UtcNow - $PerfS.At).TotalSeconds -ge 30) { Perf-Flush }
+}
+function Perf-Flush {
+    $PerfS.At = [DateTime]::UtcNow
+    foreach ($k in @($PerfAcc.Keys | Sort-Object)) {
+        $a = $PerfAcc[$k]
+        if ($a[0] -gt 0) { Write-Log ('PERF ' + $k + ' n=' + [int]$a[0] + ' avg=' + ($a[1] / $a[0]).ToString('0.0', [System.Globalization.CultureInfo]::InvariantCulture) + ' ms max=' + $a[2].ToString('0.0', [System.Globalization.CultureInfo]::InvariantCulture) + ' ms') }
+        $PerfAcc[$k] = [double[]]@(0.0, 0.0, 0.0)
+    }
+}
 function Write-Log([string]$msg, [string]$key = '') {
     try {
         if ($key -ne '') {
@@ -1877,6 +1896,7 @@ try {
         }
     }
 } catch { }
+Mark-Step 'languages loaded'
 $LangCode = ''
 $ThemePref = 'dark'
 try {
@@ -1885,6 +1905,7 @@ try {
         foreach ($ln0 in [System.IO.File]::ReadAllLines($cfgPath0)) {
             if ($ln0.StartsWith('Lang=')) { $LangCode = $ln0.Substring(5).Trim().ToLower() }
             if ($ln0.StartsWith('Theme=')) { $ThemePref = $ln0.Substring(6).Trim().ToLower() }
+            if ($ln0.StartsWith('Perf=')) { $PerfS.On = ($ln0.Substring(5).Trim() -eq '1') }
         }
     }
 } catch { }
@@ -4118,14 +4139,14 @@ function Update-Mon {
         $wj = (($S.DiskWant.ToArray()) -join ',')
         if ($wj -ne $S.WantPushed) { $hw.Want = [string[]]@($S.DiskWant.ToArray()); $S.WantPushed = $wj }
     } catch { }
-    try { Update-Hist $drx $dtx $dt } catch { Write-Log ('Update-Hist: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'uh' }
+    $pf0 = 0; if ($PerfS.On) { $pf0 = [Diagnostics.Stopwatch]::GetTimestamp() }; try { Update-Hist $drx $dtx $dt } catch { Write-Log ('Update-Hist: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'uh' }; if ($PerfS.On) { Perf-Add 'update-hist' $pf0 }
     try { Poll-Bg } catch { }
     $nowU = [DateTime]::UtcNow
     $formOn = ($form.Visible -and ($form.WindowState -ne [System.Windows.Forms.FormWindowState]::Minimized))
     $remoteOn = (($nowU - $S.LastRemote).TotalSeconds -lt 15)
     $needProcs = ($formOn -or $remoteOn)
     if ($needProcs) { $S.NeedAt = $nowU }
-    if ($needProcs -and (($S.Tick % 2) -eq 0)) { try { Update-Procs } catch { } }
+    if ($needProcs -and (($S.Tick % 2) -eq 0)) { $pf0 = 0; if ($PerfS.On) { $pf0 = [Diagnostics.Stopwatch]::GetTimestamp() }; try { Update-Procs } catch { }; if ($PerfS.On) { Perf-Add 'update-procs' $pf0 } }
     if ($S.EtwOk -and $S.CumulOn -and (($S.Tick % 2) -eq 0)) { try { Update-AppAcc } catch { Write-Log ('App totals: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'ua' } }
     if ($S.EtwOk) {
         $pz = ((($nowU - $S.NeedAt).TotalSeconds -gt 15) -and (-not $S.CumulOn))
@@ -4145,10 +4166,10 @@ function Update-Mon {
     if ($S.EtwOk) { try { $S.EtwStatus = [NetEtw]::Status } catch { } }
 
     if ((($S.Tick % 20) -eq 3) -and (-not $S.Busy) -and (-not $S.Switching)) { Start-BgWork 'mode' }
-    try { Update-Bar } catch { Write-Log ('Update-Bar: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'ub' }
+    $pf0 = 0; if ($PerfS.On) { $pf0 = [Diagnostics.Stopwatch]::GetTimestamp() }; try { Update-Bar } catch { Write-Log ('Update-Bar: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'ub' }; if ($PerfS.On) { Perf-Add 'update-bar' $pf0 }
     try { Check-Alerts } catch { Write-Log ('Check-Alerts: ' + $_.Exception.Message) 'ca' }
     try { Check-TimedCut } catch { Write-Log ('Check-TimedCut: ' + $_.Exception.Message) 'ct' }
-    try { Update-Widget } catch { Write-Log ('Update-Widget: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'uw' }
+    $pf0 = 0; if ($PerfS.On) { $pf0 = [Diagnostics.Stopwatch]::GetTimestamp() }; try { Update-Widget } catch { Write-Log ('Update-Widget: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'uw' }; if ($PerfS.On) { Perf-Add 'update-widget' $pf0 }
     if ($formOn) { try { $pnlRight.Invalidate() } catch { } }
 }
 
@@ -4731,6 +4752,7 @@ $pnlRight.Add_MouseClick({
 
 $pnlRight.Add_Paint({
     param($sender, $pe)
+    $pf0 = 0; if ($PerfS.On) { $pf0 = [Diagnostics.Stopwatch]::GetTimestamp() };
     try {
         $g = $pe.Graphics
         $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -4844,7 +4866,7 @@ $pnlRight.Add_Paint({
         $bb2.Dispose()
         $rv3 = New-Object System.Drawing.RectangleF -ArgumentList ([single]608), ([single]524), ([single]454), ([single]44)
         $g.DrawString($lblMsg.Text, $fSmall, $bMuted, $rv3, $sfEll)
-    } catch { Write-Log ('Window paint: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'pw' }
+    } catch { Write-Log ('Window paint: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'pw' } finally { if ($PerfS.On) { Perf-Add 'paint-window' $pf0 } }
 })
 
 # --- Animation du bouton ---
@@ -4917,13 +4939,19 @@ Add-Type -AssemblyName System.Numerics
 function T([string]$k) { if ($Msgs.ContainsKey($k)) { return [string]$Msgs[$k] }; return $k }
 function Tf([string]$k, [object[]]$a) { try { return [string]::Format((T $k), $a) } catch { return (T $k) } }
 . ([scriptblock]::Create($FnSrc))
-$res = @{ ok = $true; err = ''; net = $false; box = $false }
+$res = @{ ok = $true; err = ''; net = $false; box = $false; msw = 0; mnet = 0; mbox = 0 }
+$swt = [System.Diagnostics.Stopwatch]::StartNew()
 if ($Target -ne '') {
     try { if ($Target -eq 'LOCAL') { Set-ModeLocal } else { Set-ModeInternet } } catch { $res.ok = $false; $res.err = $_.Exception.Message }
+    $res.msw = [int]$swt.ElapsedMilliseconds
 }
 if ($res.ok) {
+    $swt.Restart()
     try { $res.net = [bool](Test-Internet) } catch { }
+    $res.mnet = [int]$swt.ElapsedMilliseconds
+    $swt.Restart()
     try { $res.box = [bool](Test-Box) } catch { }
+    $res.mbox = [int]$swt.ElapsedMilliseconds
 }
 $res
 '@
@@ -4975,6 +5003,7 @@ function Poll-NetJob {
     $S.Switching = $false
     $S.Busy = $false
     if ($res -eq $null) { $res = @{ ok = $false; err = 'no result'; net = $false; box = $false } }
+    try { Write-Log ('NETJOB ' + $(if ($target -ne '') { $target } else { 'tests' }) + ' total=' + [int]([DateTime]::UtcNow - $S.SwStart).TotalMilliseconds + ' ms (switch=' + $res.msw + ' net=' + $res.mnet + ' box=' + $res.mbox + ' ok=' + $res.ok + ')') } catch { }
     if ($res.ok) {
         if ($target -ne '') { Update-Ui $target } else { Update-Ui ([string]$(if ($S.Local) { 'LOCAL' } else { 'INTERNET' })) }
         Apply-TestResults ([bool]$res.net) ([bool]$res.box)
@@ -5257,6 +5286,7 @@ function Save-BarConfig {
         )
         try { $lines = $lines + ('WX=' + $wForm.Location.X) + ('WY=' + $wForm.Location.Y) } catch { }
         if ($LangPref -ne '') { $lines = $lines + ('Lang=' + $LangPref) }
+        if ($PerfS.On) { $lines = $lines + 'Perf=1' }
         if ($S.DiskCustom) { $lines = $lines + ('Disks=' + (($S.DiskWant.ToArray()) -join ',')) }
         Set-Content -LiteralPath $cfgFile -Value $lines -Encoding ASCII
     } catch { }
@@ -5349,7 +5379,7 @@ function Draw-Bar($g, [double]$k) {
         $sepPen.Dispose()
     } catch { Write-Log ('Bar paint: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'pb' }
 }
-$barForm.Add_Paint({ param($sender, $pe) Draw-Bar $pe.Graphics $BAR.K })
+$barForm.Add_Paint({ param($sender, $pe) $pf0 = 0; if ($PerfS.On) { $pf0 = [Diagnostics.Stopwatch]::GetTimestamp() }; Draw-Bar $pe.Graphics $BAR.K; if ($PerfS.On) { Perf-Add 'paint-bar' $pf0 } })
 
 $barForm.Add_MouseDown({
     param($sender, $me)
@@ -6720,6 +6750,7 @@ function Get-HistPayload([string]$range) {
 }
 
 Load-History
+Mark-Step 'history loaded'
 
 # ---------- Cumul par application et par service (35 jours) ----------
 $appsFile = Join-Path $cfgDir 'apps.csv'
@@ -6842,6 +6873,7 @@ function Get-TopPayload {
 }
 
 Load-AppDays
+Mark-Step 'app totals loaded'
 
 # ---------- Fenetre Historique ----------
 $fH1 = New-Object System.Drawing.Font('Segoe UI Semibold', 13)
@@ -7192,7 +7224,7 @@ try { Update-Adapters } catch { }
 Mark-Step 'tray and menus built'
 $monTimer = New-Object System.Windows.Forms.Timer
 $monTimer.Interval = 1000
-$monTimer.Add_Tick({ try { Update-Mon } catch { Write-Log ('Update-Mon: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'um' } })
+$monTimer.Add_Tick({ $pf0 = 0; if ($PerfS.On) { $pf0 = [Diagnostics.Stopwatch]::GetTimestamp() }; try { Update-Mon } catch { Write-Log ('Update-Mon: ' + $_.Exception.Message + ' (line ' + $_.InvocationInfo.ScriptLineNumber + ')') 'um' }; if ($PerfS.On) { Perf-Add 'update-mon' $pf0 } })
 $monTimer.Start()
 
 # Telecommande iPhone
@@ -7281,6 +7313,7 @@ $appCtx = New-Object System.Windows.Forms.ApplicationContext
 
 # nettoyage a la fermeture
 try { $netTimer.Stop(); $monTimer.Stop() } catch { }
+try { if ($PerfS.On) { Perf-Flush } } catch { }
 Stop-Remote
 try { if ($S.EtwOk) { [NetEtw]::Stop() } } catch { }
 try { Flush-Minute; Save-Days } catch { }
