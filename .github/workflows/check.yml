@@ -16,3 +16,6 @@ jobs:
       - name: C# blocks compile (Windows PowerShell 5.1)
         shell: powershell
         run: powershell -ExecutionPolicy Bypass -File tools\check-csharp.ps1
+      - name: Firewall engine (COM, throw-away rules)
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File tools\test-fw.ps1

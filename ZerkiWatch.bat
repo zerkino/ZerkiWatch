@@ -2322,13 +2322,13 @@ function ConvertTo-RangeStrings($Gaps, [int]$Len) {
 }
 
 # ---------- Actions ----------
-function Remove-Rules {
+function Remove-RulesSlow {
     foreach ($g in (@($Group) + $LegacyGroups)) {
         Get-NetFirewallRule -Group $g -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction SilentlyContinue
     }
 }
 
-function Get-Mode {
+function Get-ModeSlow {
     foreach ($g in (@($Group) + $LegacyGroups)) {
         $r = @(Get-NetFirewallRule -Group $g -ErrorAction SilentlyContinue | Where-Object { $_.Enabled -eq 'True' })
         if ($r.Count -ge 2) { return 'LOCAL' }
@@ -2336,15 +2336,15 @@ function Get-Mode {
     return 'INTERNET'
 }
 
-function Set-ModeInternet {
-    Remove-Rules
+function Set-ModeInternetSlow {
+    Remove-RulesSlow
     $left = @()
     foreach ($g in (@($Group) + $LegacyGroups)) { $left += @(Get-NetFirewallRule -Group $g -ErrorAction SilentlyContinue) }
     if ($left.Count -gt 0) { throw (T 'err.rules_left') }
     Clear-DnsClientCache -ErrorAction SilentlyContinue
 }
 
-function Set-ModeLocal {
+function Set-ModeLocalSlow {
     $svc = Get-Service -Name 'mpssvc'
     if ($svc.Status -ne 'Running') { throw (T 'err.fw_stopped') }
     $off = @(Get-NetFirewallProfile | Where-Object { $_.Enabled -eq 'False' })
@@ -2352,7 +2352,7 @@ function Set-ModeLocal {
         throw (Tf 'err.fw_disabled' @((($off | ForEach-Object { $_.Name }) -join ', ')))
     }
     try {
-        Remove-Rules
+        Remove-RulesSlow
         $v4Allowed = @('0.0.0.0/8', '10.0.0.0/8', '127.0.0.0/8', '169.254.0.0/16', '172.16.0.0/12', '192.168.0.0/16', '224.0.0.0/3') + $ExtraIPv4
         $v6Allowed = @('::/128', '::1/128', 'fc00::/7', 'fe80::/10', 'ff00::/8') + $ExtraIPv6
         $v6Dyn = @(Get-NetIPAddress -AddressFamily IPv6 -ErrorAction SilentlyContinue |
@@ -2376,10 +2376,137 @@ function Set-ModeLocal {
         $n = @(Get-NetFirewallRule -Group $Group -ErrorAction SilentlyContinue | Where-Object { $_.Enabled -eq 'True' }).Count
         if ($n -ne 2) { throw (T 'err.rules_inactive') }
     } catch {
-        Remove-Rules
+        Remove-RulesSlow
         throw
     }
     Clear-DnsClientCache -ErrorAction SilentlyContinue
+}
+
+# ---------- Fast firewall engine (COM HNetCfg.FwPolicy2: no CIM, no NetSecurity module) ----------
+# The old cmdlet functions are kept under the names *Slow and used as a safety net when anything unexpected happens.
+$FwRuleOut = 'ZerkiWatch - Block Internet (outbound)'
+$FwRuleIn  = 'ZerkiWatch - Block Internet (inbound)'
+function Get-FwPolicy { return (New-Object -ComObject HNetCfg.FwPolicy2) }
+function Get-OurGroups { return (@($Group) + $LegacyGroups) }
+
+# Same meaning as the old Get-Mode: LOCAL when one of our groups (current or legacy) holds 2 enabled rules. One enumeration, no CIM.
+function Get-ModeFast {
+    $pol = Get-FwPolicy
+    $grps = Get-OurGroups
+    $cnt = @{}
+    foreach ($r in $pol.Rules) {
+        $gname = [string]$r.Grouping
+        if (($gname -ne '') -and ($grps -contains $gname) -and $r.Enabled) {
+            if ($cnt.ContainsKey($gname)) { $cnt[$gname] = $cnt[$gname] + 1 } else { $cnt[$gname] = 1 }
+        }
+    }
+    foreach ($v in $cnt.Values) { if ($v -ge 2) { return 'LOCAL' } }
+    return 'INTERNET'
+}
+function Get-OurRuleCount {
+    $pol = Get-FwPolicy
+    $grps = Get-OurGroups
+    $n = 0
+    foreach ($r in $pol.Rules) { $gname = [string]$r.Grouping; if (($gname -ne '') -and ($grps -contains $gname)) { $n++ } }
+    return $n
+}
+function Remove-RulesFast {
+    $pol = Get-FwPolicy
+    $grps = Get-OurGroups
+    $names = @{}
+    foreach ($r in $pol.Rules) {
+        $gname = [string]$r.Grouping
+        if (($gname -ne '') -and ($grps -contains $gname)) { $names[[string]$r.Name] = $true }
+    }
+    foreach ($nm in @($names.Keys)) { try { $pol.Rules.Remove($nm) } catch { } }
+}
+function Set-ModeLocalFast($remote) {
+    $pol = Get-FwPolicy
+    Remove-RulesFast
+    $csv = (@($remote) -join ',')
+    foreach ($def in @(@($FwRuleOut, 2), @($FwRuleIn, 1))) {
+        $r = New-Object -ComObject HNetCfg.FWRule
+        $r.Name = [string]$def[0]
+        $r.Description = 'Created by ZerkiWatch. Blocks everything except the local network.'
+        $r.Grouping = $Group
+        $r.Direction = [int]$def[1]      # 1 = inbound, 2 = outbound
+        $r.Action = 0                    # 0 = block
+        $r.Protocol = 256                # any
+        $r.Profiles = 2147483647         # all profiles
+        $r.RemoteAddresses = $csv        # comma separated, a-b ranges allowed (IPv4 and IPv6)
+        $r.Enabled = $true
+        $pol.Rules.Add($r)
+    }
+    if ((Get-ModeFast) -ne 'LOCAL') { throw (T 'err.rules_inactive') }
+}
+function Set-ModeInternetFast {
+    Remove-RulesFast
+    if ((Get-OurRuleCount) -gt 0) { throw (T 'err.rules_left') }
+}
+# Profiles that are switched off. Any odd answer from COM -> the old cmdlet decides (never a false "firewall disabled" error).
+function Get-DisabledProfiles {
+    try {
+        $pol = Get-FwPolicy
+        $off = @()
+        foreach ($pt in @(@(1, 'Domain'), @(2, 'Private'), @(4, 'Public'))) {
+            $v = $pol.FirewallEnabled($pt[0])
+            if ($v -isnot [bool]) { throw 'unexpected answer' }
+            if (-not $v) { $off += [string]$pt[1] }
+        }
+        return , $off
+    } catch { }
+    return , @(Get-NetFirewallProfile | Where-Object { $_.Enabled -eq 'False' } | ForEach-Object { [string]$_.Name })
+}
+function Clear-DnsFast { try { $null = & cmd.exe /c 'ipconfig /flushdns >nul 2>&1' } catch { } }
+
+# The ranges "everything except the local network" (code moved as it was from Set-ModeLocal; only the IPv6 CIM query became plain .NET)
+function Get-LocalOnlyRanges {
+    $v4Allowed = @('0.0.0.0/8', '10.0.0.0/8', '127.0.0.0/8', '169.254.0.0/16', '172.16.0.0/12', '192.168.0.0/16', '224.0.0.0/3') + $ExtraIPv4
+    $v6Allowed = @('::/128', '::1/128', 'fc00::/7', 'fe80::/10', 'ff00::/8') + $ExtraIPv6
+    $v6Dyn = New-Object System.Collections.ArrayList
+    foreach ($ni in [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces()) {
+        if ($ni.OperationalStatus -ne [System.Net.NetworkInformation.OperationalStatus]::Up) { continue }
+        foreach ($ua in $ni.GetIPProperties().UnicastAddresses) {
+            if ($ua.Address.AddressFamily -ne [System.Net.Sockets.AddressFamily]::InterNetworkV6) { continue }
+            $t6 = $ua.Address.ToString()
+            if (($t6 -match '^[23]') -and ($ua.PrefixLength -ge 64)) {
+                $p6 = $t6 + '/' + $ua.PrefixLength
+                if (-not $v6Dyn.Contains($p6)) { [void]$v6Dyn.Add($p6) }
+            }
+        }
+    }
+    $v6Allowed = $v6Allowed + @($v6Dyn.ToArray())
+    $v4Iv = @(); foreach ($c in $v4Allowed) { $v4Iv += Get-Interval $c 32 }
+    $v6Iv = @(); foreach ($c in $v6Allowed) { $v6Iv += Get-Interval $c 128 }
+    $v4Block = ConvertTo-RangeStrings (Get-Complement $v4Iv 32) 4
+    $v6Block = ConvertTo-RangeStrings (Get-Complement $v6Iv 128) 16
+    return (@($v4Block) + @($v6Block))
+}
+
+# Dispatchers: fast COM path first, the old cmdlets as a safety net. The UI, the timers and the iPhone code keep calling the same names.
+function Get-Mode {
+    try { return (Get-ModeFast) } catch { }
+    return (Get-ModeSlow)
+}
+function Set-ModeInternet {
+    $done = $false
+    try { Set-ModeInternetFast; $done = $true } catch { }
+    if (-not $done) { Set-ModeInternetSlow }
+    Clear-DnsFast
+}
+function Set-ModeLocal {
+    $svc = Get-Service -Name 'mpssvc'
+    if ($svc.Status -ne 'Running') { throw (T 'err.fw_stopped') }
+    $off = Get-DisabledProfiles
+    if ($off.Count -gt 0) { throw (Tf 'err.fw_disabled' @(($off -join ', '))) }
+    $remote = $null
+    try { $remote = @(Get-LocalOnlyRanges) } catch { $remote = $null }
+    $done = $false
+    if (($remote -ne $null) -and ($remote.Count -gt 0)) {
+        try { Set-ModeLocalFast $remote; $done = $true } catch { try { Remove-RulesFast } catch { } }
+    }
+    if (-not $done) { Set-ModeLocalSlow }
+    Clear-DnsFast
 }
 
 # ---------- Tests ----------
@@ -2402,13 +2529,80 @@ function Test-Ping([string]$Ip) {
         return ($p.Send($Ip, 2000).Status -eq 'Success')
     } catch { return $false }
 }
+# Worst case 2 s instead of 3 x 2 s: the three connections are tried at the same time, the first success wins
+function Test-AnyTcp($Targets, [int]$TimeoutMs) {
+    $clients = New-Object System.Collections.ArrayList
+    try {
+        foreach ($t in $Targets) {
+            try {
+                $addr = [System.Net.IPAddress]::Parse([string]$t[0])
+                $c = New-Object System.Net.Sockets.TcpClient -ArgumentList $addr.AddressFamily
+                $iar = $c.BeginConnect($addr, [int]$t[1], $null, $null)
+                [void]$clients.Add(@($c, $iar))
+            } catch { }
+        }
+        $deadline = [DateTime]::UtcNow.AddMilliseconds($TimeoutMs)
+        $pending = New-Object System.Collections.ArrayList
+        foreach ($p in $clients) { [void]$pending.Add($p) }
+        while (($pending.Count -gt 0) -and ([DateTime]::UtcNow -lt $deadline)) {
+            foreach ($p in @($pending.ToArray())) {
+                if ($p[1].IsCompleted) {
+                    [void]$pending.Remove($p)
+                    try { $p[0].EndConnect($p[1]); return $true } catch { }
+                }
+            }
+            Start-Sleep -Milliseconds 15
+        }
+        return $false
+    } finally { foreach ($p in $clients) { try { $p[0].Close() } catch { } } }
+}
 function Test-Internet {
-    return ((Test-Tcp '1.1.1.1' 443 2000) -or (Test-Tcp '8.8.8.8' 443 2000) -or (Test-Tcp '2606:4700:4700::1111' 443 2000))
+    return (Test-AnyTcp @(@('1.1.1.1', 443), @('8.8.8.8', 443), @('2606:4700:4700::1111', 443)) 2000)
+}
+# The router (box) test: default gateways come from .NET (no Get-NetRoute / CIM, which costs 0.3 - 1 s the first time); up to 3 are pinged at the same time
+function Test-AnyPing($Targets, [int]$TimeoutMs) {
+    $pings = New-Object System.Collections.ArrayList
+    $tasks = New-Object System.Collections.ArrayList
+    try {
+        foreach ($ip in $Targets) {
+            try {
+                $p = New-Object System.Net.NetworkInformation.Ping
+                [void]$pings.Add($p)
+                [void]$tasks.Add($p.SendPingAsync([string]$ip, $TimeoutMs))
+            } catch { }
+        }
+        $deadline = [DateTime]::UtcNow.AddMilliseconds($TimeoutMs + 500)
+        while (($tasks.Count -gt 0) -and ([DateTime]::UtcNow -lt $deadline)) {
+            foreach ($tk in @($tasks.ToArray())) {
+                if ($tk.IsCompleted) {
+                    [void]$tasks.Remove($tk)
+                    try { if ((-not $tk.IsFaulted) -and (-not $tk.IsCanceled) -and ($tk.Result.Status -eq [System.Net.NetworkInformation.IPStatus]::Success)) { return $true } } catch { }
+                }
+            }
+            Start-Sleep -Milliseconds 15
+        }
+        return $false
+    } finally { foreach ($p in $pings) { try { $p.Dispose() } catch { } } }
+}
+function Get-GatewayList {
+    $gws = New-Object System.Collections.ArrayList
+    try {
+        foreach ($ni in [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces()) {
+            if ($ni.OperationalStatus -ne [System.Net.NetworkInformation.OperationalStatus]::Up) { continue }
+            if ($ni.NetworkInterfaceType -eq [System.Net.NetworkInformation.NetworkInterfaceType]::Loopback) { continue }
+            foreach ($ga in $ni.GetIPProperties().GatewayAddresses) {
+                if ($ga.Address.AddressFamily -ne [System.Net.Sockets.AddressFamily]::InterNetwork) { continue }
+                $gs = $ga.Address.ToString()
+                if (($gs -ne '0.0.0.0') -and (-not $gws.Contains($gs))) { [void]$gws.Add($gs) }
+            }
+        }
+    } catch { }
+    return , @($gws.ToArray())
 }
 function Test-Box {
-    $gw = Get-NetRoute -DestinationPrefix '0.0.0.0/0' -ErrorAction SilentlyContinue | Sort-Object -Property RouteMetric | Select-Object -First 1
-    if ($gw -and $gw.NextHop -and ($gw.NextHop -ne '0.0.0.0')) { return (Test-Ping $gw.NextHop) }
-    return $false
+    $gws = Get-GatewayList
+    if ($gws.Count -eq 0) { return $false }
+    return (Test-AnyPing @($gws | Select-Object -First 3) 2000)
 }
 
 '@
@@ -4066,12 +4260,12 @@ function Start-BgWork([string]$kind) {
         if ($S.Bg -eq $null) { $S.Bg = [powershell]::Create() }
         $S.Bg.Commands.Clear()
         if ($kind -eq 'mode') {
-            $src = '$r = @(Get-NetFirewallRule -Group ''__G__'' -ErrorAction SilentlyContinue | Where-Object { $_.Enabled -eq ''True'' }); $r2 = @(Get-NetFirewallRule -Group ''__G2__'' -ErrorAction SilentlyContinue | Where-Object { $_.Enabled -eq ''True'' }); if (($r.Count -ge 2) -or ($r2.Count -ge 2)) { ''LOCAL'' } else { ''INTERNET'' }'
-            $src = $src.Replace('__G__', $Group).Replace('__G2__', $LegacyGroups[0])
+            $src = 'param($Group, $LegacyGroups, $FnSrc) function T([string]$k) { return $k }; function Tf([string]$k, [object[]]$a) { return $k }; . ([scriptblock]::Create($FnSrc)); Get-Mode'
         } else {
             $src = 'Get-CimInstance -ClassName Win32_Service -Filter "State=''Running''" -ErrorAction SilentlyContinue | ForEach-Object { ([string]$_.ProcessId) + ''|'' + $_.DisplayName }'
         }
         [void]$S.Bg.AddScript($src)
+        if ($kind -eq 'mode') { [void]$S.Bg.AddArgument($Group).AddArgument($LegacyGroups).AddArgument($ModeFnSrc) }
         $S.BgKind = $kind
         $S.BgH = $S.Bg.BeginInvoke()
     } catch { $S.BgH = $null }
