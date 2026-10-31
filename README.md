@@ -71,7 +71,7 @@ English, Français, Español, Deutsch, Italiano, Português. The language follow
 **Verify what you download** (free, no trust needed):
 - Every file is built by GitHub Actions from this repository's source, and carries a signed build attestation. With the [GitHub CLI](https://cli.github.com): `gh attestation verify ZerkiWatch-Setup.exe --repo zerkino/ZerkiWatch` (same for the zip).
 - `SHA256.txt` lists the SHA-256 of each file: compare with `Get-FileHash <file>` in PowerShell.
-- The files are not code-signed yet (a certificate costs money; see the [code signing policy](CODE_SIGNING_POLICY.md)), so Windows SmartScreen may warn on first run: choose *More info, Run anyway*. The program itself is a readable script, nothing is hidden in the exe.
+- The files are not code-signed yet, so Windows SmartScreen may warn on first run: choose *More info, Run anyway*. Free code signing by [SignPath.io](https://signpath.io), with a certificate from the [SignPath Foundation](https://signpath.org), has been applied for (see the [code signing policy](CODE_SIGNING_POLICY.md)). The program itself is a readable script, nothing is hidden in the exe.
 
 ### Option 1: just run it
 1. Download `ZerkiWatch.bat` (and `ZerkiWatch.ico` if you want the icon).
