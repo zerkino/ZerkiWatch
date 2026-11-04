@@ -264,6 +264,7 @@ ui.local=SOLO LOCALE
 ui.local_net=Rete locale
 ui.local_sub=Internet è disattivato per questo PC. La rete locale (router, NAS, stampante, altri dispositivi) funziona.
 ui.mbps_in=Mbps in ricezione
+ui.more=+ {0} altre
 ui.network=RETE
 ui.no_internet=Nessun Internet: controlla il router, il Wi-Fi o una VPN.
 ui.noact=Nessuna attività rilevante

@@ -264,6 +264,7 @@ ui.local=LOCAL ONLY
 ui.local_net=Local network
 ui.local_sub=The Internet is cut for this PC. The local network (router, NAS, printer, other devices) works.
 ui.mbps_in=Mbps received
+ui.more=+ {0} more
 ui.network=NETWORK
 ui.no_internet=No Internet: check the router, the Wi-Fi or a VPN.
 ui.noact=No notable activity

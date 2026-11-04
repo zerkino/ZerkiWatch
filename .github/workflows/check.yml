@@ -22,3 +22,6 @@ jobs:
       - name: Compiled-type cache folder (ACL and owner)
         shell: powershell
         run: powershell -ExecutionPolicy Bypass -File tools\test-cache.ps1
+      - name: Application lists (every application that moves a byte)
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File tools\test-apps.ps1

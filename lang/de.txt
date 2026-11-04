@@ -264,6 +264,7 @@ ui.local=NUR LOKAL
 ui.local_net=Lokales Netzwerk
 ui.local_sub=Das Internet ist für diesen PC getrennt. Das lokale Netzwerk (Router, NAS, Drucker, andere Geräte) funktioniert.
 ui.mbps_in=Mbps Empfang
+ui.more=+ {0} weitere
 ui.network=NETZWERK
 ui.no_internet=Kein Internet: Prüfe den Router, das Wi-Fi oder ein VPN.
 ui.noact=Keine nennenswerte Aktivität

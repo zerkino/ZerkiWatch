@@ -264,6 +264,7 @@ ui.local=LOCAL UNIQUEMENT
 ui.local_net=Réseau local
 ui.local_sub=Internet est coupé pour ce PC. Le réseau local (box, NAS, imprimante, autres appareils) fonctionne.
 ui.mbps_in=Mbps en réception
+ui.more=+ {0} autres
 ui.network=RÉSEAU
 ui.no_internet=Pas d'Internet : vérifiez la box, le Wi-Fi ou un VPN.
 ui.noact=Aucune activité notable

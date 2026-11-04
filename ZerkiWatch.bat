@@ -425,6 +425,7 @@ ui.local=NUR LOKAL
 ui.local_net=Lokales Netzwerk
 ui.local_sub=Das Internet ist f\u00fcr diesen PC getrennt. Das lokale Netzwerk (Router, NAS, Drucker, andere Ger\u00e4te) funktioniert.
 ui.mbps_in=Mbps Empfang
+ui.more=+ {0} weitere
 ui.network=NETZWERK
 ui.no_internet=Kein Internet: Pr\u00fcfe den Router, das Wi-Fi oder ein VPN.
 ui.noact=Keine nennenswerte Aktivit\u00e4t
@@ -721,6 +722,7 @@ ui.local=LOCAL ONLY
 ui.local_net=Local network
 ui.local_sub=The Internet is cut for this PC. The local network (router, NAS, printer, other devices) works.
 ui.mbps_in=Mbps received
+ui.more=+ {0} more
 ui.network=NETWORK
 ui.no_internet=No Internet: check the router, the Wi-Fi or a VPN.
 ui.noact=No notable activity
@@ -1017,6 +1019,7 @@ ui.local=SOLO LOCAL
 ui.local_net=Red local
 ui.local_sub=Internet est\u00e1 cortado para este PC. La red local (router, NAS, impresora, otros dispositivos) funciona.
 ui.mbps_in=Mbps recibidos
+ui.more=+ {0} m\u00e1s
 ui.network=RED
 ui.no_internet=Sin Internet: revisa el router, el Wi-Fi o una VPN.
 ui.noact=Sin actividad notable
@@ -1313,6 +1316,7 @@ ui.local=LOCAL UNIQUEMENT
 ui.local_net=R\u00e9seau local
 ui.local_sub=Internet est coup\u00e9 pour ce PC. Le r\u00e9seau local (box, NAS, imprimante, autres appareils) fonctionne.
 ui.mbps_in=Mbps en r\u00e9ception
+ui.more=+ {0} autres
 ui.network=R\u00c9SEAU
 ui.no_internet=Pas d'Internet : v\u00e9rifiez la box, le Wi-Fi ou un VPN.
 ui.noact=Aucune activit\u00e9 notable
@@ -1609,6 +1613,7 @@ ui.local=SOLO LOCALE
 ui.local_net=Rete locale
 ui.local_sub=Internet \u00e8 disattivato per questo PC. La rete locale (router, NAS, stampante, altri dispositivi) funziona.
 ui.mbps_in=Mbps in ricezione
+ui.more=+ {0} altre
 ui.network=RETE
 ui.no_internet=Nessun Internet: controlla il router, il Wi-Fi o una VPN.
 ui.noact=Nessuna attivit\u00e0 rilevante
@@ -1905,6 +1910,7 @@ ui.local=S\u00d3 LOCAL
 ui.local_net=Rede local
 ui.local_sub=A Internet est\u00e1 cortada para este PC. A rede local (roteador, NAS, impressora, outros dispositivos) funciona.
 ui.mbps_in=Mbps recebidos
+ui.more=+ {0} mais
 ui.network=REDE
 ui.no_internet=Sem Internet: verifique o roteador, o Wi-Fi ou uma VPN.
 ui.noact=Sem atividade not\u00e1vel
@@ -1938,7 +1944,7 @@ wiz.pin=Palavra-passe do controlo remoto do iPhone (pode manter a gerada):
 wiz.skip=Saltar
 wiz.title=Bem-vindo ao ZerkiWatch
 '@
-$langHash = @{ 'de' = '0ce7902f7bd6e8d9'; 'en' = '107c266858febf78'; 'es' = '30eb1df90df9ae97'; 'fr' = '0a7dc610cbb1f84e'; 'it' = '51858612cfeb8c9a'; 'pt' = 'f1d6ea0d99df479f' }
+$langHash = @{ 'de' = '889585a74c371d26'; 'en' = '5e009a2d8529af20'; 'es' = 'ee828d2217177b86'; 'fr' = '9c252bfc3daa7a49'; 'it' = 'e2fc3863972fa9d2'; 'pt' = '7538c7bfc173f826' }
 # LANGDATA END
 function Get-TextHash([string]$s) {
     $norm = $s.Replace("`r`n", "`n").Trim()
@@ -2736,6 +2742,7 @@ canvas{width:100%;height:70px;display:block;margin-top:12px}
 .bar.s i{background:#4ade80}
 .bar.k i{background:#fbbf24}
 .empty{font-size:14px;color:#6b7690}
+.idle .rn,.idle .rv{opacity:.5}
 .g2{display:flex;gap:12px}
 .g4{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 8px}
 .gb{text-align:center}
@@ -2862,6 +2869,13 @@ function disks(list) {
     el.appendChild(r);
   });
 }
+function rate(m) {
+  m = Number(m) || 0;
+  if (m <= 0) return '--';
+  if (m >= 0.9995) return fmt(m) + ' Mbps';
+  if (m * 1000 >= 0.9995) return fmt(m * 1000) + ' kbps';
+  return Math.max(1, Math.round(m * 1000000)) + ' bps';
+}
 function rows(id, list, cls, empty) {
   var el = document.getElementById(id);
   el.textContent = '';
@@ -2869,11 +2883,11 @@ function rows(id, list, cls, empty) {
   var mx = 0.05;
   list.forEach(function (x) { if (x.m > mx) mx = x.m; });
   list.forEach(function (x) {
-    var r = document.createElement('div'); r.className = 'row';
+    var r = document.createElement('div'); r.className = x.m > 0 ? 'row' : 'row idle';
     var a = document.createElement('div'); a.className = 'rn'; a.textContent = x.n;
-    var b = document.createElement('div'); b.className = 'rv'; b.textContent = fmt(x.m) + ' Mbps';
+    var b = document.createElement('div'); b.className = 'rv'; b.textContent = rate(x.m);
     var bar = document.createElement('div'); bar.className = 'bar ' + cls;
-    var f = document.createElement('i'); f.style.width = Math.max(2, 100 * x.m / mx) + '%';
+    var f = document.createElement('i'); f.style.width = (x.m > 0 ? Math.max(2, 100 * x.m / mx) : 0) + '%';
     bar.appendChild(f);
     r.appendChild(a); r.appendChild(b); r.appendChild(bar);
     el.appendChild(r);
@@ -4010,6 +4024,8 @@ $S.LastT = 0.0
 $S.Watch = [System.Diagnostics.Stopwatch]::StartNew()
 $S.Apps = @()
 $S.Svcs = @()
+$S.AppSeen = @{}
+$S.AppHold = 15
 $S.SvcMap = @{}
 $S.LastRemote = [DateTime]::MinValue
 $S.NeedAt = [DateTime]::UtcNow
@@ -4230,6 +4246,15 @@ function Format-Mbps([double]$v) {
     return $v.ToString('0.00')
 }
 
+# rate of one application or service ($m is in Mbps): the unit follows the size, so a few bytes stay readable instead of showing 0.00
+function Format-AppRate([double]$m) {
+    if ($m -le 0) { return '--' }
+    if ($m -ge 0.9995) { return ((Format-Mbps $m) + ' Mbps') }
+    $k = $m * 1000.0
+    if ($k -ge 0.9995) { return ((Format-Mbps $k) + ' kbps') }
+    return (([math]::Max(1.0, [math]::Round($k * 1000.0))).ToString('0') + ' bps')
+}
+
 function Update-Adapters {
     $all = @()
     $withGw = @()
@@ -4281,12 +4306,26 @@ function Get-AppLabel([int]$procId) {
     return $label
 }
 
-function Convert-Top($tbl) {
-    $out = @()
-    foreach ($k in ($tbl.Keys | Sort-Object { $tbl[$_] } -Descending | Select-Object -First 5)) {
-        $out += @{ n = [string]$k; m = [math]::Round([double]$tbl[$k], 2) }
+# Every application (or service) that moved at least one byte in the last capture window is listed, busiest first.
+# One that went quiet stays in the list with a rate of 0 for $S.AppHold seconds, so that a short exchange can be read before its row goes away.
+function Convert-Rows($tbl, [string]$pfx, [DateTime]$nowU) {
+    foreach ($k in @($tbl.Keys)) { $S.AppSeen[$pfx + $k] = $nowU }
+    $items = New-Object System.Collections.ArrayList
+    $gone = New-Object System.Collections.ArrayList
+    foreach ($sk in @($S.AppSeen.Keys)) {
+        if (-not ([string]$sk).StartsWith($pfx, [StringComparison]::Ordinal)) { continue }
+        $age = ($nowU - [DateTime]$S.AppSeen[$sk]).TotalSeconds
+        if ($age -gt $S.AppHold) { [void]$gone.Add($sk); continue }
+        $nm = ([string]$sk).Substring($pfx.Length)
+        $m = 0.0
+        if ($tbl.ContainsKey($nm)) { $m = [double]$tbl[$nm] }
+        [void]$items.Add(@{ n = $nm; m = $m; a = $age })
     }
-    return $out
+    foreach ($sk in $gone) { $S.AppSeen.Remove($sk) }
+    $out = New-Object System.Collections.ArrayList
+    $sorted = @($items.ToArray() | Sort-Object -Property @{ Expression = { $_.m }; Descending = $true }, @{ Expression = { $_.a }; Ascending = $true } | Select-Object -First 60)
+    foreach ($it in $sorted) { [void]$out.Add(@{ n = [string]$it.n; m = [math]::Round([double]$it.m, 6) }) }
+    return $out.ToArray()
 }
 
 $svcCode = @'
@@ -4401,8 +4440,9 @@ function Update-Procs {
     $svcs = @{}
     foreach ($row in $rows) {
         $procId = [int]$row[0]
-        $mbps = ([double]$row[1] + [double]$row[2]) * 8.0 / 1000000.0
-        if ($mbps -lt 0.005) { continue }
+        $bytes = [double]$row[1] + [double]$row[2]
+        if ($bytes -le 0) { continue }
+        $mbps = $bytes * 8.0 / 1000000.0
         if ($procId -eq 4) {
             $key = (T 'app.system')
             $tbl = $svcs
@@ -4412,13 +4452,15 @@ function Update-Procs {
             if ($names.Count -gt 1) { $key = $key + ' (+' + ($names.Count - 1) + ')' }
             $tbl = $svcs
         } else {
-            $key = Get-AppLabel $procId
+            $key = [string](Get-AppLabel $procId)
+            if ($key -match '^Process \d+$') { $key = (T 'app.others') }
             $tbl = $apps
         }
         if ($tbl.ContainsKey($key)) { $tbl[$key] = $tbl[$key] + $mbps } else { $tbl[$key] = $mbps }
     }
-    $S.Apps = @(Convert-Top $apps)
-    $S.Svcs = @(Convert-Top $svcs)
+    $nowU = [DateTime]::UtcNow
+    $S.Apps = @(Convert-Rows $apps 'a|' $nowU)
+    $S.Svcs = @(Convert-Rows $svcs 's|' $nowU)
 }
 
 function Update-Mon {
@@ -4993,29 +5035,59 @@ function Draw-Rate($g, [single]$x, [single]$y, [bool]$down, [double]$val, $color
     $g.DrawString($caption, $fSmall, $bMuted, [single]($x + 24), [single]($y + 32), $sfTight)
 }
 
-function Draw-Rows($g, $items, [int]$x, [int]$y0, $accent, [string]$emptyMsg, [int]$w = 358) {
-    $cnt = @($items).Count
+# $yMax = lowest y a row may reach (0 = no limit). Roomy rows (26 px) while the list is short, tighter rows (down to 19 px) when it is long,
+# and as a last resort the rows that do not fit are summed up in one "+ N more" line: nothing is hidden silently.
+function Draw-Rows($g, $items, [int]$x, [int]$y0, $accent, [string]$emptyMsg, [int]$w = 358, [int]$yMax = 0) {
+    $list = @($items)
+    $cnt = $list.Count
     if ($cnt -eq 0) {
         $g.DrawString($emptyMsg, $fSmall, $bMuted, [single]($x + 16), [single]($y0 + 6))
         return
     }
+    $pitch = 26
+    $show = $cnt
+    $extra = 0
+    if ($yMax -gt $y0) {
+        $room = $yMax - $y0
+        if (($cnt * 26) -gt $room) {
+            $pitch = [int][math]::Floor($room / $cnt)
+            if ($pitch -lt 19) {
+                $pitch = 19
+                $show = [int][math]::Floor($room / $pitch) - 1
+                if ($show -lt 1) { $show = 1 }
+                $extra = $cnt - $show
+            }
+        }
+    }
+    $barY = 20
+    $barH = 3
+    if ($pitch -lt 24) { $barY = $pitch - 2; $barH = 2 }
     $mx = 0.05
-    foreach ($it in $items) { if ([double]$it.m -gt $mx) { $mx = [double]$it.m } }
+    foreach ($it in $list) { if ([double]$it.m -gt $mx) { $mx = [double]$it.m } }
     $i = 0
-    foreach ($it in $items) {
-        $ry = $y0 + $i * 26
-        $rc1 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x + 16)), ([single]$ry), ([single]($w - 128)), ([single]18)
-        $g.DrawString([string]$it.n, $fRow, $bText, $rc1, $sfEll)
-        $rc2 = New-Object System.Drawing.RectangleF -ArgumentList ([single]($x + 16 + $w - 124)), ([single]$ry), ([single]124), ([single]18)
-        $g.DrawString((Format-Mbps ([double]$it.m)) + ' Mbps', $fRowV, $bMuted, $rc2, $sfRight)
-        $tr = New-Object System.Drawing.SolidBrush((Get-Ov 26))
-        $g.FillRectangle($tr, [single]($x + 16), [single]($ry + 20), [single]$w, [single]3)
+    foreach ($it in $list) {
+        if ($i -ge $show) { break }
+        $ry = $y0 + $i * $pitch
+        $m = [double]$it.m
+        $nb = $bText
+        if ($m -le 0) { $nb = $bMuted }
+        $rc1 = [System.Drawing.RectangleF]::new([single]($x + 16), [single]$ry, [single]($w - 128), [single]18)
+        $g.DrawString([string]$it.n, $fRow, $nb, $rc1, $sfEll)
+        $rc2 = [System.Drawing.RectangleF]::new([single]($x + 16 + $w - 124), [single]$ry, [single]124, [single]18)
+        $g.DrawString((Format-AppRate $m), $fRowV, $bMuted, $rc2, $sfRight)
+        $tr = [System.Drawing.SolidBrush]::new((Get-Ov 26))
+        $g.FillRectangle($tr, [single]($x + 16), [single]($ry + $barY), [single]$w, [single]$barH)
         $tr.Dispose()
-        $fw = [math]::Max(2.0, [double]$w * [double]$it.m / $mx)
-        $fbr = New-Object System.Drawing.SolidBrush($accent)
-        $g.FillRectangle($fbr, [single]($x + 16), [single]($ry + 20), [single]$fw, [single]3)
-        $fbr.Dispose()
+        if ($m -gt 0) {
+            $fw = [math]::Max(2.0, [double]$w * $m / $mx)
+            $fbr = [System.Drawing.SolidBrush]::new($accent)
+            $g.FillRectangle($fbr, [single]($x + 16), [single]($ry + $barY), [single]$fw, [single]$barH)
+            $fbr.Dispose()
+        }
         $i = $i + 1
+    }
+    if ($extra -gt 0) {
+        $g.DrawString((Tf 'ui.more' @([string]$extra)), $fSmall, $bMuted, [single]($x + 16), [single]($y0 + $show * $pitch + 2))
     }
 }
 
@@ -5155,9 +5227,9 @@ $pnlRight.Add_Paint({
             Draw-RingTile $g 556 158 254 176 'GPU' $S.Gpu $aGpu 2 $gn $gd
             Draw-DiskTile $g 824 158 256 176 @($S.Disks)
             Draw-Card $g 20 348 523 232 (T 'ui.apps')
-            Draw-Rows $g $S.Apps 20 386 $cApp $msg1 491
+            Draw-Rows $g $S.Apps 20 386 $cApp $msg1 491 572
             Draw-Card $g 557 348 523 232 (T 'ui.services')
-            Draw-Rows $g $S.Svcs 557 386 $cSvc $msg2 491
+            Draw-Rows $g $S.Svcs 557 386 $cSvc $msg2 491 572
             return
         }
         # ----- Accueil : cadran -----
@@ -5226,7 +5298,7 @@ $pnlRight.Add_Paint({
         Draw-NetTile $g 590 16 238 120 $true $S.Dl $S.HistDl $cDl (T 'ui.recv')
         Draw-NetTile $g 842 16 238 120 $false $S.Ul $S.HistUl $cUl (T 'ui.send')
         Draw-Card $g 590 150 490 262 (T 'ui.apps')
-        Draw-Rows $g $S.Apps 590 188 $cApp $msg1 458
+        Draw-Rows $g $S.Apps 590 188 $cApp $msg1 458 404
         Draw-Card $g 590 426 490 154 (T 'ui.network')
         $nb = New-Object System.Drawing.SolidBrush($valNet.ForeColor)
         $g.DrawString('Internet', $fRowV, $bText, [single]608, [single]462)

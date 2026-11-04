@@ -264,6 +264,7 @@ ui.local=SÓ LOCAL
 ui.local_net=Rede local
 ui.local_sub=A Internet está cortada para este PC. A rede local (roteador, NAS, impressora, outros dispositivos) funciona.
 ui.mbps_in=Mbps recebidos
+ui.more=+ {0} mais
 ui.network=REDE
 ui.no_internet=Sem Internet: verifique o roteador, o Wi-Fi ou uma VPN.
 ui.noact=Sem atividade notável
